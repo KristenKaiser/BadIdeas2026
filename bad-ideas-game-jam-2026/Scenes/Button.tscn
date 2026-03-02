@@ -17,7 +17,7 @@ transform = Transform3D(0.99999976, 0, 0, 0, 1, 0, 0, 0, 0.99999976, 0, 0, 0)
 mesh = SubResource("BoxMesh_a506e")
 skeleton = NodePath("../../Device")
 script = ExtResource("1_p3102")
-label = NodePath("Label3D")
+label = NodePath("")
 
 [node name="Area3D" type="Area3D" parent="."]
 
@@ -25,8 +25,4 @@ label = NodePath("Label3D")
 transform = Transform3D(0.054999884, 0, 0, 0, 0.055, 0, 0, 0, 0.054999884, 0.012925148, 0, 0)
 shape = SubResource("BoxShape3D_ohrw4")
 
-[node name="Label3D" type="Label3D" parent="."]
-transform = Transform3D(-2.4103647e-08, 0, -1, 0, 0.5034887, 0, 0.5514272, 0, -4.371139e-08, -0.025572527, 0.0018492063, -1.1178107e-09)
-text = "1"
-font_size = 16
-outline_size = 5
+[connection signal="input_event" from="Area3D" to="." method="_on_area_3d_input_event"]
