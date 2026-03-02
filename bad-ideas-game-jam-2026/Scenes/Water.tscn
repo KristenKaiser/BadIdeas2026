@@ -1,0 +1,20 @@
+[gd_scene load_steps=2 format=3 uid="uid://dg21mddb1l2b5"]
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_g6c1a"]
+height = 0.2
+radius = 0.07
+
+[node name="Water" type="Node3D"]
+
+[node name="CSGCylinder3D" type="CSGCylinder3D" parent="."]
+radius = 0.05
+height = 0.3
+
+[node name="Label3D" type="Label3D" parent="CSGCylinder3D"]
+transform = Transform3D(-1.2321801e-08, 0.44379148, 0, -0.28188995, -1.9398742e-08, 0, 0, 0, 1, 0, 0.0006167367, 0.050496913)
+text = "WATER"
+
+[node name="Area3D" type="Area3D" parent="CSGCylinder3D"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="CSGCylinder3D/Area3D"]
+shape = SubResource("CylinderShape3D_g6c1a")

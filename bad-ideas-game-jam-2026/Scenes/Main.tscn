@@ -1,0 +1,195 @@
+[gd_scene load_steps=7 format=3 uid="uid://d0nk4t02xe8ik"]
+
+[ext_resource type="PackedScene" uid="uid://uvo3k3alfmfd" path="res://Scenes/food_can.tscn" id="1_kln2b"]
+[ext_resource type="PackedScene" uid="uid://ccmmb1u17r8a0" path="res://Scenes/keypad.tscn" id="1_r150o"]
+[ext_resource type="PackedScene" uid="uid://dg21mddb1l2b5" path="res://Scenes/Water.tscn" id="2_rgh2o"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_c1w88"]
+size = Vector3(0.33112794, 0.4994873, 0.5165771)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_idj7w"]
+size = Vector3(0.82, 1, 0.71999997)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_r150o"]
+size = Vector3(0.6, 0.2, 0.4)
+
+[node name="Main" type="Node3D"]
+
+[node name="LightmapGI" type="LightmapGI" parent="."]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 3.1608565, 0, -0.7691581)
+
+[node name="OmniLight3D" type="OmniLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.9, 0)
+light_energy = 0.41
+shadow_enabled = true
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -0.9031855, 0.4292505, 0, -0.4292505, -0.9031855, 0, 2.7360015, -2.8512096)
+shadow_enabled = true
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 5.9604645e-08, 0, 1, 0, -5.9604645e-08, 0, 1, -0.3, 1.1, -0.9)
+
+[node name="room" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.2, -0.2)
+
+[node name="WallRight" type="CSGBox3D" parent="room"]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 2.4, 0.2, -0.6999999)
+size = Vector3(5.3, 3.5, 0.1)
+
+[node name="WallLeft" type="CSGBox3D" parent="room"]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -3.3, 0.100000024, -0.7)
+size = Vector3(5.2000003, 3.5, 0.8)
+
+[node name="cubby" type="CSGBox3D" parent="room/WallLeft"]
+transform = Transform3D(0.9, 0, 0, 0, 0.9, 0, 0, 0, 1, -1.1033332, 0.100000024, 0.099999905)
+operation = 2
+size = Vector3(0.8, 0.8, 0.8)
+
+[node name="cubby2" type="CSGBox3D" parent="room/WallLeft"]
+transform = Transform3D(0.9, 0, 0, 0, 0.9, 0, 0, 0, 1, -0.20333326, 0.100000024, 0.099999905)
+operation = 2
+size = Vector3(0.8, 0.8, 0.8)
+
+[node name="cubby3" type="CSGBox3D" parent="room/WallLeft"]
+transform = Transform3D(0.9, 0, 0, 0, 0.9, 0, 0, 0, 1, 0.6066667, 0.100000024, 0.099999905)
+operation = 2
+size = Vector3(0.8, 0.8, 0.8)
+
+[node name="cubby4" type="CSGBox3D" parent="room/WallLeft"]
+transform = Transform3D(0.9, 0, 0, 0, 0.9, 0, 0, 0, 1, -1.1033332, 0.9, 0.099999905)
+operation = 2
+size = Vector3(0.8, 0.8, 0.8)
+
+[node name="cubby5" type="CSGBox3D" parent="room/WallLeft"]
+transform = Transform3D(0.9, 0, 0, 0, 0.9, 0, 0, 0, 1, -0.20333326, 0.9, 0.099999905)
+operation = 2
+size = Vector3(0.8, 0.8, 0.8)
+
+[node name="cubby6" type="CSGBox3D" parent="room/WallLeft"]
+transform = Transform3D(0.9, 0, 0, 0, 0.9, 0, 0, 0, 1, 0.6066667, 0.9, 0.099999905)
+operation = 2
+size = Vector3(0.8, 0.8, 0.8)
+
+[node name="WallCenter" type="CSGBox3D" parent="room"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.25000006, 0.20000005, 1.9)
+size = Vector3(6.9, 3.5, 0.1)
+
+[node name="Floor" type="CSGBox3D" parent="room"]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, -0.1, -1.5, -0.7)
+size = Vector3(6.8, 5.3, 0.2)
+
+[node name="ceiling" type="CSGBox3D" parent="room"]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, -0.2, 1.8999999, -0.7)
+size = Vector3(7, 5.3, 0.2)
+
+[node name="Left" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.2, -0.2)
+
+[node name="Desk" type="CSGBox3D" parent="Left"]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -2.723567, -0.49499935, -0.52674234)
+use_collision = true
+size = Vector3(2.7, 0.1, 1)
+
+[node name="TrashCan" type="CSGBox3D" parent="Left"]
+transform = Transform3D(0.8660254, 0, -0.5, 0, 1, 0, 0.5, 0, 0.8660254, -2.45, -1.05, -1.25)
+size = Vector3(0.3, 0.5, 0.5)
+
+[node name="Area3D" type="Area3D" parent="Left/TrashCan"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Left/TrashCan/Area3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0020155907, -0.0036743134, 0.0053583384)
+shape = SubResource("BoxShape3D_c1w88")
+
+[node name="Label3D" type="Label3D" parent="Left/TrashCan"]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 0.15368505, 0, -1.4168368e-08)
+text = "Trash
+Can"
+
+[node name="Center" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.2, -0.2)
+
+[node name="Conveyer" type="CSGBox3D" parent="Center"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.9, -0.9, -2.5)
+use_collision = true
+size = Vector3(4.4, 1, 1.4)
+
+[node name="BoxDropper" type="CSGBox3D" parent="Center"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.4, 1.6000001, -2.5000005)
+size = Vector3(1, 1, 1.2)
+
+[node name="TapeOTron" type="CSGBox3D" parent="Center"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.19999999, 2.15, -2.2000005)
+size = Vector3(0.6, 2.5, 0.6)
+
+[node name="LabelPrinter" type="CSGBox3D" parent="Center"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.85, -0.20000005, -2.9500003)
+size = Vector3(0.5, 0.4, 0.5)
+
+[node name="Right" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.2, -0.2)
+
+[node name="Desk" type="CSGBox3D" parent="Right"]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 1.8714073, -0.49499935, -1.2080847)
+use_collision = true
+size = Vector3(1.4, 0.1, 1)
+
+[node name="FoodCan" parent="Right/Desk" instance=ExtResource("1_kln2b")]
+transform = Transform3D(-0.9796559, 0, -0.20068473, 0, 1, 0, 0.20068473, 0, -0.9796559, -0.49240506, 0.1500001, 4.512033)
+
+[node name="FoodCan2" parent="Right/Desk" instance=ExtResource("1_kln2b")]
+transform = Transform3D(-0.9383785, 0, 0.34560934, 0, 1, 0, -0.34560934, 0, -0.9383785, -0.41540062, 0.15000004, 4.356213)
+
+[node name="FoodCan3" parent="Right/Desk" instance=ExtResource("1_kln2b")]
+transform = Transform3D(-0.9767846, 0, 0.21422385, 0, 1, 0, -0.21422385, 0, -0.9767846, -0.56646526, 0.1500001, 4.320902)
+
+[node name="FoodCan4" parent="Right/Desk" instance=ExtResource("1_kln2b")]
+transform = Transform3D(-0.96870023, 0, -0.2482335, 0, 1, 0, 0.2482335, 0, -0.96870023, -0.5080881, 0.35000008, 4.364704)
+
+[node name="FoodCan6" parent="Right/Desk" instance=ExtResource("1_kln2b")]
+transform = Transform3D(-0.98710567, 0, 0.16007063, 0, 1, 0, -0.16007063, 0, -0.98710567, -0.40159214, 0.35000008, 4.4761667)
+
+[node name="FoodCan5" parent="Right/Desk" instance=ExtResource("1_kln2b")]
+transform = Transform3D(-0.9698083, 0, 0.24386896, 0, 1, 0, -0.24386896, 0, -0.9698083, -0.33069932, 0.15000004, 4.4821935)
+
+[node name="Water" parent="Right/Desk" instance=ExtResource("2_rgh2o")]
+transform = Transform3D(-0.99125934, 0, -0.13192773, 0, 1, 0, 0.13192773, 0, -0.99125934, 0.030214667, 0.19999999, 4.2333493)
+
+[node name="Water2" parent="Right/Desk" instance=ExtResource("2_rgh2o")]
+transform = Transform3D(-0.9677136, 0, -0.2520525, 0, 1, 0, 0.2520525, 0, -0.9677136, 0.15355194, 0.19999999, 4.291578)
+
+[node name="Water3" parent="Right/Desk" instance=ExtResource("2_rgh2o")]
+transform = Transform3D(-0.43607935, 0, -0.8999082, 0, 1, 0, 0.8999082, 0, -0.43607935, 0.016806006, 0.19999999, 4.3472805)
+
+[node name="OrderTube" type="CSGCylinder3D" parent="Right"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.7, 0.4156251, 0.099999994)
+radius = 0.3
+height = 3.56875
+
+[node name="TrashCompactor" type="CSGBox3D" parent="Right"]
+transform = Transform3D(0.64278764, 0, 0.7660445, 0, 1, 0, -0.7660445, 0, 0.64278764, 1.7766043, -0.9, 1.2857213)
+size = Vector3(0.8, 1, 0.7)
+
+[node name="Area3D" type="Area3D" parent="Right/TrashCompactor"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Right/TrashCompactor/Area3D"]
+transform = Transform3D(1, 0, 2.9802322e-08, 0, 1, 0, -2.9802322e-08, 0, 1, 2.9802322e-07, 0, -3.0994415e-06)
+shape = SubResource("BoxShape3D_idj7w")
+
+[node name="Label3D" type="Label3D" parent="Right/TrashCompactor"]
+transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, -1.4901161e-08, 0, -0.38208658)
+text = "Trash
+Compactor"
+font_size = 28
+
+[node name="Catalogue" type="CSGBox3D" parent="Right"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.8656684, -0.39011323, -1.1371408)
+size = Vector3(0.6, 0.1, 0.4)
+
+[node name="Area3D" type="Area3D" parent="Right/Catalogue"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Right/Catalogue/Area3D"]
+shape = SubResource("BoxShape3D_r150o")
+
+[node name="keypad" parent="Right" instance=ExtResource("1_r150o")]
+transform = Transform3D(0.8660254, 0, -0.5, 0, 1, 0, 0.5, 0, 0.8660254, 1.4239999, -0.40000004, -0.056698725)
