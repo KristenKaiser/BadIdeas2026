@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://cpxhjnah05wv6"]
+
+[ext_resource type="Script" uid="uid://ddgtuurbafg7k" path="res://Scripts/Managers/merch_manager.gd" id="1_qb7xf"]
+
+[node name="MerchManager" type="Node"]
+script = ExtResource("1_qb7xf")
