@@ -37,7 +37,6 @@ func call_item():
 		print("call item %s" % keypad_input)
 		order_item.emit(codes_and_items[keypad_input])
 		await display_flash_color(Color.GREEN)
-		
 	else:
 		await display_flash_color(Color.RED)
 	clear_input()

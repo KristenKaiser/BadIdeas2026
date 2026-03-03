@@ -163,6 +163,10 @@ transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 1.87
 use_collision = true
 size = Vector3(1.4, 0.1, 1)
 
+[node name="Catalogue" parent="Right/Desk" instance=ExtResource("3_pbw6q")]
+transform = Transform3D(-3.035918e-08, 0, 0.38678715, 0, 0.10020816, 0, -0.69453704, 0, -1.6907002e-08, 0.2080847, 0.09499931, 0.07140708)
+skeleton = NodePath("../../..")
+
 [node name="OrderTube" type="CSGCylinder3D" parent="Right" node_paths=PackedStringArray("deposit", "keypad")]
 transform = Transform3D(0.9848077, 0, 0.17364818, 0, 1, 0, -0.17364818, 0, 0.9848077, 1.7, 0.4156251, 0.099999994)
 radius = 0.3
@@ -195,5 +199,5 @@ text = "Trash
 Compactor"
 font_size = 28
 
-[node name="Catalogue" parent="." instance=ExtResource("3_pbw6q")]
-transform = Transform3D(0.69453704, 0, -1.7763568e-15, 0, 0.10020816, 0, 0, 0, 0.38678715, 1.8000001, 0.8, -1.2)
+[node name="Hand" type="Node3D" parent="."]
+transform = Transform3D(0.69453704, 0, -1.7763568e-15, 0, 0.10020816, 0, 0, 0, 0.38678715, 1.8000002, 0.8, -1.2)

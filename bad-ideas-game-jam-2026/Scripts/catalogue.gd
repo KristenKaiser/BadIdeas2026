@@ -14,14 +14,20 @@ func _on_area_3d_input_event(_camera: Node, event: InputEvent, _event_position: 
 
 
 func on_click():
-	
 	if is_zoomed_in == false:
 		prev_camera = get_viewport().get_camera_3d()
 		camera.current = true
 		print("zoom in")
 		is_zoomed_in = true
-	else: 
-		prev_camera.current = true
-		print("zoom out")
-		is_zoomed_in = false
+
+		
 	
+
+func _unhandled_input(event: InputEvent) -> void:
+	if event is InputEventMouseButton:
+		if event.button_index == MOUSE_BUTTON_RIGHT and event.pressed:
+			if is_zoomed_in:
+				prev_camera.current = true
+				print("zoom out")
+				is_zoomed_in = false
+				get_viewport().set_input_as_handled()
