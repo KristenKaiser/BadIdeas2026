@@ -35,8 +35,9 @@ func append_num(value : String):
 func call_item():
 	if codes_and_items.has(keypad_input):
 		print("call item %s" % keypad_input)
-		await display_flash_color(Color.GREEN)
 		order_item.emit(codes_and_items[keypad_input])
+		await display_flash_color(Color.GREEN)
+		
 	else:
 		await display_flash_color(Color.RED)
 	clear_input()

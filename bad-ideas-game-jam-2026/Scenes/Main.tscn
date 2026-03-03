@@ -1,10 +1,11 @@
-[gd_scene load_steps=8 format=3 uid="uid://d0nk4t02xe8ik"]
+[gd_scene load_steps=9 format=3 uid="uid://d0nk4t02xe8ik"]
 
 [ext_resource type="PackedScene" uid="uid://uvo3k3alfmfd" path="res://Scenes/food_can.tscn" id="1_kln2b"]
 [ext_resource type="PackedScene" uid="uid://ccmmb1u17r8a0" path="res://Scenes/keypad.tscn" id="1_r150o"]
+[ext_resource type="Script" uid="uid://dxx1jykm0t1k6" path="res://Scripts/main.gd" id="1_v1gob"]
 [ext_resource type="PackedScene" uid="uid://dg21mddb1l2b5" path="res://Scenes/Water.tscn" id="2_rgh2o"]
 [ext_resource type="PackedScene" uid="uid://dc2ar543euyj6" path="res://Scenes/catalogue.tscn" id="3_pbw6q"]
-[ext_resource type="Script" uid="uid://cd6s54ejg8gtm" path="res://Scenes/order_tube.gd" id="3_rgh2o"]
+[ext_resource type="Script" uid="uid://cd6s54ejg8gtm" path="res://Scripts/order_tube.gd" id="3_rgh2o"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_c1w88"]
 size = Vector3(0.33112794, 0.4994873, 0.5165771)
@@ -12,7 +13,9 @@ size = Vector3(0.33112794, 0.4994873, 0.5165771)
 [sub_resource type="BoxShape3D" id="BoxShape3D_idj7w"]
 size = Vector3(0.82, 1, 0.71999997)
 
-[node name="Main" type="Node3D"]
+[node name="Main" type="Node3D" node_paths=PackedStringArray("main_camera")]
+script = ExtResource("1_v1gob")
+main_camera = NodePath("Camera3D")
 
 [node name="LightmapGI" type="LightmapGI" parent="."]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 3.1608565, 0, -0.7691581)
@@ -160,9 +163,6 @@ transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 1.87
 use_collision = true
 size = Vector3(1.4, 0.1, 1)
 
-[node name="Catalogue" parent="Right/Desk" instance=ExtResource("3_pbw6q")]
-transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 0.07094395, 0.104886115, 0.005738735)
-
 [node name="OrderTube" type="CSGCylinder3D" parent="Right" node_paths=PackedStringArray("deposit", "keypad")]
 transform = Transform3D(0.9848077, 0, 0.17364818, 0, 1, 0, -0.17364818, 0, 0.9848077, 1.7, 0.4156251, 0.099999994)
 radius = 0.3
@@ -194,3 +194,6 @@ transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, -1.4
 text = "Trash
 Compactor"
 font_size = 28
+
+[node name="Catalogue" parent="." instance=ExtResource("3_pbw6q")]
+transform = Transform3D(0.69453704, 0, -1.7763568e-15, 0, 0.10020816, 0, 0, 0, 0.38678715, 1.8000001, 0.8, -1.2)
