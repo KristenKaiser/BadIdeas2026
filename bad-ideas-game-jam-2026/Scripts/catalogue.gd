@@ -9,9 +9,6 @@ func _on_area_3d_input_event(_camera: Node, event: InputEvent, _event_position: 
 		if event is InputEventMouseButton:
 			if event.button_index == MOUSE_BUTTON_LEFT and event.pressed:
 				on_click()
-			if event.button_index == MOUSE_BUTTON_RIGHT and event.pressed:
-				on_click()
-
 
 func on_click():
 	if is_zoomed_in == false:
@@ -19,9 +16,6 @@ func on_click():
 		camera.current = true
 		print("zoom in")
 		is_zoomed_in = true
-
-		
-	
 
 func _unhandled_input(event: InputEvent) -> void:
 	if event is InputEventMouseButton:
