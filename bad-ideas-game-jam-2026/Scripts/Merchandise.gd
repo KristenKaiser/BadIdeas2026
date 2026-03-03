@@ -2,6 +2,7 @@ extends Node3D
 class_name Merchandise
 
 var object_mesh : MeshInstance3D
+var is_held : bool = false
 
 func _ready() -> void:
 	Global.merch_manager.add_merch(self)
@@ -22,7 +23,14 @@ func _ready() -> void:
 func _on_area_3d_input_event(_camera: Node, event: InputEvent, _event_position: Vector3, _normal: Vector3, _shape_idx: int):
 	if event is InputEventMouseButton:
 		if event.button_index == MOUSE_BUTTON_LEFT and event.pressed:
-			Global.camera_manager.hold_item(self, object_mesh)
+			select_object()
 
 func get_mesh()-> MeshInstance3D:
 	return object_mesh
+
+func select_object():
+	if is_held:
+		pass
+	else:
+		is_held = true
+		Global.camera_manager.hold_item(self, object_mesh)

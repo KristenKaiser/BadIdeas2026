@@ -1,8 +1,9 @@
-[gd_scene load_steps=9 format=3 uid="uid://d0nk4t02xe8ik"]
+[gd_scene load_steps=10 format=3 uid="uid://d0nk4t02xe8ik"]
 
 [ext_resource type="PackedScene" uid="uid://uvo3k3alfmfd" path="res://Scenes/food_can.tscn" id="1_kln2b"]
 [ext_resource type="PackedScene" uid="uid://ccmmb1u17r8a0" path="res://Scenes/keypad.tscn" id="1_r150o"]
 [ext_resource type="Script" uid="uid://dxx1jykm0t1k6" path="res://Scripts/main.gd" id="1_v1gob"]
+[ext_resource type="Script" uid="uid://ojqvaarbbc86" path="res://Scripts/main_camera.gd" id="2_jw32o"]
 [ext_resource type="PackedScene" uid="uid://dg21mddb1l2b5" path="res://Scenes/Water.tscn" id="2_rgh2o"]
 [ext_resource type="PackedScene" uid="uid://dc2ar543euyj6" path="res://Scenes/catalogue.tscn" id="3_pbw6q"]
 [ext_resource type="Script" uid="uid://cd6s54ejg8gtm" path="res://Scripts/order_tube.gd" id="3_rgh2o"]
@@ -31,6 +32,7 @@ shadow_enabled = true
 
 [node name="Camera3D" type="Camera3D" parent="."]
 transform = Transform3D(1.5893256e-08, 0, -1, 0, 1, 0, 1, 0, 1.5893256e-08, -0.3, 1.1, -0.9)
+script = ExtResource("2_jw32o")
 
 [node name="room" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.2, -0.2)
@@ -142,25 +144,25 @@ radius = 0.1
 height = 0.65
 
 [node name="Label3D" type="Label3D" parent="Left/BubbleWrap"]
-transform = Transform3D(-0.48000002, 0, 8.742278e-08, 4.1962934e-08, -2.1855694e-08, 1, 1.834258e-15, 0.5, 4.371139e-08, 0.047999978, -0.29999998, 0.14999999)
+transform = Transform3D(-2.0981467e-08, 0, -1, -0.48000002, -2.1855692e-08, 4.371139e-08, -2.0981467e-08, 0.5, 3.5527137e-15, -0.15200001, 0.036000054, 0.05)
 text = "Bubble wrap"
 
 [node name="WrappingPaper1" type="CSGCylinder3D" parent="Left"]
-transform = Transform3D(-4.371139e-08, 1, 0, 4.371139e-08, 0, 1, 1, 4.371139e-08, -4.3711385e-08, -2.5249999, 0.049999915, 1)
+transform = Transform3D(-4.371139e-08, 1, 0, 4.371139e-08, 0, 1, 1, 4.371139e-08, -4.3711385e-08, -2.3874998, 0.049999952, 1)
 radius = 0.1
-height = 0.65
+height = 0.725
 
 [node name="Label3D2" type="Label3D" parent="Left/WrappingPaper1"]
-transform = Transform3D(-0.48000002, 0, 8.742278e-08, 4.1962934e-08, -2.1855694e-08, 1, 1.7763568e-15, 0.5, 4.371139e-08, 0.19199996, -0.29999992, 0.14999986)
-text = "wrapping paper blue"
+transform = Transform3D(-2.0981467e-08, 0, -1, -0.48000002, -2.1855692e-08, 4.371139e-08, -2.0981467e-08, 0.5, 3.5527137e-15, -0.10800004, -0.05999989, 0.049999867)
+text = "wrapping paper Blue"
 
 [node name="WrappingPaper2" type="CSGCylinder3D" parent="Left"]
-transform = Transform3D(-4.371139e-08, 1, 0, 4.371139e-08, 0, 1, 1, 4.371139e-08, -4.3711385e-08, -2.5249999, 0.34999996, 1)
+transform = Transform3D(-4.371139e-08, 1, 0, 4.371139e-08, 0, 1, 1, 4.371139e-08, -4.3711385e-08, -2.4374998, 0.3499999, 1)
 radius = 0.1
-height = 0.65
+height = 0.825
 
 [node name="Label3D3" type="Label3D" parent="Left/WrappingPaper2"]
-transform = Transform3D(-0.48000002, 0, 8.742278e-08, 4.1962934e-08, -2.1855694e-08, 1, 1.7763568e-15, 0.5, 4.371139e-08, 0.1919999, -0.29999992, 0.14999992)
+transform = Transform3D(-2.0981467e-08, 0, -1, -0.48000002, -2.1855692e-08, 4.371139e-08, -2.0981467e-08, 0.5, 3.5527137e-15, -0.10800011, -0.011999927, -7.681809e-08)
 text = "wrapping paper Red"
 
 [node name="Center" type="Node3D" parent="."]

@@ -27,7 +27,8 @@ text = "84460 - Apple
 69128 - Banana
 07590 - Bread
 71411 - EggPLant
-63389 - Sauce"
+63389 - Sauce
+right click to exit "
 
 [node name="Camera3D" type="Camera3D" parent="."]
 transform = Transform3D(4.2909605e-08, 1.4398079, 6.383236e-08, 7.101007e-08, -4.4241847e-07, 9.979227, 2.5854013, -7.705094e-08, -1.8397172e-08, -2.3600288e-08, 4.9896135, 0)
