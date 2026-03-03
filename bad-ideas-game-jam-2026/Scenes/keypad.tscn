@@ -21,6 +21,7 @@ buttons = [NodePath("Buttons/One"), NodePath("Buttons/Two"), NodePath("Buttons/T
 display_label = NodePath("Display/Label3D")
 display = NodePath("Display")
 codes_and_items = Dictionary[String, PackedScene]({
+"0": ExtResource("2_phgvv"),
 "07590": ExtResource("5_nlnrq"),
 "63389": ExtResource("7_s4x0h"),
 "69128": ExtResource("3_h5lr6"),
