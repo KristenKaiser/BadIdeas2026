@@ -1,17 +1,16 @@
-[gd_scene load_steps=7 format=3 uid="uid://d0nk4t02xe8ik"]
+[gd_scene load_steps=8 format=3 uid="uid://d0nk4t02xe8ik"]
 
 [ext_resource type="PackedScene" uid="uid://uvo3k3alfmfd" path="res://Scenes/food_can.tscn" id="1_kln2b"]
 [ext_resource type="PackedScene" uid="uid://ccmmb1u17r8a0" path="res://Scenes/keypad.tscn" id="1_r150o"]
 [ext_resource type="PackedScene" uid="uid://dg21mddb1l2b5" path="res://Scenes/Water.tscn" id="2_rgh2o"]
+[ext_resource type="PackedScene" uid="uid://dc2ar543euyj6" path="res://Scenes/catalogue.tscn" id="3_pbw6q"]
+[ext_resource type="Script" uid="uid://cd6s54ejg8gtm" path="res://Scenes/order_tube.gd" id="3_rgh2o"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_c1w88"]
 size = Vector3(0.33112794, 0.4994873, 0.5165771)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_idj7w"]
 size = Vector3(0.82, 1, 0.71999997)
-
-[sub_resource type="BoxShape3D" id="BoxShape3D_r150o"]
-size = Vector3(0.6, 0.2, 0.4)
 
 [node name="Main" type="Node3D"]
 
@@ -28,7 +27,7 @@ transform = Transform3D(1, 0, 0, 0, -0.9031855, 0.4292505, 0, -0.4292505, -0.903
 shadow_enabled = true
 
 [node name="Camera3D" type="Camera3D" parent="."]
-transform = Transform3D(1, 0, 5.9604645e-08, 0, 1, 0, -5.9604645e-08, 0, 1, -0.3, 1.1, -0.9)
+transform = Transform3D(1.5893256e-08, 0, -1, 0, 1, 0, 1, 0, 1.5893256e-08, -0.3, 1.1, -0.9)
 
 [node name="room" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.2, -0.2)
@@ -91,6 +90,33 @@ transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -2.7
 use_collision = true
 size = Vector3(2.7, 0.1, 1)
 
+[node name="FoodCan" parent="Left/Desk" instance=ExtResource("1_kln2b")]
+transform = Transform3D(0.9796559, 0, 0.20068464, 0, 1, 0, -0.20068464, 0, 0.9796559, 1.1737478, 0.1500001, 0.08294129)
+
+[node name="FoodCan2" parent="Left/Desk" instance=ExtResource("1_kln2b")]
+transform = Transform3D(0.9383785, 0, -0.3456094, 0, 1, 0, 0.3456094, 0, 0.9383785, 1.0967433, 0.15000004, 0.23876119)
+
+[node name="FoodCan3" parent="Left/Desk" instance=ExtResource("1_kln2b")]
+transform = Transform3D(0.9767846, 0, -0.21422394, 0, 1, 0, 0.21422394, 0, 0.9767846, 1.247808, 0.1500001, 0.2740724)
+
+[node name="FoodCan4" parent="Left/Desk" instance=ExtResource("1_kln2b")]
+transform = Transform3D(0.96870023, 0, 0.24823341, 0, 1, 0, -0.24823341, 0, 0.96870023, 1.1894307, 0.35000008, 0.23027015)
+
+[node name="FoodCan6" parent="Left/Desk" instance=ExtResource("1_kln2b")]
+transform = Transform3D(0.98710567, 0, -0.16007072, 0, 1, 0, 0.16007072, 0, 0.98710567, 1.0829349, 0.35000008, 0.118807554)
+
+[node name="FoodCan5" parent="Left/Desk" instance=ExtResource("1_kln2b")]
+transform = Transform3D(0.9698083, 0, -0.24386905, 0, 1, 0, 0.24386905, 0, 0.9698083, 1.012042, 0.15000004, 0.11278081)
+
+[node name="Water" parent="Left/Desk" instance=ExtResource("2_rgh2o")]
+transform = Transform3D(0.99125934, 0, 0.13192764, 0, 1, 0, -0.13192764, 0, 0.99125934, 0.651128, 0.19999999, 0.36162496)
+
+[node name="Water2" parent="Left/Desk" instance=ExtResource("2_rgh2o")]
+transform = Transform3D(0.9677136, 0, 0.25205243, 0, 1, 0, -0.25205243, 0, 0.9677136, 0.5277907, 0.19999999, 0.30339646)
+
+[node name="Water3" parent="Left/Desk" instance=ExtResource("2_rgh2o")]
+transform = Transform3D(0.4360794, 0, 0.8999082, 0, 1, 0, -0.8999082, 0, 0.4360794, 0.66453665, 0.19999999, 0.24769378)
+
 [node name="TrashCan" type="CSGBox3D" parent="Left"]
 transform = Transform3D(0.8660254, 0, -0.5, 0, 1, 0, 0.5, 0, 0.8660254, -2.45, -1.05, -1.25)
 size = Vector3(0.3, 0.5, 0.5)
@@ -134,37 +160,24 @@ transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 1.87
 use_collision = true
 size = Vector3(1.4, 0.1, 1)
 
-[node name="FoodCan" parent="Right/Desk" instance=ExtResource("1_kln2b")]
-transform = Transform3D(-0.9796559, 0, -0.20068473, 0, 1, 0, 0.20068473, 0, -0.9796559, -0.49240506, 0.1500001, 4.512033)
+[node name="Catalogue" parent="Right/Desk" instance=ExtResource("3_pbw6q")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 0.07094395, 0.104886115, 0.005738735)
 
-[node name="FoodCan2" parent="Right/Desk" instance=ExtResource("1_kln2b")]
-transform = Transform3D(-0.9383785, 0, 0.34560934, 0, 1, 0, -0.34560934, 0, -0.9383785, -0.41540062, 0.15000004, 4.356213)
-
-[node name="FoodCan3" parent="Right/Desk" instance=ExtResource("1_kln2b")]
-transform = Transform3D(-0.9767846, 0, 0.21422385, 0, 1, 0, -0.21422385, 0, -0.9767846, -0.56646526, 0.1500001, 4.320902)
-
-[node name="FoodCan4" parent="Right/Desk" instance=ExtResource("1_kln2b")]
-transform = Transform3D(-0.96870023, 0, -0.2482335, 0, 1, 0, 0.2482335, 0, -0.96870023, -0.5080881, 0.35000008, 4.364704)
-
-[node name="FoodCan6" parent="Right/Desk" instance=ExtResource("1_kln2b")]
-transform = Transform3D(-0.98710567, 0, 0.16007063, 0, 1, 0, -0.16007063, 0, -0.98710567, -0.40159214, 0.35000008, 4.4761667)
-
-[node name="FoodCan5" parent="Right/Desk" instance=ExtResource("1_kln2b")]
-transform = Transform3D(-0.9698083, 0, 0.24386896, 0, 1, 0, -0.24386896, 0, -0.9698083, -0.33069932, 0.15000004, 4.4821935)
-
-[node name="Water" parent="Right/Desk" instance=ExtResource("2_rgh2o")]
-transform = Transform3D(-0.99125934, 0, -0.13192773, 0, 1, 0, 0.13192773, 0, -0.99125934, 0.030214667, 0.19999999, 4.2333493)
-
-[node name="Water2" parent="Right/Desk" instance=ExtResource("2_rgh2o")]
-transform = Transform3D(-0.9677136, 0, -0.2520525, 0, 1, 0, 0.2520525, 0, -0.9677136, 0.15355194, 0.19999999, 4.291578)
-
-[node name="Water3" parent="Right/Desk" instance=ExtResource("2_rgh2o")]
-transform = Transform3D(-0.43607935, 0, -0.8999082, 0, 1, 0, 0.8999082, 0, -0.43607935, 0.016806006, 0.19999999, 4.3472805)
-
-[node name="OrderTube" type="CSGCylinder3D" parent="Right"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.7, 0.4156251, 0.099999994)
+[node name="OrderTube" type="CSGCylinder3D" parent="Right" node_paths=PackedStringArray("deposit", "keypad")]
+transform = Transform3D(0.9848077, 0, 0.17364818, 0, 1, 0, -0.17364818, 0, 0.9848077, 1.7, 0.4156251, 0.099999994)
 radius = 0.3
 height = 3.56875
+script = ExtResource("3_rgh2o")
+deposit = NodePath("deposit")
+keypad = NodePath("keypad")
+
+[node name="keypad" parent="Right/OrderTube" instance=ExtResource("1_r150o")]
+transform = Transform3D(0.8660254, 0, -0.5, 0, 1, 0, 0.5, 0, 0.8660254, -0.27600014, -0.81562513, -0.15669872)
+
+[node name="deposit" type="CSGBox3D" parent="Right/OrderTube"]
+transform = Transform3D(0.86603236, 0, -0.5000012, 0, 1, 0, 0.5000012, 0, 0.86603236, -0.12017405, -0.15, -0.078659385)
+operation = 2
+size = Vector3(0.5, 0.5, 0.4)
 
 [node name="TrashCompactor" type="CSGBox3D" parent="Right"]
 transform = Transform3D(0.64278764, 0, 0.7660445, 0, 1, 0, -0.7660445, 0, 0.64278764, 1.7766043, -0.9, 1.2857213)
@@ -181,15 +194,3 @@ transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, -1.4
 text = "Trash
 Compactor"
 font_size = 28
-
-[node name="Catalogue" type="CSGBox3D" parent="Right"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.8656684, -0.39011323, -1.1371408)
-size = Vector3(0.6, 0.1, 0.4)
-
-[node name="Area3D" type="Area3D" parent="Right/Catalogue"]
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Right/Catalogue/Area3D"]
-shape = SubResource("BoxShape3D_r150o")
-
-[node name="keypad" parent="Right" instance=ExtResource("1_r150o")]
-transform = Transform3D(0.8660254, 0, -0.5, 0, 1, 0, 0.5, 0, 0.8660254, 1.4239999, -0.40000004, -0.056698725)

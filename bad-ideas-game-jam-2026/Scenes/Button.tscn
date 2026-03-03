@@ -12,12 +12,13 @@ size = Vector3(0.05, 0.05, 0.05)
 [sub_resource type="BoxShape3D" id="BoxShape3D_ohrw4"]
 size = Vector3(1.53, 1, 1)
 
-[node name="Button" type="MeshInstance3D" node_paths=PackedStringArray("label")]
+[node name="Button" type="MeshInstance3D" node_paths=PackedStringArray("label", "collision_shape")]
 transform = Transform3D(0.99999976, 0, 0, 0, 1, 0, 0, 0, 0.99999976, 0, 0, 0)
 mesh = SubResource("BoxMesh_a506e")
 skeleton = NodePath("../../Device")
 script = ExtResource("1_p3102")
 label = NodePath("")
+collision_shape = NodePath("Area3D/CollisionShape3D")
 
 [node name="Area3D" type="Area3D" parent="."]
 

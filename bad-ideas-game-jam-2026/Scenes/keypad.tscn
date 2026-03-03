@@ -1,7 +1,13 @@
-[gd_scene load_steps=5 format=3 uid="uid://ccmmb1u17r8a0"]
+[gd_scene load_steps=11 format=3 uid="uid://ccmmb1u17r8a0"]
 
 [ext_resource type="Script" uid="uid://dn0o66irphsce" path="res://Scripts/keypad.gd" id="1_ohrw4"]
 [ext_resource type="PackedScene" uid="uid://dki82342476vv" path="res://Scenes/KeypadButton.tscn" id="1_v31qc"]
+[ext_resource type="PackedScene" uid="uid://dfn3krjokafc0" path="res://Art/Merchandise/Apple.fbx" id="2_phgvv"]
+[ext_resource type="PackedScene" uid="uid://bbbeto6mvhhx" path="res://Scenes/Button.tscn" id="3_cam67"]
+[ext_resource type="PackedScene" uid="uid://egattn0x1cpl" path="res://Art/Merchandise/Banana.fbx" id="3_h5lr6"]
+[ext_resource type="PackedScene" uid="uid://bgovkjkfacog5" path="res://Art/Merchandise/Bread.fbx" id="5_nlnrq"]
+[ext_resource type="PackedScene" uid="uid://dc8v3glcim8la" path="res://Art/Merchandise/Eggplant.fbx" id="6_kbj4l"]
+[ext_resource type="PackedScene" uid="uid://dmy5uvckvxx3h" path="res://Art/Merchandise/Sauce.fbx" id="7_s4x0h"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_phgvv"]
 albedo_color = Color(0, 0, 0, 1)
@@ -9,10 +15,18 @@ albedo_color = Color(0, 0, 0, 1)
 [sub_resource type="BoxMesh" id="BoxMesh_h5lr6"]
 material = SubResource("StandardMaterial3D_phgvv")
 
-[node name="Keypad" type="Node3D" node_paths=PackedStringArray("buttons", "display_label")]
+[node name="Keypad" type="Node3D" node_paths=PackedStringArray("buttons", "display_label", "display")]
 script = ExtResource("1_ohrw4")
-buttons = [NodePath("Buttons/One"), NodePath("Buttons/Two"), NodePath("Buttons/Three"), NodePath("Buttons/Four"), NodePath("Buttons/Five"), NodePath("Buttons/Six"), NodePath("Buttons/Seven"), NodePath("Buttons/Eight"), NodePath("Buttons/Nine"), NodePath("Buttons/Zero"), NodePath("Buttons/Clear"), NodePath("Buttons/Backspace")]
+buttons = [NodePath("Buttons/One"), NodePath("Buttons/Two"), NodePath("Buttons/Three"), NodePath("Buttons/Four"), NodePath("Buttons/Five"), NodePath("Buttons/Six"), NodePath("Buttons/Seven"), NodePath("Buttons/Eight"), NodePath("Buttons/Nine"), NodePath("Buttons/Zero"), NodePath("Buttons/Clear"), NodePath("Buttons/Backspace"), NodePath("Buttons/Enter")]
 display_label = NodePath("Display/Label3D")
+display = NodePath("Display")
+codes_and_items = Dictionary[String, PackedScene]({
+"07590": ExtResource("5_nlnrq"),
+"63389": ExtResource("7_s4x0h"),
+"69128": ExtResource("3_h5lr6"),
+"71411": ExtResource("6_kbj4l"),
+"84460": ExtResource("2_phgvv")
+})
 
 [node name="Device" type="CSGBox3D" parent="."]
 transform = Transform3D(0.99999994, 0, 0, 0, 1, 0, 0, 0, 0.99999994, 0, -0.075, 0)
@@ -93,3 +107,8 @@ transform = Transform3D(0.99999976, 0, 0, 0, 1, 0, 0, 0, 0.99999976, -0.06, -0.2
 text = "<-"
 functionality = 1
 color = Color(1, 0, 0, 1)
+
+[node name="Enter" parent="Buttons" instance=ExtResource("3_cam67")]
+transform = Transform3D(0.99999976, 0, 0, 0, 1, 0, 0, 0, 4.439999, -0.06, -0.3, 0)
+functionality = 3
+color = Color(0.9019608, 0, 0.84313726, 1)
