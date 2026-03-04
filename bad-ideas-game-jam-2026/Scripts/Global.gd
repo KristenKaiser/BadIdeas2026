@@ -2,6 +2,7 @@ extends Node
 
 @export var conveyer_speed: float =.5
 var box_drop_speed: float =.8
+var grid_size : float  = 1.0/6.0
 
 
 

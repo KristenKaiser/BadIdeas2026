@@ -17,5 +17,4 @@ collision_shape = NodePath("Area3D/CollisionShape3D")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.9604645e-08, 0, -5.9604645e-08)
 shape = SubResource("BoxShape3D_x5p7y")
 
-[connection signal="area_entered" from="Area3D" to="." method="_on_area_3d_area_entered"]
-[connection signal="area_exited" from="Area3D" to="." method="_on_area_3d_area_exited"]
+[connection signal="area_entered" from="Area3D" to="." method="entered_conveyer"]
