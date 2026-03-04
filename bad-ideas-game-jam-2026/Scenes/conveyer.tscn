@@ -5,10 +5,11 @@
 [sub_resource type="BoxShape3D" id="BoxShape3D_x5p7y"]
 size = Vector3(4.4, 1, 1.4)
 
-[node name="Conveyer" type="CSGBox3D"]
+[node name="Conveyer" type="CSGBox3D" node_paths=PackedStringArray("collision_shape")]
 use_collision = true
 size = Vector3(4.4, 1, 1.4)
 script = ExtResource("1_doyy2")
+collision_shape = NodePath("Area3D/CollisionShape3D")
 
 [node name="Area3D" type="Area3D" parent="."]
 
