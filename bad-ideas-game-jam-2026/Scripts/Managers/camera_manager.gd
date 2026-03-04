@@ -5,6 +5,7 @@ var cameras : Array[Camera3D]
 var current : Camera3D
 var prev_cameras : Array[Camera3D]
 var is_zoomed_in : bool = false
+var is_screen_locked :bool = false
 
 func _ready() -> void:
 	current = get_viewport().get_camera_3d()
@@ -45,6 +46,7 @@ func hold_item(item : Node3D, mesh_instance : MeshInstance3D):
 	current.cull_mask = 0xFFFFFFFF
 	
 func follow_mouse(camera : Camera3D, base_rotaton : Vector3, x_max_change : float, y_max_change : float, delta: float, speed : float):
+	if is_screen_locked: return
 	##TODO make max chage greater towards center so drift area is round not square
 	var change : float = 1 ##TODO replace this with speed
 	var mouse_pos = get_viewport().get_mouse_position()
@@ -79,3 +81,7 @@ func _unhandled_input(event: InputEvent) -> void:
 				print("zoom out")
 				is_zoomed_in = false
 				get_viewport().set_input_as_handled()
+	if event is InputEventKey:
+		if OS.get_keycode_string(event.keycode) == "L" and event.pressed:
+			is_screen_locked = !is_screen_locked
+			
