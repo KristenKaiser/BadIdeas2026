@@ -5,9 +5,10 @@
 [sub_resource type="BoxShape3D" id="BoxShape3D_42nxc"]
 size = Vector3(0.3, 0.3, 0.3)
 
-[node name="CSGBox3D" type="CSGBox3D"]
+[node name="CSGBox3D" type="CSGBox3D" node_paths=PackedStringArray("camera")]
 size = Vector3(0.3, 0.3, 0.3)
 script = ExtResource("1_8s0t8")
+camera = NodePath("Camera3D")
 
 [node name="CSGBox3D2" type="CSGBox3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.015000001, 0)
@@ -18,5 +19,8 @@ size = Vector3(0.27, 0.3, 0.27)
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
 shape = SubResource("BoxShape3D_42nxc")
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 0.4, 0)
 
 [connection signal="input_event" from="Area3D" to="." method="_on_area_3d_input_event"]

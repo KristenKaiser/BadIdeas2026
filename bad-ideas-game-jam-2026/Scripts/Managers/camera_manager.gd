@@ -4,6 +4,7 @@ class_name CameraManager
 var cameras : Array[Camera3D]
 var current : Camera3D
 var prev_cameras : Array[Camera3D]
+var is_zoomed_in : bool = false
 
 func _ready() -> void:
 	current = get_viewport().get_camera_3d()
@@ -11,9 +12,11 @@ func _ready() -> void:
 func add_camera(camera: Camera3D):
 	cameras.append(camera)
 
-func change_camera(new_camera : Camera3D): 
+func change_camera(new_camera : Camera3D, is_zoom : bool = false): 
 	prev_cameras.append(current)
 	current = new_camera
+	if is_zoom == true: 
+		is_zoomed_in = true
 	
 	if new_camera.current == true:
 		return
@@ -66,3 +69,13 @@ func follow_mouse(camera : Camera3D, base_rotaton : Vector3, x_max_change : floa
 	
 	camera.rotation_degrees += Vector3(x_change, y_change , 0) * delta * speed
 	
+	
+func _unhandled_input(event: InputEvent) -> void:
+	if event is InputEventMouseButton:
+		if event.button_index == MOUSE_BUTTON_RIGHT and event.pressed:
+			if is_zoomed_in:
+				change_camera_to_prev()
+				#prev_camera.current = true
+				print("zoom out")
+				is_zoomed_in = false
+				get_viewport().set_input_as_handled()
