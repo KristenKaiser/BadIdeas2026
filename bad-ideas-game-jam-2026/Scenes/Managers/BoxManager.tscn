@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://bo1cyd553pjcu"]
+
+[ext_resource type="Script" uid="uid://b2vh432yu5wnw" path="res://Scripts/Managers/box_manager.gd" id="1_ffvkd"]
+
+[node name="BoxManager" type="Node"]
+script = ExtResource("1_ffvkd")
