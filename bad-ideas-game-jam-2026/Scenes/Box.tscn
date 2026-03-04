@@ -3,12 +3,20 @@
 [ext_resource type="Script" uid="uid://cdi0harqoraet" path="res://Scripts/box.gd" id="1_8s0t8"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_42nxc"]
+resource_local_to_scene = true
 size = Vector3(0.3, 0.3, 0.3)
 
-[node name="CSGBox3D" type="CSGBox3D" node_paths=PackedStringArray("camera")]
+[node name="CSGBox3D" type="CSGBox3D" node_paths=PackedStringArray("camera", "box_interior", "collision_shape")]
 size = Vector3(0.3, 0.3, 0.3)
 script = ExtResource("1_8s0t8")
 camera = NodePath("Camera3D")
+sizes = Dictionary[String, Vector3i]({
+"Large": Vector3i(4, 1, 5),
+"Medium": Vector3i(3, 1, 3),
+"Small": Vector3i(2, 1, 3)
+})
+box_interior = NodePath("CSGBox3D2")
+collision_shape = NodePath("Area3D/CollisionShape3D")
 
 [node name="CSGBox3D2" type="CSGBox3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.015000001, 0)
