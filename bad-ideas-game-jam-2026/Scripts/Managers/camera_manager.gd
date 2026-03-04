@@ -41,3 +41,28 @@ func hold_item(item : Node3D, mesh_instance : MeshInstance3D):
 	mesh_instance.layers = 2
 	current.cull_mask = 0xFFFFFFFF
 	
+func follow_mouse(camera : Camera3D, base_rotaton : Vector3, x_max_change : float, y_max_change : float, delta: float, speed : float):
+	##TODO make max chage greater towards center so drift area is round not square
+	var change : float = 1 ##TODO replace this with speed
+	var mouse_pos = get_viewport().get_mouse_position()
+	var screen_center = get_viewport().get_visible_rect().size/2
+	var x_change : float = 0
+	var y_change : float = 0
+	var y_dist_to_center : float = abs(mouse_pos.x - screen_center.x)/screen_center.x
+	var x_dist_to_center : float = abs(mouse_pos.y - screen_center.y)/screen_center.y
+	if mouse_pos.y > screen_center.y:
+		if camera.rotation_degrees.x - change > base_rotaton.x - x_max_change:
+			x_change = -smoothstep(0.0, 1.0, x_dist_to_center) 
+	elif mouse_pos.y < screen_center.y:
+		if camera.rotation_degrees.x + change < base_rotaton.x + x_max_change:
+			x_change = smoothstep(0.0, 1.0, x_dist_to_center) 
+		
+	if mouse_pos.x > screen_center.x:
+		if camera.rotation_degrees.y - change > base_rotaton.y - y_max_change:
+			y_change = -smoothstep(0.0, 1.0, y_dist_to_center) 
+	elif mouse_pos.x < screen_center.x:
+		if camera.rotation_degrees.y + change < base_rotaton.y + y_max_change:
+			y_change = smoothstep(0.0, 1.0, y_dist_to_center) 
+	
+	camera.rotation_degrees += Vector3(x_change, y_change , 0) * delta * speed
+	

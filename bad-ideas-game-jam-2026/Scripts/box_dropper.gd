@@ -6,6 +6,7 @@ func _ready() -> void:
 	Global.box_manager.box_dropper = self
 
 func drop_box():
+	print("drop box")
 	var new_box : Box = BOX.instantiate()
 	
 	Global.box_manager.add_box(new_box)
@@ -16,5 +17,5 @@ func drop_box():
 func _unhandled_input(event: InputEvent) -> void:
 	if event is InputEventKey:
 		if event is InputEventKey and event.pressed and event.keycode == 66:
-			print("drop box")
+			
 			drop_box()

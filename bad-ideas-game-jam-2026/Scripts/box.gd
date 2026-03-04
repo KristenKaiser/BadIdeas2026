@@ -4,8 +4,6 @@ class_name Box
 enum State {ENTERING, CONVEYING, EXITING}
 var current_state : State
 
-
-
 	
 func _process(delta: float) -> void:
 	match current_state:
@@ -27,5 +25,10 @@ func exiting(delta: float):
 
 func ship():
 	Global.box_manager.box_dropper.drop_box()
+	await get_tree().create_timer(1).timeout
 	self.queue_free()
-	
+
+func _on_area_3d_input_event(_camera: Node, event: InputEvent, _event_position: Vector3, _normal: Vector3, _shape_idx: int) -> void:
+	if event is InputEventMouseButton:
+			if event.button_index == MOUSE_BUTTON_LEFT and event.pressed:
+				Global.merch_manager.place_held_merch(self, Vector3.ZERO)

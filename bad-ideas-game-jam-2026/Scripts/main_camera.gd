@@ -4,7 +4,7 @@ enum Direction {LEFT, CENTER, RIGHT}
 var current_direction : Direction 
 
 var x_max_rotation_change : float = 35
-var y_max_rotation_change : float = 35
+var y_max_rotation_change : float = 40
 
 var left_position = Vector3(-.885, 1.75, -1.5)
 var left_rotation = Vector3(-15, 101.5, 0)
@@ -20,7 +20,7 @@ func _ready() -> void:
 
 func _process(delta: float) -> void:
 	if current_direction == Direction.CENTER:
-		follow_mouse()
+		Global.camera_manager.follow_mouse(self, center_rotation, x_max_rotation_change, y_max_rotation_change, delta, 30)
 
 func _unhandled_input(event: InputEvent):
 	if event.is_action_pressed("ui_right"):
@@ -47,31 +47,3 @@ func move_camera(direction : Direction):
 			position = left_position
 			rotation_degrees = left_rotation
 		
-	
-func follow_mouse():
-	var change : float = 1
-
-	var mouse_pos = get_viewport().get_mouse_position()
-	var screen_center = get_viewport().get_visible_rect().size/2
-	var x_change : float = 0
-	var y_change : float = 0
-	var y_dist_to_center : float = abs(mouse_pos.x - screen_center.x)/screen_center.x
-	var x_dist_to_center : float = abs(mouse_pos.y - screen_center.y)/screen_center.y
-	if mouse_pos.y > screen_center.y:
-		if rotation_degrees.x - change > center_rotation.x - x_max_rotation_change:
-			x_change = -smoothstep(0.0, 1.0, x_dist_to_center) 
-	elif mouse_pos.y < screen_center.y:
-		if rotation_degrees.x + change < center_rotation.x + x_max_rotation_change:
-			x_change = smoothstep(0.0, 1.0, x_dist_to_center) 
-		
-	if mouse_pos.x > screen_center.x:
-		if rotation_degrees.y - change > center_rotation.y - y_max_rotation_change:
-			y_change = -smoothstep(0.0, 1.0, y_dist_to_center) 
-	elif mouse_pos.x < screen_center.x:
-		if rotation_degrees.y + change < center_rotation.y + y_max_rotation_change:
-			y_change = smoothstep(0.0, 1.0, y_dist_to_center) 
-	#
-	rotation_degrees += Vector3(x_change, y_change , 0)
-	
-	
-	

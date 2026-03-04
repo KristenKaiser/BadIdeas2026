@@ -34,3 +34,4 @@ func select_object():
 	else:
 		is_held = true
 		Global.camera_manager.hold_item(self, object_mesh)
+		Global.merch_manager.hold_merch(self)
