@@ -6,6 +6,7 @@ var current : Camera3D
 var prev_cameras : Array[Camera3D]
 var is_zoomed_in : bool = false
 var is_screen_locked :bool = false
+signal camera_changed
 
 func _ready() -> void:
 	current = get_viewport().get_camera_3d()
@@ -30,6 +31,7 @@ func change_camera(new_camera : Camera3D, is_zoom : bool = false):
 			else: 
 				printerr("%s is in group pickuppable but does not have method get_mesh" % child)
 		child.reparent(new_camera)
+	camera_changed.emit()
 
 func add_child_to_active(child : Node3D):
 	child.reparent(get_viewport().get_camera_3d())

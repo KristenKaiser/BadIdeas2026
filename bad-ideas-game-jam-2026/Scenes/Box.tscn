@@ -1,12 +1,16 @@
-[gd_scene load_steps=3 format=3 uid="uid://hg2wuymgg6bs"]
+[gd_scene load_steps=4 format=3 uid="uid://hg2wuymgg6bs"]
 
 [ext_resource type="Script" uid="uid://cdi0harqoraet" path="res://Scripts/box.gd" id="1_8s0t8"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_8s0t8"]
+resource_local_to_scene = true
+size = Vector3(0.26644897, 0.052085876, 0.2673645)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_42nxc"]
 resource_local_to_scene = true
 size = Vector3(0.3, 0.3, 0.3)
 
-[node name="CSGBox3D" type="CSGBox3D" node_paths=PackedStringArray("camera", "box_interior", "collision_shape")]
+[node name="CSGBox3D" type="CSGBox3D" node_paths=PackedStringArray("camera", "box_interior", "box_collision_shape", "bottom_box_collision_shape")]
 size = Vector3(0.3, 0.3, 0.3)
 script = ExtResource("1_8s0t8")
 camera = NodePath("Camera3D")
@@ -16,19 +20,29 @@ sizes = Dictionary[String, Vector3i]({
 "Small": Vector3i(2, 1, 3)
 })
 box_interior = NodePath("CSGBox3D2")
-collision_shape = NodePath("Area3D/CollisionShape3D")
+box_collision_shape = NodePath("Area3D/BoxCollisionShape")
+bottom_box_collision_shape = NodePath("CSGBox3D2/Area3D/BottomCollisionShape")
 
 [node name="CSGBox3D2" type="CSGBox3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.015000001, 0)
 operation = 2
 size = Vector3(0.27, 0.3, 0.27)
 
+[node name="Area3D" type="Area3D" parent="CSGBox3D2"]
+
+[node name="BottomCollisionShape" type="CollisionShape3D" parent="CSGBox3D2/Area3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0001373291, -0.1369362, 7.6293945e-05)
+shape = SubResource("BoxShape3D_8s0t8")
+debug_color = Color(0.9647059, 0, 0.5058824, 0.60784316)
+
 [node name="Area3D" type="Area3D" parent="."]
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
+[node name="BoxCollisionShape" type="CollisionShape3D" parent="Area3D"]
 shape = SubResource("BoxShape3D_42nxc")
 
 [node name="Camera3D" type="Camera3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 0.4, 0)
 
+[connection signal="input_event" from="CSGBox3D2/Area3D" to="." method="_box_bottom_on_area_3d_input_event"]
 [connection signal="input_event" from="Area3D" to="." method="_on_area_3d_input_event"]
+[connection signal="visibility_changed" from="Camera3D" to="." method="_on_camera_3d_visibility_changed"]

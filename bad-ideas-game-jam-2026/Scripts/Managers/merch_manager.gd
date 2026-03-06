@@ -21,8 +21,14 @@ func drop_merch(merch : Merchandise):
 func pop_last_held_merch()-> Merchandise:
 	return held_merch.pop_back()
 
-func place_held_merch(new_parent : Node3D, offset : Vector3):
+func get_last_held_merch()-> Merchandise:
+	return held_merch.back()
+
+func place_held_merch(new_parent : Node3D, offset : Vector3, is_box : bool = false):
 	var merch =  pop_last_held_merch()
 	merch.scale = Vector3.ONE
 	merch.reparent(new_parent)
-	merch.global_position = new_parent.global_position + offset
+	if is_box: 
+		merch.global_position = offset
+	else: 
+		merch.global_position = new_parent.global_position + offset

@@ -1,4 +1,4 @@
-class_name MerchData
+
 extends Resource
 
 @export var number: String

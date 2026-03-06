@@ -6,7 +6,6 @@ func _ready() -> void:
 	Global.box_manager.box_dropper = self
 
 func drop_box():
-	print("drop box")
 	var new_box : Box = BOX.instantiate()
 	new_box.set_box_size("Medium")
 	
