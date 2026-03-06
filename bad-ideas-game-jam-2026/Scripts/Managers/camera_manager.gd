@@ -25,12 +25,19 @@ func change_camera(new_camera : Camera3D, is_zoom : bool = false):
 	var children : Array[Node] = get_viewport().get_camera_3d().get_children()
 	new_camera.current = true
 	for child in children:
-		if child.is_in_group("pickupable"):
-			if child.has_method("get_mesh"):
-				hold_item(child, child.get_mesh())
-			else: 
-				printerr("%s is in group pickuppable but does not have method get_mesh" % child)
+		var child_position : Vector3 = child.position
+		var child_rotation : Vector3 = child.rotation
 		child.reparent(new_camera)
+		child.position = child_position
+		child.rotation = child_rotation
+		#if child.is_in_group("pickupable"):
+			#if child.has_method("get_mesh"):
+				#hold_item(child, child.get_mesh())
+			#else: 
+				#printerr("%s is in group pickuppable but does not have method get_mesh" % child)
+		
+		
+		
 	camera_changed.emit()
 
 func add_child_to_active(child : Node3D):
@@ -40,10 +47,11 @@ func change_camera_to_prev():
 	change_camera(prev_cameras.pop_back())
 
 func hold_item(item : Node3D, mesh_instance : MeshInstance3D):
+	var item_rotation : Vector3 = item.rotation
 	item.reparent(current)
 	item.scale = Vector3(.1,.1,.1)
 	item.position = Vector3(.08, -.045, -.07)
-	item.global_rotation = current.global_rotation
+	item.rotation = item_rotation
 	mesh_instance.layers = 2
 	current.cull_mask = 0xFFFFFFFF
 	

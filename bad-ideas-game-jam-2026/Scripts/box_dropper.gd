@@ -4,6 +4,7 @@ const BOX = preload("uid://hg2wuymgg6bs")
 
 func _ready() -> void:
 	Global.box_manager.box_dropper = self
+	drop_box()
 
 func drop_box():
 	var new_box : Box = BOX.instantiate()

@@ -46,6 +46,8 @@ func create_from_code(code : String) -> Merchandise:
 	if item_Data == null : return null
 	var new_item : Node3D = item_Data.item.instantiate()
 	new_item.set_script(MerchandiseScript)
+	new_item.rotation_degrees = item_Data.item_rotation 
+	new_item.get_child(0).rotation_degrees = Vector3.ZERO
 	return new_item 
 	
 	

@@ -13,10 +13,6 @@ var ghost: MeshInstance3D = null
 var ghost_timer : Timer
 var is_zoomed_in : bool = false
 
-
-
-
-
 func _ready() -> void:
 	Global.camera_manager.camera_changed.connect(camera_changed)
 	set_box_size("Small")
@@ -72,7 +68,6 @@ func set_box_size(box_size : String):
 	box_interior.size = size_vector
 	box_collision_shape.shape.size *= change_vector
 
-
 func create_grid_mesh(grid_size: Vector2i, cell_size: float) -> MeshInstance3D:
 	var mesh_instance = MeshInstance3D.new()
 	var immediate_mesh = ImmediateMesh.new()
@@ -110,11 +105,9 @@ func snap_to_grid(world_pos: Vector3) -> Vector3:
 		snap_position.x +=  Global.grid_size/2
 	if sizes[current_size].z % 2 == 0: 
 		snap_position.z +=  Global.grid_size/2
-	
 	return snap_position
 
 func _box_bottom_on_area_3d_input_event(_camera: Node, event: InputEvent, event_position: Vector3, _normal: Vector3, _shape_idx: int) -> void:
-	
 	if event is InputEventMouseButton:
 		if Global.merch_manager.held_merch.is_empty() == false:
 			if event.pressed:
@@ -124,22 +117,19 @@ func _box_bottom_on_area_3d_input_event(_camera: Node, event: InputEvent, event_
 	if event is InputEventMouseMotion:
 		if Global.merch_manager.held_merch.is_empty() == false:
 			move_ghost(snap_to_grid(to_local(event_position)))
-	
 
 func move_ghost(ghost_position : Vector3):
-
 	if ghost == null: 
 		ghost = Global.merch_manager.get_last_held_merch().object_mesh.duplicate()
-		box_interior.add_child(ghost)
-		ghost.global_rotation =  Global.merch_manager.get_last_held_merch().global_rotation
+		ghost.name = ghost.name +"_ghost"
+		self.add_child(ghost)
+		ghost.rotation = Global.merch_manager.get_last_held_merch().rotation
+		ghost.rotation.x = 90
 		ghost.get_child(0).get_child(0).disabled = true
 		ghost.transparency =.5
 	ghost.position = ghost_position
-	
-
 
 func camera_changed() -> void:
-	print("camera changed")
 	if camera == Global.camera_manager.current:
 		is_zoomed_in = true
 		box_collision_shape.shape.size.y = .01
@@ -149,14 +139,10 @@ func camera_changed() -> void:
 		box_collision_shape.shape.size = size
 		box_collision_shape.global_position = global_position
 
-
 func _on_box_bottom_3d_mouse_entered() -> void:
-	print("area entered")
 	if ghost != null:
 		ghost.show()
 
-
 func _on_box_bottom_3d_mouse_exited() -> void:
-	print("area exited")
 	if ghost != null:
 		ghost.hide()
