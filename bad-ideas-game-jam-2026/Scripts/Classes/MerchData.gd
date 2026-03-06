@@ -1,6 +1,8 @@
 extends Resource
 class_name MerchData
 
-@export var Code : String
+@export var code : String
+@export var item_name : String
 @export var item: PackedScene
-@export var shape : String
+@export_multiline var shape : String
+@export var item_rotation : Vector3

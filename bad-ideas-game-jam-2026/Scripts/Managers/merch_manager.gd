@@ -1,8 +1,10 @@
 extends Node
 class_name MerchManager
-
+@export var prototypes : Array[MerchData]
 var all_merch : Array[Merchandise]
 var held_merch : Array[Merchandise]
+const MerchandiseScript = preload("uid://8d86k6wj4m5x")
+
 
 func add_merch(merch : Merchandise):
 	all_merch.append(merch)
@@ -32,3 +34,21 @@ func place_held_merch(new_parent : Node3D, offset : Vector3, is_box : bool = fal
 		merch.global_position = offset
 	else: 
 		merch.global_position = new_parent.global_position + offset
+
+func get_object_by_code(code: String) -> MerchData:
+	for prototype in prototypes:
+		if prototype.code == code: 
+			return prototype
+	return null
+
+func create_from_code(code : String) -> Merchandise:
+	var item_Data : MerchData = get_object_by_code(code)
+	if item_Data == null : return null
+	var new_item : Node3D = item_Data.item.instantiate()
+	new_item.set_script(MerchandiseScript)
+	return new_item 
+	
+	
+	#var new_item : Node3D = item.instantiate()
+	#new_item.set_script(Merchandise_script)
+	

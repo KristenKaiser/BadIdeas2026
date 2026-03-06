@@ -10,6 +10,7 @@ var current_size: String
 @export var box_collision_shape : CollisionShape3D
 @export var bottom_box_collision_shape : CollisionShape3D
 var ghost: MeshInstance3D = null
+var ghost_timer : Timer
 var is_zoomed_in : bool = false
 
 
@@ -26,6 +27,7 @@ func _ready() -> void:
 	bottom_box_collision_shape.shape.size = Vector3(box_interior.size.x, .01, box_interior.size.z)
 	bottom_box_collision_shape.position.y = box_interior.position.y - box_interior.size.y/2 + .01
 	box_collision_shape.shape.size = size
+	#ghost_timer.timeout.connect(hide_ghost)
 	
 	
 func _process(delta: float) -> void:
@@ -93,15 +95,21 @@ func create_grid_mesh(grid_size: Vector2i, cell_size: float) -> MeshInstance3D:
 	return mesh_instance
 
 func snap_to_grid(world_pos: Vector3) -> Vector3:
+	#offset orgin point for odd number row/columns
+	if sizes[current_size].x % 2 != 0: 
+		world_pos.x += Global.grid_size/2
+	if sizes[current_size].z % 2 != 0: 
+		world_pos.z += Global.grid_size/2
+	
 	var snap_position :  Vector3 = Vector3 ((floor(world_pos.x / Global.grid_size) * Global.grid_size) ,
 		world_pos.y, # keep Y as-is, or snap it too if needed
 		(floor(world_pos.z / Global.grid_size) * Global.grid_size) 
 	)
+	# offset center of snap for even rows.colums
 	if sizes[current_size].x % 2 == 0: 
-		snap_position.x += + Global.grid_size/2
-	#snap_position.y = 0
+		snap_position.x +=  Global.grid_size/2
 	if sizes[current_size].z % 2 == 0: 
-		snap_position.z += + Global.grid_size/2
+		snap_position.z +=  Global.grid_size/2
 	
 	return snap_position
 
@@ -119,7 +127,7 @@ func _box_bottom_on_area_3d_input_event(_camera: Node, event: InputEvent, event_
 	
 
 func move_ghost(ghost_position : Vector3):
-	
+
 	if ghost == null: 
 		ghost = Global.merch_manager.get_last_held_merch().object_mesh.duplicate()
 		box_interior.add_child(ghost)
@@ -127,6 +135,7 @@ func move_ghost(ghost_position : Vector3):
 		ghost.get_child(0).get_child(0).disabled = true
 		ghost.transparency =.5
 	ghost.position = ghost_position
+	
 
 
 func camera_changed() -> void:
@@ -138,4 +147,16 @@ func camera_changed() -> void:
 	elif is_zoomed_in == true: 
 		is_zoomed_in = false
 		box_collision_shape.shape.size = size
-		box_collision_shape.position = position
+		box_collision_shape.global_position = global_position
+
+
+func _on_box_bottom_3d_mouse_entered() -> void:
+	print("area entered")
+	if ghost != null:
+		ghost.show()
+
+
+func _on_box_bottom_3d_mouse_exited() -> void:
+	print("area exited")
+	if ghost != null:
+		ghost.hide()

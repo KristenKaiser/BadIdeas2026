@@ -6,7 +6,7 @@ class_name KeyPad
 @export var display_label : Label3D
 @export var display : MeshInstance3D
 var keypad_input : String = ""
-@export var codes_and_items : Dictionary[String, PackedScene]
+#@export var codes_and_items : Dictionary[String, PackedScene]
 signal order_item(PackedScene)
 
 
@@ -33,9 +33,9 @@ func append_num(value : String):
 	display_label.text = keypad_input
 
 func call_item():
-	if codes_and_items.has(keypad_input):
+	if  Global.merch_manager.get_object_by_code(keypad_input) != null:
 		print("call item %s" % keypad_input)
-		order_item.emit(codes_and_items[keypad_input])
+		order_item.emit(keypad_input)
 		await display_flash_color(Color.GREEN)
 	else:
 		await display_flash_color(Color.RED)

@@ -1,6 +1,64 @@
-[gd_scene load_steps=2 format=3 uid="uid://cpxhjnah05wv6"]
+[gd_scene load_steps=14 format=3 uid="uid://cpxhjnah05wv6"]
 
 [ext_resource type="Script" uid="uid://ddgtuurbafg7k" path="res://Scripts/Managers/merch_manager.gd" id="1_qb7xf"]
+[ext_resource type="Script" uid="uid://d06to0talnada" path="res://Scripts/Classes/MerchData.gd" id="2_y8k13"]
+[ext_resource type="PackedScene" uid="uid://dfn3krjokafc0" path="res://Art/Merchandise/Apple.fbx" id="3_ossd1"]
+[ext_resource type="PackedScene" uid="uid://egattn0x1cpl" path="res://Art/Merchandise/Banana.fbx" id="4_ayf3q"]
+[ext_resource type="PackedScene" uid="uid://bgovkjkfacog5" path="res://Art/Merchandise/Bread.fbx" id="5_wrjup"]
+[ext_resource type="PackedScene" uid="uid://dc8v3glcim8la" path="res://Art/Merchandise/Eggplant.fbx" id="6_merxk"]
+[ext_resource type="PackedScene" uid="uid://dmy5uvckvxx3h" path="res://Art/Merchandise/Sauce.fbx" id="7_wysys"]
+
+[sub_resource type="Resource" id="Resource_sgreg"]
+script = ExtResource("2_y8k13")
+code = "84460"
+item_name = "Apple"
+item = ExtResource("3_ossd1")
+shape = "x"
+metadata/_custom_type_script = "uid://d06to0talnada"
+
+[sub_resource type="Resource" id="Resource_kkwcq"]
+script = ExtResource("2_y8k13")
+code = "69128"
+item_name = "Banana"
+item = ExtResource("4_ayf3q")
+shape = "xx
+x_"
+metadata/_custom_type_script = "uid://d06to0talnada"
+
+[sub_resource type="Resource" id="Resource_0vlwy"]
+script = ExtResource("2_y8k13")
+code = "07590"
+item_name = "Bread"
+item = ExtResource("5_wrjup")
+shape = "xxx
+xxx"
+metadata/_custom_type_script = "uid://d06to0talnada"
+
+[sub_resource type="Resource" id="Resource_sspri"]
+script = ExtResource("2_y8k13")
+code = "71411"
+item_name = "Eggplant"
+item = ExtResource("6_merxk")
+shape = "xx"
+metadata/_custom_type_script = "uid://d06to0talnada"
+
+[sub_resource type="Resource" id="Resource_j6e08"]
+script = ExtResource("2_y8k13")
+code = "63389"
+item_name = "Sauce"
+item = ExtResource("7_wysys")
+shape = "xxx"
+metadata/_custom_type_script = "uid://d06to0talnada"
+
+[sub_resource type="Resource" id="Resource_ossd1"]
+script = ExtResource("2_y8k13")
+code = "0"
+item_name = "Apple-Cheat"
+item = ExtResource("3_ossd1")
+shape = "xx
+xx"
+metadata/_custom_type_script = "uid://d06to0talnada"
 
 [node name="MerchManager" type="Node"]
 script = ExtResource("1_qb7xf")
+prototypes = Array[ExtResource("2_y8k13")]([SubResource("Resource_sgreg"), SubResource("Resource_kkwcq"), SubResource("Resource_0vlwy"), SubResource("Resource_sspri"), SubResource("Resource_j6e08"), SubResource("Resource_ossd1")])
