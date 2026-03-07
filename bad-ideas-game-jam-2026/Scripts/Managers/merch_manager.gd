@@ -30,6 +30,8 @@ func place_held_merch(new_parent : Node3D, offset : Vector3, is_box : bool = fal
 	var merch =  pop_last_held_merch()
 	merch.scale = Vector3.ONE
 	merch.reparent(new_parent)
+	offset -= merch.center_offset * Global.grid_size
+
 	if is_box: 
 		merch.global_position = offset
 	else: 
@@ -49,9 +51,5 @@ func create_from_code(code : String) -> Merchandise:
 	new_item.rotation_degrees = item_Data.item_rotation 
 	new_item.get_child(0).rotation_degrees = Vector3.ZERO
 	new_item.grid_shape = item_Data.grid_shape
+	new_item.center_offset = item_Data.center_offset
 	return new_item 
-	
-	
-	#var new_item : Node3D = item.instantiate()
-	#new_item.set_script(Merchandise_script)
-	

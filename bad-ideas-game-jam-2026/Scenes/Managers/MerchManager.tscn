@@ -24,6 +24,7 @@ item = ExtResource("4_ayf3q")
 grid_shape = "xo
 _x"
 item_rotation = Vector3(0, 180, -135)
+center_offset = Vector3(0.25, 0, -0.25)
 metadata/_custom_type_script = "uid://d06to0talnada"
 
 [sub_resource type="Resource" id="Resource_0vlwy"]
@@ -69,6 +70,7 @@ item = ExtResource("4_ayf3q")
 grid_shape = "xo
 _x"
 item_rotation = Vector3(0, 180, -135)
+center_offset = Vector3(0.25, 0, -0.25)
 metadata/_custom_type_script = "uid://d06to0talnada"
 
 [node name="MerchManager" type="Node"]

@@ -6,6 +6,7 @@ var is_held : bool = false
 var area3d : Area3D
 var collision_shape : CollisionShape3D
 var grid_shape : String
+var center_offset: Vector3
 
 func _ready() -> void:
 	Global.merch_manager.add_merch(self)
@@ -23,7 +24,31 @@ func _ready() -> void:
 	collision_shape.shape.resource_local_to_scene = true
 	area3d.add_child(collision_shape)
 	area3d.input_event.connect(_on_area_3d_input_event)
+	object_mesh.scale = get_size_from_shape()
+
+func get_size_from_shape() -> Vector3:
+	var angle = object_mesh.rotation.z
+	var cos_a = absf(cos(angle))
+	var sin_a = absf(sin(angle))
+	var columns = grid_shape.find("\n")
+	var rows = grid_shape.count("\n") + 1
 	
+	var mesh_w = (columns * Global.grid_size) * cos_a - (rows * Global.grid_size) * sin_a
+	var mesh_h = (rows * Global.grid_size) * cos_a - (columns * Global.grid_size) * sin_a
+	
+	#var transformed_aabb : AABB = object_mesh.get_aabb() * object_mesh.transform
+	var x_scale : float = mesh_w / object_mesh.get_aabb().size.x 
+	var y_scale: float
+	var z_scale : float =  mesh_h / object_mesh.get_aabb().size.z
+	
+	if x_scale < z_scale: 
+		y_scale = x_scale
+	else:
+		y_scale = z_scale
+	
+	return Vector3(x_scale, y_scale, z_scale)
+
+
 func _on_area_3d_input_event(_camera: Node, event: InputEvent, _event_position: Vector3, _normal: Vector3, _shape_idx: int):
 	if event is InputEventMouseButton:
 		if event.button_index == MOUSE_BUTTON_LEFT and event.pressed:

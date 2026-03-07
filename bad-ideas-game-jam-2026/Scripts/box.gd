@@ -25,8 +25,6 @@ func _ready() -> void:
 		temp.fill(false)
 		grid_statuses.append(temp)
 	print_grid(grid_statuses)
-	#grid_statuses.resize(sizes[current_size].x  * sizes[current_size].z )
-	#grid_statuses.fill(false)
 	var grid : MeshInstance3D=  create_grid_mesh(Vector2i(sizes[current_size].x,sizes[current_size].z), Global.grid_size)
 	box_interior.add_child(grid)
 	grid.position = Vector3(-box_interior.size.x/2, -box_interior.size.y/2.9, -box_interior.size.z/2)
@@ -192,7 +190,7 @@ func move_ghost(ghost_position : Vector3):
 		ghost.rotation.x = 90
 		ghost.get_child(0).get_child(0).disabled = true
 		ghost.transparency =.5
-	ghost.position = ghost_position
+	ghost.position = ghost_position - (Global.merch_manager.get_last_held_merch().center_offset * Global.grid_size)
 
 func camera_changed() -> void:
 	if camera == Global.camera_manager.current:
