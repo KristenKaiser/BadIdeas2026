@@ -12,11 +12,21 @@ var current_size: String
 var ghost: MeshInstance3D = null
 var ghost_timer : Timer
 var is_zoomed_in : bool = false
+var grid_statuses : Array[Array]
+	
 
 func _ready() -> void:
 	Global.camera_manager.camera_changed.connect(camera_changed)
 	set_box_size("Small")
 	current_state = State.STILL
+	for z in range(sizes[current_size].z): 
+		var temp : Array[bool]
+		temp.resize(sizes[current_size].x)
+		temp.fill(false)
+		grid_statuses.append(temp)
+	print_grid(grid_statuses)
+	#grid_statuses.resize(sizes[current_size].x  * sizes[current_size].z )
+	#grid_statuses.fill(false)
 	var grid : MeshInstance3D=  create_grid_mesh(Vector2i(sizes[current_size].x,sizes[current_size].z), Global.grid_size)
 	box_interior.add_child(grid)
 	grid.position = Vector3(-box_interior.size.x/2, -box_interior.size.y/2.9, -box_interior.size.z/2)
@@ -92,9 +102,9 @@ func create_grid_mesh(grid_size: Vector2i, cell_size: float) -> MeshInstance3D:
 func snap_to_grid(world_pos: Vector3) -> Vector3:
 	#offset orgin point for odd number row/columns
 	if sizes[current_size].x % 2 != 0: 
-		world_pos.x += Global.grid_size/2
+		world_pos.x += Global.grid_size/2.0
 	if sizes[current_size].z % 2 != 0: 
-		world_pos.z += Global.grid_size/2
+		world_pos.z += Global.grid_size/2.0
 	
 	var snap_position :  Vector3 = Vector3 ((floor(world_pos.x / Global.grid_size) * Global.grid_size) ,
 		world_pos.y, # keep Y as-is, or snap it too if needed
@@ -111,12 +121,67 @@ func _box_bottom_on_area_3d_input_event(_camera: Node, event: InputEvent, event_
 	if event is InputEventMouseButton:
 		if Global.merch_manager.held_merch.is_empty() == false:
 			if event.pressed:
-				Global.merch_manager.place_held_merch(self, snap_to_grid(to_local(event_position)))
+				var new_position : Vector3= snap_to_grid(to_local(event_position))
+				if add_to_grid(Vector2(new_position.x, new_position.z),  Global.merch_manager.get_last_held_merch().grid_shape) == true: 
+				#fill_grid(Vector2(new_position.x, new_position.z),  Global.merch_manager.get_last_held_merch().grid_shape)
+					Global.merch_manager.place_held_merch(self, new_position)
+				
 				if ghost != null: 
 					ghost.queue_free()
 	if event is InputEventMouseMotion:
 		if Global.merch_manager.held_merch.is_empty() == false:
 			move_ghost(snap_to_grid(to_local(event_position)))
+
+func add_to_grid(snap_position: Vector2, shape: String)->bool:
+	var grid_update : Array[Array] = get_grid_placement(snap_position, shape)
+	if grid_update == [[-1]]:
+		print("! out of bounds")
+		return false
+	print_grid(grid_statuses)
+	for row in range(grid_update.size()-1):
+		for column in range(grid_update.size()-1):
+			if grid_statuses[row][column] == true and grid_update[row][column] == true:
+				print("overlap")
+				return false
+	for row in range(grid_update.size()-1):
+		for column in range(grid_update.size()-1):
+			if grid_update[row][column] == true:
+				grid_statuses[row][column] = true
+	print_grid(grid_statuses)
+	return true
+
+
+func get_grid_placement(snap_position: Vector2, shape: String)-> Array[Array]:
+	@warning_ignore("integer_division")
+	var position_int : Vector2i = Vector2i(floori(snapped(snap_position.x/Global.grid_size,.1)) + sizes[current_size].x/2 , \
+	floori(snapped(snap_position.y/Global.grid_size, .1))+ sizes[current_size].z/2)
+	
+	var grid_copy : Array[Array] = grid_statuses.duplicate(true)
+	for row in grid_copy:
+			row.fill(false)
+	var columns : int = shape.find("\n") 
+	var shape_copy : String = shape.remove_chars("\n")
+	@warning_ignore("integer_division")
+	var orgin : Vector2i = Vector2i(shape_copy.find("o")%columns, floor(shape_copy.find("o")/columns))
+	grid_copy[position_int.y][position_int.x] = true
+	var index : int = 0
+	for x in shape_copy.count("x", 0, 0):
+		index = shape_copy.find("x", index)
+		@warning_ignore("integer_division")
+		var index_vector : Vector2i = Vector2(index%columns, floor(index/columns))
+		index_vector = -(orgin - index_vector)
+		index += 1
+		index_vector = position_int + index_vector
+		if index_vector.y >= grid_copy.size() or index_vector.x >= grid_copy[index_vector.y].size():
+			print("out of bounds")
+			return [[-1]]
+		grid_copy[index_vector.y][index_vector.x] = true
+	return grid_copy
+	
+
+func print_grid(grid : Array[Array]):
+	for row in grid: 
+		print(row)
 
 func move_ghost(ghost_position : Vector3):
 	if ghost == null: 

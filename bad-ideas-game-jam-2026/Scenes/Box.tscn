@@ -47,4 +47,3 @@ transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 0
 [connection signal="mouse_entered" from="CSGBox3D2/Area3D" to="." method="_on_box_bottom_3d_mouse_entered"]
 [connection signal="mouse_exited" from="CSGBox3D2/Area3D" to="." method="_on_box_bottom_3d_mouse_exited"]
 [connection signal="input_event" from="Area3D" to="." method="_on_area_3d_input_event"]
-[connection signal="visibility_changed" from="Camera3D" to="." method="_on_camera_3d_visibility_changed"]

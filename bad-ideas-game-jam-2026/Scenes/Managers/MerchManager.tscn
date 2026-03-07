@@ -13,7 +13,7 @@ script = ExtResource("2_y8k13")
 code = "84460"
 item_name = "Apple"
 item = ExtResource("3_ossd1")
-shape = "o"
+grid_shape = "o"
 metadata/_custom_type_script = "uid://d06to0talnada"
 
 [sub_resource type="Resource" id="Resource_kkwcq"]
@@ -21,7 +21,7 @@ script = ExtResource("2_y8k13")
 code = "69128"
 item_name = "Banana"
 item = ExtResource("4_ayf3q")
-shape = "xo
+grid_shape = "xo
 _x"
 item_rotation = Vector3(0, 180, -135)
 metadata/_custom_type_script = "uid://d06to0talnada"
@@ -31,7 +31,7 @@ script = ExtResource("2_y8k13")
 code = "07590"
 item_name = "Bread"
 item = ExtResource("5_wrjup")
-shape = "xox
+grid_shape = "xox
 xxx"
 metadata/_custom_type_script = "uid://d06to0talnada"
 
@@ -40,7 +40,8 @@ script = ExtResource("2_y8k13")
 code = "71411"
 item_name = "Eggplant"
 item = ExtResource("6_merxk")
-shape = "xo"
+grid_shape = "o
+x"
 metadata/_custom_type_script = "uid://d06to0talnada"
 
 [sub_resource type="Resource" id="Resource_j6e08"]
@@ -48,7 +49,9 @@ script = ExtResource("2_y8k13")
 code = "63389"
 item_name = "Sauce"
 item = ExtResource("7_wysys")
-shape = "xox"
+grid_shape = "x
+o
+x"
 metadata/_custom_type_script = "uid://d06to0talnada"
 
 [sub_resource type="Resource" id="Resource_ossd1"]
@@ -56,7 +59,6 @@ script = ExtResource("2_y8k13")
 code = "0"
 item_name = "Apple-Cheat"
 item = ExtResource("3_ossd1")
-shape = "o"
 metadata/_custom_type_script = "uid://d06to0talnada"
 
 [sub_resource type="Resource" id="Resource_ayf3q"]
@@ -64,7 +66,7 @@ script = ExtResource("2_y8k13")
 code = "1"
 item_name = "banana test"
 item = ExtResource("4_ayf3q")
-shape = "xo
+grid_shape = "xo
 _x"
 item_rotation = Vector3(0, 180, -135)
 metadata/_custom_type_script = "uid://d06to0talnada"

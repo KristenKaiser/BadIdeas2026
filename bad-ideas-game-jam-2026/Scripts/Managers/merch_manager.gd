@@ -48,6 +48,7 @@ func create_from_code(code : String) -> Merchandise:
 	new_item.set_script(MerchandiseScript)
 	new_item.rotation_degrees = item_Data.item_rotation 
 	new_item.get_child(0).rotation_degrees = Vector3.ZERO
+	new_item.grid_shape = item_Data.grid_shape
 	return new_item 
 	
 	
