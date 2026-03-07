@@ -5,6 +5,7 @@ var object_mesh : MeshInstance3D
 var is_held : bool = false
 var area3d : Area3D
 var collision_shape : CollisionShape3D
+var grid_shape : String
 
 func _ready() -> void:
 	Global.merch_manager.add_merch(self)
@@ -27,7 +28,18 @@ func _on_area_3d_input_event(_camera: Node, event: InputEvent, _event_position: 
 	if event is InputEventMouseButton:
 		if event.button_index == MOUSE_BUTTON_LEFT and event.pressed:
 			select_object()
+			get_viewport().set_input_as_handled()
 
+func _unhandled_input(event: InputEvent) -> void:
+		if event is InputEventKey:
+			if is_held == true:
+				if OS.get_keycode_string(event.keycode) == "Q" and event.pressed:
+					turn(false)
+					get_viewport().set_input_as_handled()
+				if OS.get_keycode_string(event.keycode) == "E" and event.pressed:
+					turn(true)
+					get_viewport().set_input_as_handled()
+	
 func get_mesh()-> MeshInstance3D:
 	return object_mesh
 
@@ -38,3 +50,10 @@ func select_object():
 		is_held = true
 		Global.camera_manager.hold_item(self, object_mesh)
 		Global.merch_manager.hold_merch(self)
+
+func turn(is_right : bool):
+	print("turn")
+	if is_right: 
+		rotation.z += 90
+	else:
+		rotation.z -= 90
