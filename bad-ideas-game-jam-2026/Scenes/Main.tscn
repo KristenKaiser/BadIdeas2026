@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://d0nk4t02xe8ik"]
+[gd_scene load_steps=15 format=3 uid="uid://d0nk4t02xe8ik"]
 
 [ext_resource type="PackedScene" uid="uid://uvo3k3alfmfd" path="res://Scenes/food_can.tscn" id="1_kln2b"]
 [ext_resource type="PackedScene" uid="uid://ccmmb1u17r8a0" path="res://Scenes/keypad.tscn" id="1_r150o"]
@@ -10,6 +10,7 @@
 [ext_resource type="Script" uid="uid://1jf6gby3db6p" path="res://Scripts/box_dropper.gd" id="5_50glp"]
 [ext_resource type="Script" uid="uid://b238gl40bbarg" path="res://Scripts/trash_can.gd" id="5_bmxlf"]
 [ext_resource type="PackedScene" uid="uid://denvefmpnolys" path="res://Scenes/conveyer.tscn" id="5_vy5pj"]
+[ext_resource type="Script" uid="uid://0i2ldxgwgruq" path="res://Scripts/trash_compactor.gd" id="11_4kpch"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_c1w88"]
 size = Vector3(0.33112794, 0.4994873, 0.5165771)
@@ -244,6 +245,7 @@ size = Vector3(0.5, 0.5, 0.4)
 [node name="TrashCompactor" type="CSGBox3D" parent="Right"]
 transform = Transform3D(0.64278764, 0, 0.7660445, 0, 1, 0, -0.7660445, 0, 0.64278764, 1.7766043, -0.9, 1.2857213)
 size = Vector3(0.8, 1, 0.7)
+script = ExtResource("11_4kpch")
 
 [node name="Area3D" type="Area3D" parent="Right/TrashCompactor"]
 
@@ -262,3 +264,4 @@ transform = Transform3D(0.69453704, 0, -1.7763568e-15, 0, 0.10020816, 0, 0, 0, 0
 
 [connection signal="input_event" from="Left/TrashCan/Area3D" to="Left/TrashCan" method="_on_area_3d_input_event"]
 [connection signal="area_entered" from="Center/Conveyer/CSGBox3D/Area3D" to="Center/Conveyer" method="exited_conveyer"]
+[connection signal="input_event" from="Right/TrashCompactor/Area3D" to="Right/TrashCompactor" method="_on_area_3d_input_event"]
