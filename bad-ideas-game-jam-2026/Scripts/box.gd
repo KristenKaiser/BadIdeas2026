@@ -174,6 +174,7 @@ func get_grid_placement(snap_position: Vector2, shape: String)-> Array[Array]:
 			print("out of bounds")
 			return [[-1]]
 		grid_copy[index_vector.y][index_vector.x] = true
+		print_grid(grid_copy)
 	return grid_copy
 	
 
@@ -187,10 +188,12 @@ func move_ghost(ghost_position : Vector3):
 		ghost.name = ghost.name +"_ghost"
 		self.add_child(ghost)
 		ghost.rotation = Global.merch_manager.get_last_held_merch().rotation
-		ghost.rotation.x = 90
+		ghost.rotation_degrees.x = 90
 		ghost.get_child(0).get_child(0).disabled = true
 		ghost.transparency =.5
 	ghost.position = ghost_position - (Global.merch_manager.get_last_held_merch().center_offset * Global.grid_size)
+	var parent_rotation : Vector3 = Global.merch_manager.get_last_held_merch().rotation
+	ghost.rotation.z = parent_rotation.z
 
 func camera_changed() -> void:
 	if camera == Global.camera_manager.current:

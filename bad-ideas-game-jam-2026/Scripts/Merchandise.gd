@@ -6,7 +6,7 @@ var is_held : bool = false
 var area3d : Area3D
 var collision_shape : CollisionShape3D
 var grid_shape : String
-var center_offset: Vector3
+var center_offset: Vector3 
 
 func _ready() -> void:
 	Global.merch_manager.add_merch(self)
@@ -78,7 +78,104 @@ func select_object():
 
 func turn(is_right : bool):
 	print("turn")
+	rotate_shape()
 	if is_right: 
 		rotation.z += 90
 	else:
 		rotation.z -= 90
+		
+
+func rotate_shape():
+	##TODO move center_offset
+	var rows : int = grid_shape.count("\n") + 1
+	var start_shape : Array[Array]
+	var current_row : Array[String] = []
+	start_shape.append(current_row)
+	for i in range(grid_shape.length()):
+		var character : String = grid_shape[i]
+		if character =="\n":
+			var new_row : Array[String] = []
+			start_shape.append(new_row)
+			current_row = new_row
+		else: 
+			current_row.append(character)
+		
+	var perimeter_rows : Array[Array] = []
+	var perimeter_row : Array[String] = []
+	perimeter_rows.append(perimeter_row)
+	var edge_array : Array[String] = []
+	while start_shape.is_empty() == false:
+		for row in range(start_shape.size()):
+			if row == 0 :
+				perimeter_row.append_array(start_shape[0])
+			elif row == start_shape.size()-1:
+				start_shape[row].reverse()
+				perimeter_row.append_array(start_shape[row])
+			else:
+				perimeter_row.append(start_shape[row][start_shape[row].size() -1])
+				start_shape[row].remove_at(start_shape[row].size() -1)
+				edge_array.append(start_shape[row][0])
+				start_shape[row].remove_at(0)
+		start_shape.remove_at(start_shape.size() -1)
+		if start_shape.is_empty() == false:
+			start_shape.remove_at(0)
+		edge_array.reverse()
+		perimeter_row.append_array(edge_array)
+		edge_array = [] 
+		if start_shape.is_empty() != true:
+			var new_perimeter : Array[String] = []
+			perimeter_rows.append(new_perimeter)
+			perimeter_row = new_perimeter
+	
+	var rows_offset = rows - 1
+	for row in range(perimeter_rows.size()): 
+		var temp_array : Array[String] = []
+		for i in range(rows_offset):
+			temp_array.insert(0, perimeter_rows[row].pop_back())
+		rows_offset -= 2
+		temp_array.append_array(perimeter_rows[row])
+		perimeter_rows[row] = temp_array.duplicate()
+	
+	var end_shape : Array[Array]
+	end_shape.resize(rows)
+	var column_offset = rows
+	var curent_starting_row = 0
+	var current_row_int: int = 0
+	while perimeter_rows.is_empty() == false:
+		var write_index : int = 0
+		if end_shape[current_row_int].has("!"):
+			write_index = end_shape[current_row_int].find("!")
+			end_shape[current_row_int].remove_at(write_index)
+		for i in range(column_offset):
+			end_shape[current_row_int].insert(write_index,  perimeter_rows[0].pop_front())
+			write_index += 1
+		current_row_int += 1
+		while perimeter_rows[0].size() > column_offset:
+			write_index = 0
+			if end_shape[current_row_int].has("!"):
+				write_index = end_shape[current_row_int].find("!")
+				end_shape[current_row_int].remove_at(write_index)
+			end_shape[current_row_int].insert(write_index, perimeter_rows[0].pop_back())
+			end_shape[current_row_int].insert(write_index + 1, "!")
+			end_shape[current_row_int].insert(write_index + 2, perimeter_rows[0].pop_front())
+			current_row_int += 1
+		write_index  = 0
+		if end_shape[current_row_int].has("!"):
+			write_index = end_shape[current_row_int].find("!")
+			end_shape[current_row_int].remove_at(write_index)
+		perimeter_rows[0].reverse()
+		for character in perimeter_rows[0]:
+			end_shape[current_row_int].insert(write_index,  character)
+			write_index += 1
+		perimeter_rows.remove_at(0)
+		column_offset -= 2
+		curent_starting_row += 1
+		current_row_int = curent_starting_row
+	
+	var temp_shape : String = ""
+	for row in end_shape: 
+		for character in row:
+			temp_shape += character
+		if end_shape[end_shape.size()-1] != row:
+			temp_shape += "\n"
+	grid_shape = temp_shape
