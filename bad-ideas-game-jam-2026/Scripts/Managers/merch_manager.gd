@@ -28,6 +28,7 @@ func get_last_held_merch()-> Merchandise:
 
 func place_held_merch(new_parent : Node3D, offset : Vector3, is_box : bool = false):
 	var merch =  pop_last_held_merch()
+	merch.is_held = false
 	merch.scale = Vector3.ONE
 	merch.reparent(new_parent)
 	offset -= merch.center_offset * Global.grid_size

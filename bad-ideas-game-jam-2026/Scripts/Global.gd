@@ -1,6 +1,6 @@
 extends Node
 
-@export var conveyer_speed: float =.05
+@export var conveyer_speed: float =.1
 var box_drop_speed: float =.8
 var grid_size : float  = .1 # 1.0/6.0
 

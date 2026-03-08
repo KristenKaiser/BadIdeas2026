@@ -24,7 +24,6 @@ func _ready() -> void:
 		temp.resize(sizes[current_size].x)
 		temp.fill(false)
 		grid_statuses.append(temp)
-	print_grid(grid_statuses)
 	var grid : MeshInstance3D=  create_grid_mesh(Vector2i(sizes[current_size].x,sizes[current_size].z), Global.grid_size)
 	box_interior.add_child(grid)
 	grid.position = Vector3(-box_interior.size.x/2, -box_interior.size.y/2.9, -box_interior.size.z/2)
@@ -130,22 +129,24 @@ func _box_bottom_on_area_3d_input_event(_camera: Node, event: InputEvent, event_
 		if Global.merch_manager.held_merch.is_empty() == false:
 			move_ghost(snap_to_grid(to_local(event_position)))
 
-func add_to_grid(snap_position: Vector2, shape: String)->bool:
+func is_grid_place_valid(snap_position: Vector2, shape: String)->bool:
 	var grid_update : Array[Array] = get_grid_placement(snap_position, shape)
 	if grid_update == [[-1]]:
-		print("! out of bounds")
 		return false
-	print_grid(grid_statuses)
 	for row in range(grid_update.size()-1):
 		for column in range(grid_update.size()-1):
 			if grid_statuses[row][column] == true and grid_update[row][column] == true:
-				print("overlap")
 				return false
+	return true
+
+func add_to_grid(snap_position: Vector2, shape: String)->bool:
+	if is_grid_place_valid(snap_position, shape) == false:
+		return false
+	var grid_update : Array[Array] = get_grid_placement(snap_position, shape)
 	for row in range(grid_update.size()-1):
 		for column in range(grid_update.size()-1):
 			if grid_update[row][column] == true:
 				grid_statuses[row][column] = true
-	print_grid(grid_statuses)
 	return true
 
 
@@ -170,11 +171,10 @@ func get_grid_placement(snap_position: Vector2, shape: String)-> Array[Array]:
 		index_vector = -(orgin - index_vector)
 		index += 1
 		index_vector = position_int + index_vector
-		if index_vector.y >= grid_copy.size() or index_vector.x >= grid_copy[index_vector.y].size():
-			print("out of bounds")
+		if index_vector.y >= grid_copy.size() or index_vector.x >= grid_copy[index_vector.y].size() or \
+		index_vector.x < 0 or index_vector.y < 0:
 			return [[-1]]
 		grid_copy[index_vector.y][index_vector.x] = true
-		print_grid(grid_copy)
 	return grid_copy
 	
 
@@ -191,9 +191,18 @@ func move_ghost(ghost_position : Vector3):
 		ghost.rotation_degrees.x = 90
 		ghost.get_child(0).get_child(0).disabled = true
 		ghost.transparency =.5
+	if is_grid_place_valid(Vector2(ghost_position.x, ghost_position.z), Global.merch_manager.get_last_held_merch().grid_shape) == false:
+		turn_ghost_red()
+	else:
+		ghost.material_override = null
 	ghost.position = ghost_position - (Global.merch_manager.get_last_held_merch().center_offset * Global.grid_size)
 	var parent_rotation : Vector3 = Global.merch_manager.get_last_held_merch().rotation
 	ghost.rotation.z = parent_rotation.z
+
+func turn_ghost_red():
+	var new_material = StandardMaterial3D.new()
+	new_material.albedo_color = Color(1, 0, 0)  # Pure red
+	ghost.material_override = new_material
 
 func camera_changed() -> void:
 	if camera == Global.camera_manager.current:
@@ -207,8 +216,8 @@ func camera_changed() -> void:
 
 func _on_box_bottom_3d_mouse_entered() -> void:
 	if ghost != null:
-		ghost.show()
+		ghost.material_override = null
 
 func _on_box_bottom_3d_mouse_exited() -> void:
 	if ghost != null:
-		ghost.hide()
+		turn_ghost_red()
