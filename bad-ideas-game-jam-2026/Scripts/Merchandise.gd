@@ -78,18 +78,37 @@ func select_object():
 
 func turn(is_right : bool):
 	print("turn")
-	rotate_shape()
 	if is_right: 
-		rotation.z += 90
+		rotate_shape(true)
+		update_center_offset(true)
+		rotation_degrees.z += 90
 	else:
-		rotation.z -= 90
+		rotate_shape(false)
+		update_center_offset(false)
+		rotation_degrees.z -= 90
 		
+func update_center_offset(is_to_right : bool ):
+	# upper right or lower left
+	if (center_offset.x > 0 and center_offset.z > 0) or (center_offset.x < 0 and center_offset.z < 0):
+		if is_to_right:
+			center_offset.x = -center_offset.x
+		else:
+			center_offset.z = - center_offset.z
+	# upper left or lower right
+	else:
+		if is_to_right:
+			center_offset.z = -center_offset.z
+		else:
+			center_offset.x = - center_offset.x
 
-func rotate_shape():
-	##TODO move center_offset
+	
+
+func rotate_shape(is_to_right : bool ):
 	var rows : int = grid_shape.count("\n") + 1
 	var start_shape : Array[Array]
 	var current_row : Array[String] = []
+	
+	# put string into Array
 	start_shape.append(current_row)
 	for i in range(grid_shape.length()):
 		var character : String = grid_shape[i]
@@ -99,7 +118,8 @@ func rotate_shape():
 			current_row = new_row
 		else: 
 			current_row.append(character)
-		
+	
+	#convert rows to parimeter 
 	var perimeter_rows : Array[Array] = []
 	var perimeter_row : Array[String] = []
 	perimeter_rows.append(perimeter_row)
@@ -127,15 +147,23 @@ func rotate_shape():
 			perimeter_rows.append(new_perimeter)
 			perimeter_row = new_perimeter
 	
+	#shift parimeter
 	var rows_offset = rows - 1
 	for row in range(perimeter_rows.size()): 
 		var temp_array : Array[String] = []
 		for i in range(rows_offset):
-			temp_array.insert(0, perimeter_rows[row].pop_back())
+			if is_to_right:
+				temp_array.insert(0, perimeter_rows[row].pop_back())
+			else: 
+				temp_array.append(perimeter_rows[row].pop_front())
 		rows_offset -= 2
-		temp_array.append_array(perimeter_rows[row])
-		perimeter_rows[row] = temp_array.duplicate()
+		if is_to_right:
+			temp_array.append_array(perimeter_rows[row])
+			perimeter_rows[row] = temp_array.duplicate()
+		else:
+			perimeter_rows[row].append_array(temp_array)
 	
+	#convert parimeter back to rows
 	var end_shape : Array[Array]
 	end_shape.resize(rows)
 	var column_offset = rows
@@ -172,10 +200,12 @@ func rotate_shape():
 		curent_starting_row += 1
 		current_row_int = curent_starting_row
 	
+	#convert array back to string
 	var temp_shape : String = ""
 	for row in end_shape: 
 		for character in row:
 			temp_shape += character
 		if end_shape[end_shape.size()-1] != row:
 			temp_shape += "\n"
+	print(temp_shape)
 	grid_shape = temp_shape
