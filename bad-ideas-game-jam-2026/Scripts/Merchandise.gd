@@ -7,6 +7,7 @@ var area3d : Area3D
 var collision_shape : CollisionShape3D
 var grid_shape : String
 var center_offset: Vector3 
+var trash_fill : int
 
 func _ready() -> void:
 	Global.merch_manager.add_merch(self)
@@ -72,7 +73,10 @@ func select_object():
 	if is_held:
 		pass
 	else:
+		if Global.camera_manager.held_object != null: 
+			return
 		is_held = true
+#		
 		Global.camera_manager.hold_item(self, object_mesh)
 		Global.merch_manager.hold_merch(self)
 
@@ -209,3 +213,6 @@ func rotate_shape(is_to_right : bool ):
 			temp_shape += "\n"
 	print(temp_shape)
 	grid_shape = temp_shape
+	
+func get_trash_fill()-> int:
+	return trash_fill

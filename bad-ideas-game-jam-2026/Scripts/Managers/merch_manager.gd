@@ -24,9 +24,12 @@ func pop_last_held_merch()-> Merchandise:
 	return held_merch.pop_back()
 
 func get_last_held_merch()-> Merchandise:
+	if held_merch.is_empty():
+		return null
 	return held_merch.back()
 
 func place_held_merch(new_parent : Node3D, offset : Vector3, is_box : bool = false):
+	Global.camera_manager.held_object = null
 	var merch =  pop_last_held_merch()
 	merch.is_held = false
 	merch.scale = Vector3.ONE
@@ -53,4 +56,5 @@ func create_from_code(code : String) -> Merchandise:
 	new_item.get_child(0).rotation_degrees = Vector3.ZERO
 	new_item.grid_shape = item_Data.grid_shape
 	new_item.center_offset = item_Data.center_offset
+	new_item.trash_fill = item_Data.trash_fill
 	return new_item 

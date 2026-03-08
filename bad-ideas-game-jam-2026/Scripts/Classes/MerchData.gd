@@ -7,3 +7,4 @@ class_name MerchData
 @export_multiline var grid_shape : String
 @export var item_rotation : Vector3
 @export var center_offset : Vector3
+@export var trash_fill : int = 1

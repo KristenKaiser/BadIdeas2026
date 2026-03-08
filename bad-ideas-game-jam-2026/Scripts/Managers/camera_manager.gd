@@ -7,6 +7,7 @@ var prev_cameras : Array[Camera3D]
 var is_zoomed_in : bool = false
 var is_screen_locked :bool = false
 signal camera_changed
+var held_object : Node3D
 
 func _ready() -> void:
 	current = get_viewport().get_camera_3d()
@@ -48,12 +49,16 @@ func change_camera_to_prev():
 
 func hold_item(item : Node3D, mesh_instance : MeshInstance3D):
 	var item_rotation : Vector3 = item.rotation
-	item.reparent(current)
+	if item.get_parent() != null:
+		item.reparent(current)
+	else:
+		current.add_child(item)
 	item.scale = Vector3(.1,.1,.1)
 	item.position = Vector3(.08, -.045, -.07)
 	item.rotation = item_rotation
 	mesh_instance.layers = 2
 	current.cull_mask = 0xFFFFFFFF
+	held_object = item
 	
 func follow_mouse(camera : Camera3D, base_rotaton : Vector3, x_max_change : float, y_max_change : float, delta: float, speed : float):
 	if is_screen_locked: return

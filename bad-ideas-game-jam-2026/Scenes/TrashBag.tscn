@@ -1,0 +1,19 @@
+[gd_scene load_steps=4 format=3 uid="uid://cl1qnrmj2sti4"]
+
+[ext_resource type="Script" uid="uid://bmfpa7bf32fa5" path="res://Scripts/trash_bag.gd" id="1_81j0f"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_81j0f"]
+albedo_color = Color(0.0885599, 0.0885599, 0.0885599, 1)
+metallic = 0.44
+metallic_specular = 0.73
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_81j0f"]
+material = SubResource("StandardMaterial3D_81j0f")
+radius = 0.25
+height = 0.6
+
+[node name="TrashBag" type="Node3D"]
+script = ExtResource("1_81j0f")
+
+[node name="Mesh" type="MeshInstance3D" parent="."]
+mesh = SubResource("CapsuleMesh_81j0f")

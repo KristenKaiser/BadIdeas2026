@@ -120,9 +120,7 @@ func _box_bottom_on_area_3d_input_event(_camera: Node, event: InputEvent, event_
 			if event.pressed:
 				var new_position : Vector3= snap_to_grid(to_local(event_position))
 				if add_to_grid(Vector2(new_position.x, new_position.z),  Global.merch_manager.get_last_held_merch().grid_shape) == true: 
-				#fill_grid(Vector2(new_position.x, new_position.z),  Global.merch_manager.get_last_held_merch().grid_shape)
 					Global.merch_manager.place_held_merch(self, new_position)
-				
 				if ghost != null: 
 					ghost.queue_free()
 	if event is InputEventMouseMotion:
