@@ -2,52 +2,88 @@ extends Node3D
 class_name Merchandise
 
 var object_mesh : MeshInstance3D
+var merch_name : String
 var is_held : bool = false
 var area3d : Area3D
 var collision_shape : CollisionShape3D
 var grid_shape : String
 var center_offset: Vector3 
 var trash_fill : int
+var is_ghost: bool = false
+var rotate_axis : String
+signal rotateghost(amount : Vector3)
+
 
 func _ready() -> void:
+	if is_ghost: 
+		return
 	Global.merch_manager.add_merch(self)
 	print("merch ready")
 	add_to_group("pickupable")
 	object_mesh = get_child(0)
 	area3d  = Area3D.new()
+	area3d.name = "area3d"
 	object_mesh.add_child(area3d)
-	
+	object_mesh.scale *= get_size_from_shape()
 	collision_shape = CollisionShape3D.new()
+	collision_shape.name = "collision_shape"
 	var shape = BoxShape3D.new()
 	var aabb = object_mesh.get_aabb()
 	shape.size =  aabb.size
+	object_mesh.global_position = global_position
+	
 	collision_shape.shape = shape
 	collision_shape.shape.resource_local_to_scene = true
 	area3d.add_child(collision_shape)
 	area3d.input_event.connect(_on_area_3d_input_event)
-	object_mesh.scale = get_size_from_shape()
+	collision_shape.position = aabb.get_center()
+	object_mesh.position = -aabb.get_center() * object_mesh.scale
+	object_mesh.position -= get_pivot_offset()
+
+	
+func get_pivot_offset()-> Vector3:
+	var orgin: Vector2
+	var grid_array = get_grid_as_array()
+	for y in range(grid_array.size()):
+		for x in range(grid_array[y].size()):
+			if grid_array[y][x] == "o":
+				orgin = Vector2(x + .5,y + .5)
+	print("offset: %s"%[orgin])
+	var zero : Vector2 = Vector2(grid_array[0].size() /2.0, grid_array.size() /2.0 )
+	print("zero: %s"%zero)
+	var offset = orgin - zero
+	offset *= Global.grid_size
+	print(offset)
+	return Vector3(0, offset.y, -offset.x)
+
+
+	
+	
+
+func duplicate_globals(orgin :Merchandise):
+	object_mesh = get_child(0)
+	merch_name = orgin.merch_name
+	is_held = orgin.is_held
+	area3d = object_mesh.get_node("area3d")
+	collision_shape = area3d.get_node("collision_shape")
+	grid_shape = orgin.grid_shape
+	center_offset = orgin.center_offset
+	trash_fill = orgin.trash_fill
+	rotate_axis = orgin.rotate_axis
+	orgin.rotateghost.connect(rotate_ghost)
+
+func rotate_ghost(amount : Vector3):
+	rotation_degrees += amount
 
 func get_size_from_shape() -> Vector3:
-	var angle = object_mesh.rotation.z
-	var cos_a = absf(cos(angle))
-	var sin_a = absf(sin(angle))
-	var columns = grid_shape.find("\n")
-	var rows = grid_shape.count("\n") + 1
+	var grid_array : Array[Array] = get_grid_as_array()
+	var target_size : Vector3 = Vector3(1, grid_array.size(), grid_array[0].size()) * Global.grid_size
+	var aabb = object_mesh.get_aabb()  # local space
+	var global_aabb : AABB = object_mesh.global_transform * aabb  # world space AABB
+	var scale_factor : Vector3 =  target_size / global_aabb.size 
+	print(scale_factor)
 	
-	var mesh_w = (columns * Global.grid_size) * cos_a - (rows * Global.grid_size) * sin_a
-	var mesh_h = (rows * Global.grid_size) * cos_a - (columns * Global.grid_size) * sin_a
-	
-	#var transformed_aabb : AABB = object_mesh.get_aabb() * object_mesh.transform
-	var x_scale : float = mesh_w / object_mesh.get_aabb().size.x 
-	var y_scale: float
-	var z_scale : float =  mesh_h / object_mesh.get_aabb().size.z
-	
-	if x_scale < z_scale: 
-		y_scale = x_scale
-	else:
-		y_scale = z_scale
-	
-	return Vector3(x_scale, y_scale, z_scale)
+	return scale_factor
 
 
 func _on_area_3d_input_event(_camera: Node, event: InputEvent, _event_position: Vector3, _normal: Vector3, _shape_idx: int):
@@ -59,10 +95,10 @@ func _on_area_3d_input_event(_camera: Node, event: InputEvent, _event_position: 
 func _unhandled_input(event: InputEvent) -> void:
 		if event is InputEventKey:
 			if is_held == true:
-				if OS.get_keycode_string(event.keycode) == "Q" and event.pressed:
+				if OS.get_keycode_string(event.keycode) == "Q" and event.pressed and is_ghost == false:
 					turn(false)
 					get_viewport().set_input_as_handled()
-				if OS.get_keycode_string(event.keycode) == "E" and event.pressed:
+				if OS.get_keycode_string(event.keycode) == "E" and event.pressed and is_ghost == false:
 					turn(true)
 					get_viewport().set_input_as_handled()
 	
@@ -85,12 +121,26 @@ func turn(is_right : bool):
 	if is_right: 
 		rotate_shape(true)
 		update_center_offset(true)
-		rotation_degrees.z += 90
+		rotate_node(90.0)
+		
 	else:
 		rotate_shape(false)
 		update_center_offset(false)
-		rotation_degrees.z -= 90
+		rotate_node(-90.0)
+	
 		
+func rotate_node(rotation_change : float):
+	match rotate_axis: 
+		"X":
+			rotation_degrees.x += rotation_change
+			rotateghost.emit(Vector3(rotation_change, 0, 0))
+		"Y":
+			rotation_degrees.y += rotation_change
+			rotateghost.emit(Vector3(0, rotation_change, 0))
+		"Z":
+			rotation_degrees.z += rotation_change
+			rotateghost.emit(Vector3(0, 0, rotation_change))
+
 func update_center_offset(is_to_right : bool ):
 	# upper right or lower left
 	if (center_offset.x > 0 and center_offset.z > 0) or (center_offset.x < 0 and center_offset.z < 0):
@@ -105,14 +155,10 @@ func update_center_offset(is_to_right : bool ):
 		else:
 			center_offset.x = - center_offset.x
 
-	
-
-func rotate_shape(is_to_right : bool ):
-	var rows : int = grid_shape.count("\n") + 1
+func get_grid_as_array()-> Array[Array]:
 	var start_shape : Array[Array]
 	var current_row : Array[String] = []
 	
-	# put string into Array
 	start_shape.append(current_row)
 	for i in range(grid_shape.length()):
 		var character : String = grid_shape[i]
@@ -122,6 +168,32 @@ func rotate_shape(is_to_right : bool ):
 			current_row = new_row
 		else: 
 			current_row.append(character)
+	
+	return start_shape
+
+
+func rotate_shape(is_to_right : bool ):
+	var rows : int = grid_shape.count("\n") + 1
+	var columns : int = grid_shape.find("\n")
+	if columns == -1 : columns = 1
+	if rows == 1 and columns == 1:
+		return
+	
+	# put string into Array
+	#var start_shape : Array[Array]
+	#var current_row : Array[String] = []
+	#
+	#
+	#start_shape.append(current_row)
+	#for i in range(grid_shape.length()):
+		#var character : String = grid_shape[i]
+		#if character =="\n":
+			#var new_row : Array[String] = []
+			#start_shape.append(new_row)
+			#current_row = new_row
+		#else: 
+			#current_row.append(character)
+	var start_shape : Array[Array] = get_grid_as_array()
 	
 	#convert rows to parimeter 
 	var perimeter_rows : Array[Array] = []
@@ -206,13 +278,22 @@ func rotate_shape(is_to_right : bool ):
 	
 	#convert array back to string
 	var temp_shape : String = ""
-	for row in end_shape: 
-		for character in row:
+	for row in range(end_shape.size()): 
+		for character in end_shape[row]:
 			temp_shape += character
-		if end_shape[end_shape.size()-1] != row:
+		if end_shape.size()-1 != row:
 			temp_shape += "\n"
-	print(temp_shape)
+	#print(temp_shape)
 	grid_shape = temp_shape
 	
 func get_trash_fill()-> int:
 	return trash_fill
+	
+func get_grid_size() -> Vector2:
+	var rows : int = grid_shape.count("\n") + 1
+	var columns : int = grid_shape.find("\n")
+	return Vector2(columns, rows)
+	
+func _exit_tree() -> void:
+	if self.is_queued_for_deletion():
+		Global.merch_manager.held_merch.erase(self)

@@ -1,6 +1,8 @@
 extends Node
 
 @export var conveyer_speed: float =.1
+var slow_conveyer_speed: float =.1
+var fast_conveyer_speed: float = 1
 var box_drop_speed: float =.8
 var grid_size : float  = .1 # 1.0/6.0
 
@@ -27,4 +29,15 @@ func start_game():
 	box_manager = BOX_MANAGER.instantiate()
 	add_child(box_manager)
 	
+func _unhandled_input(event: InputEvent) -> void:
+		if event is InputEventKey:
+			if OS.get_keycode_string(event.keycode) == "T" and event.pressed:
+				conveyer_speed = fast_conveyer_speed
+			if OS.get_keycode_string(event.keycode) == "T" and event.pressed == false:
+				conveyer_speed = slow_conveyer_speed
+			if OS.get_keycode_string(event.keycode) == "P" and event.pressed:
+				if conveyer_speed == 0:
+					conveyer_speed = slow_conveyer_speed
+				else:
+					conveyer_speed = 0
 	

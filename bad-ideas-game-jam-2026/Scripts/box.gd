@@ -4,35 +4,44 @@ class_name Box
 enum State {ENTERING, CONVEYING, EXITING, STILL}
 var current_state : State
 @export var camera : Camera3D
-@export var sizes : Dictionary [String, Vector3i]
 var current_size: String
 @export var box_interior : CSGBox3D ##TODO only needed for whiteboxing
 @export var box_collision_shape : CollisionShape3D
 @export var bottom_box_collision_shape : CollisionShape3D
-var ghost: MeshInstance3D = null
+var ghost: Merchandise= null
 var ghost_timer : Timer
 var is_zoomed_in : bool = false
 var grid_statuses : Array[Array]
-	
+@export var order_form : OrderForm
+
 
 func _ready() -> void:
 	Global.camera_manager.camera_changed.connect(camera_changed)
-	set_box_size("Small")
+	#order_form.position = bottom_box_collision_shape.position
+	#order_form.position.y += .005
+	#order_form.parent_box = self
+	#order_form.generate_order()
+	set_box_size("Large")
 	current_state = State.STILL
-	for z in range(sizes[current_size].z): 
-		var temp : Array[bool]
-		temp.resize(sizes[current_size].x)
-		temp.fill(false)
-		grid_statuses.append(temp)
-	var grid : MeshInstance3D=  create_grid_mesh(Vector2i(sizes[current_size].x,sizes[current_size].z), Global.grid_size)
+	#set_grid_size()
+	var grid : MeshInstance3D=  create_grid_mesh(Vector2i(Global.box_manager.sizes[current_size].x,Global.box_manager.sizes[current_size].z), Global.grid_size)
 	box_interior.add_child(grid)
 	grid.position = Vector3(-box_interior.size.x/2, -box_interior.size.y/2.9, -box_interior.size.z/2)
 	bottom_box_collision_shape.shape.size = Vector3(box_interior.size.x, .01, box_interior.size.z)
 	bottom_box_collision_shape.position.y = box_interior.position.y - box_interior.size.y/2 + .01
 	box_collision_shape.shape.size = size
-	#ghost_timer.timeout.connect(hide_ghost)
+
+
+
+
+func set_grid_size():
+	for z in range(Global.box_manager.sizes[current_size].z): 
+		var temp : Array[bool]
+		temp.resize(Global.box_manager.sizes[current_size].x)
+		temp.fill(false)
+		grid_statuses.append(temp)
 	
-	
+
 func _process(delta: float) -> void:
 	match current_state:
 		State.ENTERING:
@@ -57,6 +66,8 @@ func exiting(delta: float):
 func ship():
 	Global.box_manager.box_dropper.drop_box()
 	await get_tree().create_timer(1).timeout
+	for child in get_children():
+		child.queue_free()
 	self.queue_free()
 
 func _on_area_3d_input_event(_camera: Node, event: InputEvent, _event_position: Vector3, _normal: Vector3, _shape_idx: int) -> void:
@@ -64,16 +75,16 @@ func _on_area_3d_input_event(_camera: Node, event: InputEvent, _event_position: 
 			if event.button_index == MOUSE_BUTTON_LEFT and event.pressed:
 				if Global.camera_manager.current != camera: 
 					Global.camera_manager.change_camera(camera, true)
-					#box_collision_shape.disabled = true
 
 func set_box_size(box_size : String):
 	current_size = box_size
-	#var grid_size : Vector2 = sizes[box_size]
-	var size_vector : Vector3 = Vector3(sizes[box_size]) * Global.grid_size
+	var size_vector : Vector3 = Vector3(Global.box_manager.sizes[box_size]) * Global.grid_size
 	var change_vector : Vector3 = size_vector/box_interior.size
 	size *= change_vector
 	box_interior.size = size_vector
 	box_collision_shape.shape.size *= change_vector
+	grid_statuses.clear()
+	set_grid_size()
 
 func create_grid_mesh(grid_size: Vector2i, cell_size: float) -> MeshInstance3D:
 	var mesh_instance = MeshInstance3D.new()
@@ -98,9 +109,9 @@ func create_grid_mesh(grid_size: Vector2i, cell_size: float) -> MeshInstance3D:
 
 func snap_to_grid(world_pos: Vector3) -> Vector3:
 	#offset orgin point for odd number row/columns
-	if sizes[current_size].x % 2 != 0: 
+	if Global.box_manager.sizes[current_size].x % 2 != 0: 
 		world_pos.x += Global.grid_size/2.0
-	if sizes[current_size].z % 2 != 0: 
+	if Global.box_manager.sizes[current_size].z % 2 != 0: 
 		world_pos.z += Global.grid_size/2.0
 	
 	var snap_position :  Vector3 = Vector3 ((floor(world_pos.x / Global.grid_size) * Global.grid_size) ,
@@ -108,9 +119,9 @@ func snap_to_grid(world_pos: Vector3) -> Vector3:
 		(floor(world_pos.z / Global.grid_size) * Global.grid_size) 
 	)
 	# offset center of snap for even rows.colums
-	if sizes[current_size].x % 2 == 0: 
+	if Global.box_manager.sizes[current_size].x % 2 == 0: 
 		snap_position.x +=  Global.grid_size/2
-	if sizes[current_size].z % 2 == 0: 
+	if Global.box_manager.sizes[current_size].z % 2 == 0: 
 		snap_position.z +=  Global.grid_size/2
 	return snap_position
 
@@ -141,8 +152,8 @@ func add_to_grid(snap_position: Vector2, shape: String)->bool:
 	if is_grid_place_valid(snap_position, shape) == false:
 		return false
 	var grid_update : Array[Array] = get_grid_placement(snap_position, shape)
-	for row in range(grid_update.size()-1):
-		for column in range(grid_update.size()-1):
+	for row in range(grid_update.size()):##testing had size - 1
+		for column in range(grid_update[row].size()):##testing had size - 1
 			if grid_update[row][column] == true:
 				grid_statuses[row][column] = true
 	return true
@@ -150,13 +161,15 @@ func add_to_grid(snap_position: Vector2, shape: String)->bool:
 
 func get_grid_placement(snap_position: Vector2, shape: String)-> Array[Array]:
 	@warning_ignore("integer_division")
-	var position_int : Vector2i = Vector2i(floori(snapped(snap_position.x/Global.grid_size,.1)) + sizes[current_size].x/2 , \
-	floori(snapped(snap_position.y/Global.grid_size, .1))+ sizes[current_size].z/2)
+	var position_int : Vector2i = Vector2i(floori(snapped(snap_position.x/Global.grid_size,.1)) + Global.box_manager.sizes[current_size].x/2 , \
+	floori(snapped(snap_position.y/Global.grid_size, .1))+ Global.box_manager.sizes[current_size].z/2)
 	
 	var grid_copy : Array[Array] = grid_statuses.duplicate(true)
 	for row in grid_copy:
 			row.fill(false)
 	var columns : int = shape.find("\n") 
+	if columns == -1: 
+		columns = shape.length()
 	var shape_copy : String = shape.remove_chars("\n")
 	@warning_ignore("integer_division")
 	var orgin : Vector2i = Vector2i(shape_copy.find("o")%columns, floor(shape_copy.find("o")/columns))
@@ -182,39 +195,48 @@ func print_grid(grid : Array[Array]):
 
 func move_ghost(ghost_position : Vector3):
 	if ghost == null: 
-		ghost = Global.merch_manager.get_last_held_merch().object_mesh.duplicate()
+		ghost =  Global.merch_manager.get_last_held_merch().duplicate()
+		ghost.scale = Vector3.ONE
 		ghost.name = ghost.name +"_ghost"
-		self.add_child(ghost)
-		ghost.rotation = Global.merch_manager.get_last_held_merch().rotation
-		ghost.rotation_degrees.x = 90
-		ghost.get_child(0).get_child(0).disabled = true
-		ghost.transparency =.5
+		ghost.is_ghost = true
+		Global.merch_manager.get_last_held_merch().get_parent().add_child(ghost)
+		ghost.reparent(self)
+		#self.add_child(ghost)
+		ghost.duplicate_globals(Global.merch_manager.get_last_held_merch())
+		ghost.collision_shape.disabled = true
+		ghost.object_mesh.transparency =.5
+		
 	if is_grid_place_valid(Vector2(ghost_position.x, ghost_position.z), Global.merch_manager.get_last_held_merch().grid_shape) == false:
 		turn_ghost_red()
 	else:
-		ghost.material_override = null
+		ghost.object_mesh.material_override = null
+
+	#ghost.rotation_degrees = Global.merch_manager.get_last_held_merch().rotation_degrees 
 	ghost.position = ghost_position - (Global.merch_manager.get_last_held_merch().center_offset * Global.grid_size)
-	var parent_rotation : Vector3 = Global.merch_manager.get_last_held_merch().rotation
-	ghost.rotation.z = parent_rotation.z
+
 
 func turn_ghost_red():
 	var new_material = StandardMaterial3D.new()
 	new_material.albedo_color = Color(1, 0, 0)  # Pure red
-	ghost.material_override = new_material
+	ghost.object_mesh.material_override = new_material
 
 func camera_changed() -> void:
 	if camera == Global.camera_manager.current:
 		is_zoomed_in = true
 		box_collision_shape.shape.size.y = .01
 		box_collision_shape.position.y = position.y - size.y/2 + .01
+		if ghost != null:
+			ghost.show()
 	elif is_zoomed_in == true: 
 		is_zoomed_in = false
 		box_collision_shape.shape.size = size
 		box_collision_shape.global_position = global_position
+		if ghost != null:
+			ghost.hide()
 
 func _on_box_bottom_3d_mouse_entered() -> void:
 	if ghost != null:
-		ghost.material_override = null
+		ghost.object_mesh.material_override = null
 
 func _on_box_bottom_3d_mouse_exited() -> void:
 	if ghost != null:

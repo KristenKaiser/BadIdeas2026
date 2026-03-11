@@ -28,18 +28,17 @@ func get_last_held_merch()-> Merchandise:
 		return null
 	return held_merch.back()
 
-func place_held_merch(new_parent : Node3D, offset : Vector3, is_box : bool = false):
+func place_held_merch(new_parent : Node3D, offset : Vector3):
+	place_merch(new_parent, offset, pop_last_held_merch())
+
+
+func place_merch(new_parent : Node3D, offset : Vector3, merch : Merchandise):
 	Global.camera_manager.held_object = null
-	var merch =  pop_last_held_merch()
 	merch.is_held = false
 	merch.scale = Vector3.ONE
 	merch.reparent(new_parent)
 	offset -= merch.center_offset * Global.grid_size
-
-	if is_box: 
-		merch.global_position = offset
-	else: 
-		merch.global_position = new_parent.global_position + offset
+	merch.global_position = new_parent.global_position + offset
 
 func get_object_by_code(code: String) -> MerchData:
 	for prototype in prototypes:
@@ -52,9 +51,11 @@ func create_from_code(code : String) -> Merchandise:
 	if item_Data == null : return null
 	var new_item : Node3D = item_Data.item.instantiate()
 	new_item.set_script(MerchandiseScript)
-	new_item.rotation_degrees = item_Data.item_rotation 
-	new_item.get_child(0).rotation_degrees = Vector3.ZERO
+	#new_item.rotation_degrees = item_Data.item_rotation 
+	new_item.get_child(0).rotation_degrees = item_Data.item_rotation 
 	new_item.grid_shape = item_Data.grid_shape
 	new_item.center_offset = item_Data.center_offset
 	new_item.trash_fill = item_Data.trash_fill
+	new_item.merch_name = item_Data.item_name
+	new_item.rotate_axis = item_Data.get_rotate_axis_string()
 	return new_item 

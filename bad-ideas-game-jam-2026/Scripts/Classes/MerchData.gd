@@ -8,3 +8,16 @@ class_name MerchData
 @export var item_rotation : Vector3
 @export var center_offset : Vector3
 @export var trash_fill : int = 1
+enum RotateAxis {X, Y, Z}
+@export var rotate_axis : RotateAxis
+
+
+func get_rotate_axis_string()->String:
+	match rotate_axis:
+		RotateAxis.X: 
+			return "X"
+		RotateAxis.Y:
+			return "Y"
+		RotateAxis.Z: 
+			return "Z"
+	return "X"

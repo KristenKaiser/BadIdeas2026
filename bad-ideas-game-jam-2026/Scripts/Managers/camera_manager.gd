@@ -48,14 +48,14 @@ func change_camera_to_prev():
 	change_camera(prev_cameras.pop_back())
 
 func hold_item(item : Node3D, mesh_instance : MeshInstance3D):
-	var item_rotation : Vector3 = item.rotation
+	var item_rotation : Vector3 = item.rotation_degrees
 	if item.get_parent() != null:
 		item.reparent(current)
 	else:
 		current.add_child(item)
 	item.scale = Vector3(.1,.1,.1)
 	item.position = Vector3(.08, -.045, -.07)
-	item.rotation = item_rotation
+	item.rotation_degrees = item_rotation + Vector3(180, 90, 0)
 	mesh_instance.layers = 2
 	current.cull_mask = 0xFFFFFFFF
 	held_object = item
