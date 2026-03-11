@@ -1,8 +1,0 @@
-[gd_scene load_steps=2 format=3 uid="uid://by2yrnhqom56w"]
-
-[ext_resource type="PackedScene" uid="uid://egattn0x1cpl" path="res://Art/Merchandise/Banana.fbx" id="1_l0myh"]
-
-[node name="Banana" type="Node3D"]
-
-[node name="Banana" parent="." instance=ExtResource("1_l0myh")]
-transform = Transform3D(-0.5356943, -1.0260676e-07, 0.8444123, -0.102542184, -0.99259925, -0.06505278, 0.83816284, -0.1214362, 0.53172964, 0, 0, 0)

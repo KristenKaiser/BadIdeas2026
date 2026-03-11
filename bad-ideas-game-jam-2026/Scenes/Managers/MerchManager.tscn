@@ -1,10 +1,9 @@
-[gd_scene load_steps=16 format=3 uid="uid://cpxhjnah05wv6"]
+[gd_scene load_steps=15 format=3 uid="uid://cpxhjnah05wv6"]
 
 [ext_resource type="Script" uid="uid://ddgtuurbafg7k" path="res://Scripts/Managers/merch_manager.gd" id="1_qb7xf"]
 [ext_resource type="Script" uid="uid://d06to0talnada" path="res://Scripts/Classes/MerchData.gd" id="2_y8k13"]
 [ext_resource type="PackedScene" uid="uid://dfn3krjokafc0" path="res://Art/Merchandise/Apple.fbx" id="3_ossd1"]
 [ext_resource type="PackedScene" uid="uid://df2222p86ln6a" path="res://Art/Merchandise/Banana4.fbx" id="4_ayf3q"]
-[ext_resource type="PackedScene" uid="uid://cuva3akb1328s" path="res://Art/Merchandise/Banana1.fbx" id="4_ossd1"]
 [ext_resource type="PackedScene" uid="uid://dog3eivu5a3da" path="res://Art/Merchandise/Bread1.fbx" id="5_ossd1"]
 [ext_resource type="PackedScene" uid="uid://d2mjklbdl0rmi" path="res://Art/Merchandise/Eggplant1.fbx" id="6_ossd1"]
 [ext_resource type="PackedScene" uid="uid://b8s2rxnd5p5hh" path="res://Art/Merchandise/Sauce1.fbx" id="7_ayf3q"]
@@ -68,7 +67,7 @@ metadata/_custom_type_script = "uid://d06to0talnada"
 script = ExtResource("2_y8k13")
 code = "1"
 item_name = "banana test"
-item = ExtResource("4_ossd1")
+item = ExtResource("4_ayf3q")
 grid_shape = "ox
 x_"
 rotate_axis = 2

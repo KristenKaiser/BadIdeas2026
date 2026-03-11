@@ -17,9 +17,9 @@ var grid_statuses : Array[Array]
 
 func _ready() -> void:
 	Global.camera_manager.camera_changed.connect(camera_changed)
-	#order_form.position = bottom_box_collision_shape.position
-	#order_form.position.y += .005
-	#order_form.parent_box = self
+	order_form.position = bottom_box_collision_shape.position
+	order_form.position.y += .005
+	order_form.parent_box = self
 	#order_form.generate_order()
 	set_box_size("Large")
 	current_state = State.STILL

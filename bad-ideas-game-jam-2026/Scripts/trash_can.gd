@@ -1,6 +1,6 @@
 extends CSGBox3D
 class_name  TrashCan
-var capacity : int = 1
+var capacity : int = 10 ##TODO set too high for testing
 var trash_fill : int = 0
 @export var label : Label3D
 const TRASH_BAG = preload("uid://cl1qnrmj2sti4")

@@ -40,7 +40,6 @@ func _ready() -> void:
 	object_mesh.position = -aabb.get_center() * object_mesh.scale
 	object_mesh.position -= get_pivot_offset()
 
-	
 func get_pivot_offset()-> Vector3:
 	var orgin: Vector2
 	var grid_array = get_grid_as_array()
@@ -55,10 +54,6 @@ func get_pivot_offset()-> Vector3:
 	offset *= Global.grid_size
 	print(offset)
 	return Vector3(0, offset.y, -offset.x)
-
-
-	
-	
 
 func duplicate_globals(orgin :Merchandise):
 	object_mesh = get_child(0)
@@ -117,7 +112,6 @@ func select_object():
 		Global.merch_manager.hold_merch(self)
 
 func turn(is_right : bool):
-	print("turn")
 	if is_right: 
 		rotate_shape(true)
 		update_center_offset(true)
@@ -175,24 +169,10 @@ func get_grid_as_array()-> Array[Array]:
 func rotate_shape(is_to_right : bool ):
 	var rows : int = grid_shape.count("\n") + 1
 	var columns : int = grid_shape.find("\n")
-	if columns == -1 : columns = 1
+	if columns == -1 : columns = grid_shape.length()
 	if rows == 1 and columns == 1:
 		return
-	
-	# put string into Array
-	#var start_shape : Array[Array]
-	#var current_row : Array[String] = []
-	#
-	#
-	#start_shape.append(current_row)
-	#for i in range(grid_shape.length()):
-		#var character : String = grid_shape[i]
-		#if character =="\n":
-			#var new_row : Array[String] = []
-			#start_shape.append(new_row)
-			#current_row = new_row
-		#else: 
-			#current_row.append(character)
+
 	var start_shape : Array[Array] = get_grid_as_array()
 	
 	#convert rows to parimeter 
@@ -210,8 +190,9 @@ func rotate_shape(is_to_right : bool ):
 			else:
 				perimeter_row.append(start_shape[row][start_shape[row].size() -1])
 				start_shape[row].remove_at(start_shape[row].size() -1)
-				edge_array.append(start_shape[row][0])
-				start_shape[row].remove_at(0)
+				if start_shape[row].is_empty() == false:
+					edge_array.append(start_shape[row][0])
+					start_shape[row].remove_at(0)
 		start_shape.remove_at(start_shape.size() -1)
 		if start_shape.is_empty() == false:
 			start_shape.remove_at(0)
@@ -222,59 +203,87 @@ func rotate_shape(is_to_right : bool ):
 			var new_perimeter : Array[String] = []
 			perimeter_rows.append(new_perimeter)
 			perimeter_row = new_perimeter
+	if perimeter_rows.back().is_empty():
+		perimeter_rows.pop_back()
 	
 	#shift parimeter
-	var rows_offset = rows - 1
-	for row in range(perimeter_rows.size()): 
-		var temp_array : Array[String] = []
-		for i in range(rows_offset):
-			if is_to_right:
-				temp_array.insert(0, perimeter_rows[row].pop_back())
-			else: 
-				temp_array.append(perimeter_rows[row].pop_front())
-		rows_offset -= 2
+	if columns == 1: 
 		if is_to_right:
-			temp_array.append_array(perimeter_rows[row])
-			perimeter_rows[row] = temp_array.duplicate()
-		else:
-			perimeter_rows[row].append_array(temp_array)
+			perimeter_rows[0].reverse()
+	elif rows == 1: 
+		if is_to_right == false: 
+			perimeter_rows[0].reverse()
+	else:
+		var rows_offset
+		if is_to_right:
+			rows_offset = rows - 1 
+		else: 
+			rows_offset = columns - 1
+		for row in range(perimeter_rows.size()): 
+			var temp_array : Array[String] = []
+			for i in range(rows_offset):
+				if is_to_right:
+					temp_array.insert(0, perimeter_rows[row].pop_back())
+				else: 
+					temp_array.append(perimeter_rows[row].pop_front())
+				print(temp_array)
+			rows_offset -= 2
+			if is_to_right:
+				temp_array.append_array(perimeter_rows[row])
+				perimeter_rows[row] = temp_array.duplicate()
+			else:
+				perimeter_rows[row].append_array(temp_array)
+			print(perimeter_rows[row])
+		if perimeter_rows.back().is_empty():
+			perimeter_rows.pop_back()
 	
 	#convert parimeter back to rows
 	var end_shape : Array[Array]
-	end_shape.resize(rows)
-	var column_offset = rows
-	var curent_starting_row = 0
-	var current_row_int: int = 0
-	while perimeter_rows.is_empty() == false:
-		var write_index : int = 0
-		if end_shape[current_row_int].has("!"):
-			write_index = end_shape[current_row_int].find("!")
-			end_shape[current_row_int].remove_at(write_index)
-		for i in range(column_offset):
-			end_shape[current_row_int].insert(write_index,  perimeter_rows[0].pop_front())
-			write_index += 1
-		current_row_int += 1
-		while perimeter_rows[0].size() > column_offset:
-			write_index = 0
+	end_shape.resize(columns)
+	
+	if rows == 1: 
+		for row in end_shape:
+			row.append(perimeter_row.pop_front())
+	else: 
+		var column_offset = rows
+		var curent_starting_row = 0
+		var current_row_int: int = 0
+		while perimeter_rows.is_empty() == false:
+			var write_index : int = 0
 			if end_shape[current_row_int].has("!"):
 				write_index = end_shape[current_row_int].find("!")
 				end_shape[current_row_int].remove_at(write_index)
-			end_shape[current_row_int].insert(write_index, perimeter_rows[0].pop_back())
-			end_shape[current_row_int].insert(write_index + 1, "!")
-			end_shape[current_row_int].insert(write_index + 2, perimeter_rows[0].pop_front())
+			for i in range(column_offset):
+				end_shape[current_row_int].insert(write_index,  perimeter_rows[0].pop_front())
+				write_index += 1
 			current_row_int += 1
-		write_index  = 0
-		if end_shape[current_row_int].has("!"):
-			write_index = end_shape[current_row_int].find("!")
-			end_shape[current_row_int].remove_at(write_index)
-		perimeter_rows[0].reverse()
-		for character in perimeter_rows[0]:
-			end_shape[current_row_int].insert(write_index,  character)
-			write_index += 1
-		perimeter_rows.remove_at(0)
-		column_offset -= 2
-		curent_starting_row += 1
-		current_row_int = curent_starting_row
+			
+			while perimeter_rows[0].size() > column_offset:
+				write_index = 0
+				if end_shape[current_row_int].has("!"):
+					write_index = end_shape[current_row_int].find("!")
+					end_shape[current_row_int].remove_at(write_index)
+				end_shape[current_row_int].insert(write_index, perimeter_rows[0].pop_back())
+				end_shape[current_row_int].insert(write_index + 1, "!")
+				end_shape[current_row_int].insert(write_index + 2, perimeter_rows[0].pop_front())
+				current_row_int += 1
+			write_index  = 0
+			if end_shape.size() - 1 >= current_row_int and end_shape[current_row_int].has("!"):
+				write_index = end_shape[current_row_int].find("!")
+				end_shape[current_row_int].remove_at(write_index)
+			perimeter_rows[0].reverse()
+			for character in perimeter_rows[0]:
+				end_shape[current_row_int].insert(write_index,  character)
+				write_index += 1
+			perimeter_rows.remove_at(0)
+			column_offset -= 2
+			curent_starting_row += 1
+			current_row_int = curent_starting_row
+
+		for y in range(end_shape.size()-1, -1, -1):
+			for x in range(end_shape[y].size() -1, -1, -1):
+				if end_shape[y][x] == "!":
+					end_shape[y].remove_at(x)
 	
 	#convert array back to string
 	var temp_shape : String = ""
@@ -283,7 +292,8 @@ func rotate_shape(is_to_right : bool ):
 			temp_shape += character
 		if end_shape.size()-1 != row:
 			temp_shape += "\n"
-	#print(temp_shape)
+	print(temp_shape)
+	
 	grid_shape = temp_shape
 	
 func get_trash_fill()-> int:
