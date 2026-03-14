@@ -65,6 +65,8 @@ func generate_order():
 		max_attempts -= 1
 	for item in range(generated_items.size() - 1, -1, -1):
 		generated_items[item].queue_free()
+	for row in parent_box.grid_statuses:
+		row.fill(false)
 	write_requested_items()
 
 func place_merch(box_size : String, available_box_area : int, code : String = ""): 

@@ -60,6 +60,7 @@ func hold_item(item : Node3D, mesh_instance : MeshInstance3D):
 	current.cull_mask = 0xFFFFFFFF
 	held_object = item
 	
+	
 func follow_mouse(camera : Camera3D, base_rotaton : Vector3, x_max_change : float, y_max_change : float, delta: float, speed : float):
 	if is_screen_locked: return
 	##TODO make max chage greater towards center so drift area is round not square

@@ -15,6 +15,8 @@ var camera_manager : CameraManager
 const BOX_MANAGER = preload("uid://bo1cyd553pjcu")
 var box_manager : BoxManager
 
+const SCORE_MANAGER = preload("uid://7ho1x50016pi")
+var score_manager : ScoreManager
 
 func _ready() -> void:
 	start_game()
@@ -28,6 +30,10 @@ func start_game():
 	
 	box_manager = BOX_MANAGER.instantiate()
 	add_child(box_manager)
+	
+	score_manager = SCORE_MANAGER.instantiate()
+	add_child(score_manager)
+	
 	
 func _unhandled_input(event: InputEvent) -> void:
 		if event is InputEventKey:

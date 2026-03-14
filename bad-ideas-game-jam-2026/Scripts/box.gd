@@ -13,6 +13,7 @@ var ghost_timer : Timer
 var is_zoomed_in : bool = false
 var grid_statuses : Array[Array]
 @export var order_form : OrderForm
+var held_objects : Dictionary[String, int]
 
 
 func _ready() -> void:
@@ -62,6 +63,7 @@ func exiting(delta: float):
 
 func ship():
 	Global.box_manager.box_dropper.drop_box()
+	Global.score_manager.score_box(self)
 	await get_tree().create_timer(1).timeout
 	for child in get_children():
 		child.queue_free()
@@ -105,13 +107,6 @@ func create_grid_mesh(grid_size: Vector2i, cell_size: float) -> MeshInstance3D:
 	return mesh_instance
 
 func snap_to_grid(world_pos: Vector3) -> Vector3:
-	#offset orgin point for odd number row/columns
-	#world_pos = snapped(world_pos, Vector3(.1,.1,.1))
-	#if Global.box_manager.sizes[current_size].x % 2 != 0: 
-		#world_pos.x += Global.grid_size/2.0
-	#if Global.box_manager.sizes[current_size].z % 2 != 0: 
-		#world_pos.z += Global.grid_size/2.0
-	
 	var snap_position :  Vector3 = Vector3 ((floor(snapped(world_pos.x / Global.grid_size, .1)) * Global.grid_size) ,
 		world_pos.y, # keep Y as-is, or snap it too if needed
 		(floor(snapped(world_pos.z / Global.grid_size, 1)) * Global.grid_size) 
@@ -127,18 +122,27 @@ func _box_bottom_on_area_3d_input_event(_camera: Node, event: InputEvent, event_
 	if event is InputEventMouseButton:
 		if Global.merch_manager.held_merch.is_empty() == false:
 			if event.pressed:
-				var new_position : Vector3= snap_to_grid(to_local(event_position))
-				if add_to_grid(Vector2(new_position.x, new_position.z),  Global.merch_manager.get_last_held_merch().grid_shape) == true: 
-					if  Global.merch_manager.get_last_held_merch().ghost != null:
-						Global.merch_manager.place_held_merch(self, Global.merch_manager.get_last_held_merch().ghost.global_position)
-					else:
-						Global.merch_manager.place_held_merch(self, new_position)
-				if ghost != null: 
-					ghost.queue_free()
+				add_to_box(event_position)
 	if event is InputEventMouseMotion:
 		if Global.merch_manager.held_merch.is_empty() == false:
 			move_ghost(snap_to_grid(to_local(event_position)))
 
+func add_to_box(event_position: Vector3,):
+	var new_position : Vector3= snap_to_grid(to_local(event_position))
+	if add_to_grid(Vector2(new_position.x, new_position.z),  Global.merch_manager.get_last_held_merch().grid_shape) == true: 
+		if held_objects.has(Global.merch_manager.get_last_held_merch().merch_name): 
+			held_objects[Global.merch_manager.get_last_held_merch().merch_name] += 1
+		else: 
+			held_objects[Global.merch_manager.get_last_held_merch().merch_name] = 1
+			
+		if  Global.merch_manager.get_last_held_merch().ghost != null:
+			Global.merch_manager.place_held_merch(self, Global.merch_manager.get_last_held_merch().ghost.global_position)
+		else:
+			Global.merch_manager.place_held_merch(self, new_position)
+	if ghost != null: 
+		ghost.queue_free()
+	
+	
 func is_grid_place_valid(snap_position: Vector2, shape: String)->bool:
 	var grid_update : Array[Array] = get_grid_placement(snap_position, shape)
 	if grid_update == [[-1]]:
@@ -164,6 +168,10 @@ func get_grid_placement(snap_position: Vector2, shape: String)-> Array[Array]:
 	@warning_ignore("integer_division")
 	var position_int : Vector2i = Vector2i(floori(snapped(snap_position.x/Global.grid_size,.1)) + Global.box_manager.sizes[current_size].x/2 , \
 	floori(snapped(snap_position.y/Global.grid_size, .1))+ Global.box_manager.sizes[current_size].z/2)
+	# if outside of box return 
+	if position_int.x < 0 or position_int.x > grid_statuses[0].size() - 1 or \
+	position_int.y < 0 or position_int.y > grid_statuses.size() -1:
+		return [[-1]]
 	
 	var grid_copy : Array[Array] = grid_statuses.duplicate(true)
 	for row in grid_copy:
@@ -208,8 +216,12 @@ func move_ghost(ghost_position : Vector3):
 		ghost.object_mesh.transparency =.5
 		
 	if is_grid_place_valid(Vector2(ghost_position.x, ghost_position.z), Global.merch_manager.get_last_held_merch().grid_shape) == false:
+		is_grid_place_valid(Vector2(ghost_position.x, ghost_position.z), Global.merch_manager.get_last_held_merch().grid_shape)
+		if ghost_position.x > size.x/2 or ghost_position.x < -size.x/2 or ghost_position.z > size.x/2 or ghost_position.z < -size.y/2:
+			ghost.hide()
 		turn_ghost_red()
 	else:
+		ghost.show()
 		ghost.object_mesh.material_override = null
 
 	#ghost.rotation_degrees = Global.merch_manager.get_last_held_merch().rotation_degrees 
@@ -243,3 +255,8 @@ func _on_box_bottom_3d_mouse_entered() -> void:
 func _on_box_bottom_3d_mouse_exited() -> void:
 	if ghost != null:
 		turn_ghost_red()
+
+#func _exit_tree() -> void:
+	#if is_queued_for_deletion():
+		#print(order_form.requested_items)
+		#Global.score_manager.score_box(self)

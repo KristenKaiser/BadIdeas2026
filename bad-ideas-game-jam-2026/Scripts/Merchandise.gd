@@ -73,7 +73,7 @@ func duplicate_globals(orgin :Merchandise):
 	orgin.changgeGhostPivot.connect(change_ghost_pivot)
 
 func rotate_ghost(amount : Vector3):
-	object_mesh.rotation_degrees += amount
+	rotation_degrees += Vector3(-amount.y, -amount.x, -amount.z)
 
 func get_size_from_shape() -> Vector3:
 	var grid_array : Array[Array] = get_grid_as_array()
@@ -117,18 +117,18 @@ func select_object():
 func turn(is_right : bool):
 	if is_right: 
 		rotate_shape(true)
-		update_center_offset(true)
+		#update_center_offset(true)
 		rotate_node(90.0)
 		print("turn right")
 	else:
 		rotate_shape(false)
-		update_center_offset(false)
+		#update_center_offset(false)
 		rotate_node(-90.0)
 		print("turn left")
-	var temp_offset = current_pivot_offset
-	current_pivot_offset = get_pivot_offset()
-	object_mesh.position += -current_pivot_offset + temp_offset
-	changgeGhostPivot.emit(-current_pivot_offset + temp_offset)
+	#var temp_offset = current_pivot_offset
+	#current_pivot_offset = get_pivot_offset()
+	#object_mesh.position += -current_pivot_offset + temp_offset
+	#changgeGhostPivot.emit(-current_pivot_offset + temp_offset)
 	
 func change_ghost_pivot(pivot_change : Vector3):
 	object_mesh.position += pivot_change
@@ -136,13 +136,13 @@ func change_ghost_pivot(pivot_change : Vector3):
 func rotate_node(rotation_change : float):
 	match rotate_axis: 
 		"X":
-			object_mesh.rotation_degrees.x += rotation_change
+			rotation_degrees.x += rotation_change
 			rotateghost.emit(Vector3(rotation_change, 0, 0))
 		"Y":
-			object_mesh.rotation_degrees.y += rotation_change
+			rotation_degrees.y += rotation_change
 			rotateghost.emit(Vector3(0, rotation_change, 0))
 		"Z":
-			object_mesh.rotation_degrees.z += rotation_change
+			rotation_degrees.z += rotation_change
 			rotateghost.emit(Vector3(0, 0, rotation_change))
 
 func update_center_offset(is_to_right : bool ):

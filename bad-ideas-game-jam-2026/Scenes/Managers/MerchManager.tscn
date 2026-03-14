@@ -68,6 +68,7 @@ item_name = "banana test"
 item = ExtResource("4_ayf3q")
 grid_shape = "ox
 x_"
+item_rotation = Vector3(45, 0, 0)
 metadata/_custom_type_script = "uid://d06to0talnada"
 
 [node name="MerchManager" type="Node"]
