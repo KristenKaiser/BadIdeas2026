@@ -16,7 +16,6 @@ var grid_statuses : Array[Array]
 
 
 func _ready() -> void:
-	print("!!!NEW BOX")
 	Global.camera_manager.camera_changed.connect(camera_changed)
 	order_form.position = bottom_box_collision_shape.position
 	order_form.position.y = box_interior.size.y/2 +.001
@@ -128,12 +127,10 @@ func _box_bottom_on_area_3d_input_event(_camera: Node, event: InputEvent, event_
 	if event is InputEventMouseButton:
 		if Global.merch_manager.held_merch.is_empty() == false:
 			if event.pressed:
-				print(to_local(event_position))
 				var new_position : Vector3= snap_to_grid(to_local(event_position))
 				if add_to_grid(Vector2(new_position.x, new_position.z),  Global.merch_manager.get_last_held_merch().grid_shape) == true: 
 					if  Global.merch_manager.get_last_held_merch().ghost != null:
 						Global.merch_manager.place_held_merch(self, Global.merch_manager.get_last_held_merch().ghost.global_position)
-						print("ghost placement")
 					else:
 						Global.merch_manager.place_held_merch(self, new_position)
 				if ghost != null: 

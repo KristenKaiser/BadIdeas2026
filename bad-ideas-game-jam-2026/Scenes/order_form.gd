@@ -41,12 +41,10 @@ func _on_area_3d_input_event(_camera: Node, event: InputEvent, _event_position: 
 		if event.button_index == MOUSE_BUTTON_LEFT and event.pressed:
 			if is_zoomed:
 				is_zoomed = false
-				print("put down note")
 				position.y -= .2
 				position.x = (-parent_box.size.x / 2) - (get_aabb().size.x * scale.x)
 			else: 
 				is_zoomed = true
-				print("pick up note")
 				position.y += .2
 
 func generate_order():
@@ -64,7 +62,6 @@ func generate_order():
 			for x in range(parent_box.grid_statuses[y].size()):
 				if parent_box.grid_statuses[y][x]== false:
 					available_box_area += 1
-		parent_box.print_grid(parent_box.grid_statuses)
 		max_attempts -= 1
 	for item in range(generated_items.size() - 1, -1, -1):
 		generated_items[item].queue_free()
