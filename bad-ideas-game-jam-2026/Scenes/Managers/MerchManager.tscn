@@ -14,6 +14,7 @@ code = "84460"
 item_name = "Apple"
 item = ExtResource("3_ossd1")
 grid_shape = "o"
+rotate_axis = 2
 metadata/_custom_type_script = "uid://d06to0talnada"
 
 [sub_resource type="Resource" id="Resource_kkwcq"]
@@ -24,7 +25,6 @@ item = ExtResource("4_ayf3q")
 grid_shape = "ox
 x_"
 item_rotation = Vector3(45, 0, 0)
-rotate_axis = 2
 metadata/_custom_type_script = "uid://d06to0talnada"
 
 [sub_resource type="Resource" id="Resource_0vlwy"]
@@ -34,7 +34,6 @@ item_name = "Bread"
 item = ExtResource("5_ossd1")
 grid_shape = "xxx
 xox"
-rotate_axis = 2
 metadata/_custom_type_script = "uid://d06to0talnada"
 
 [sub_resource type="Resource" id="Resource_sspri"]
@@ -44,7 +43,6 @@ item_name = "Eggplant"
 item = ExtResource("6_ossd1")
 grid_shape = "x
 o"
-rotate_axis = 2
 metadata/_custom_type_script = "uid://d06to0talnada"
 
 [sub_resource type="Resource" id="Resource_j6e08"]
@@ -70,7 +68,6 @@ item_name = "banana test"
 item = ExtResource("4_ayf3q")
 grid_shape = "ox
 x_"
-rotate_axis = 2
 metadata/_custom_type_script = "uid://d06to0talnada"
 
 [node name="MerchManager" type="Node"]

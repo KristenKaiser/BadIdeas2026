@@ -16,14 +16,13 @@ var grid_statuses : Array[Array]
 
 
 func _ready() -> void:
+	print("!!!NEW BOX")
 	Global.camera_manager.camera_changed.connect(camera_changed)
 	order_form.position = bottom_box_collision_shape.position
-	order_form.position.y += .005
+	order_form.position.y = box_interior.size.y/2 +.001
 	order_form.parent_box = self
-	#order_form.generate_order()
-	set_box_size("Large")
+	order_form.generate_order()
 	current_state = State.STILL
-	#set_grid_size()
 	var grid : MeshInstance3D=  create_grid_mesh(Vector2i(Global.box_manager.sizes[current_size].x,Global.box_manager.sizes[current_size].z), Global.grid_size)
 	box_interior.add_child(grid)
 	grid.position = Vector3(-box_interior.size.x/2, -box_interior.size.y/2.9, -box_interior.size.z/2)
@@ -32,15 +31,13 @@ func _ready() -> void:
 	box_collision_shape.shape.size = size
 
 
-
-
 func set_grid_size():
 	for z in range(Global.box_manager.sizes[current_size].z): 
 		var temp : Array[bool]
 		temp.resize(Global.box_manager.sizes[current_size].x)
 		temp.fill(false)
 		grid_statuses.append(temp)
-	
+
 
 func _process(delta: float) -> void:
 	match current_state:
@@ -53,10 +50,11 @@ func _process(delta: float) -> void:
 		State.STILL:
 			pass
 
+
 func entering(delta: float):
 	position.y -= Global.box_drop_speed * delta
-	
-	
+
+
 func conveying(delta: float): 
 	position.x += Global.conveyer_speed *delta
 
@@ -109,14 +107,15 @@ func create_grid_mesh(grid_size: Vector2i, cell_size: float) -> MeshInstance3D:
 
 func snap_to_grid(world_pos: Vector3) -> Vector3:
 	#offset orgin point for odd number row/columns
-	if Global.box_manager.sizes[current_size].x % 2 != 0: 
-		world_pos.x += Global.grid_size/2.0
-	if Global.box_manager.sizes[current_size].z % 2 != 0: 
-		world_pos.z += Global.grid_size/2.0
+	#world_pos = snapped(world_pos, Vector3(.1,.1,.1))
+	#if Global.box_manager.sizes[current_size].x % 2 != 0: 
+		#world_pos.x += Global.grid_size/2.0
+	#if Global.box_manager.sizes[current_size].z % 2 != 0: 
+		#world_pos.z += Global.grid_size/2.0
 	
-	var snap_position :  Vector3 = Vector3 ((floor(world_pos.x / Global.grid_size) * Global.grid_size) ,
+	var snap_position :  Vector3 = Vector3 ((floor(snapped(world_pos.x / Global.grid_size, .1)) * Global.grid_size) ,
 		world_pos.y, # keep Y as-is, or snap it too if needed
-		(floor(world_pos.z / Global.grid_size) * Global.grid_size) 
+		(floor(snapped(world_pos.z / Global.grid_size, 1)) * Global.grid_size) 
 	)
 	# offset center of snap for even rows.colums
 	if Global.box_manager.sizes[current_size].x % 2 == 0: 
@@ -129,9 +128,14 @@ func _box_bottom_on_area_3d_input_event(_camera: Node, event: InputEvent, event_
 	if event is InputEventMouseButton:
 		if Global.merch_manager.held_merch.is_empty() == false:
 			if event.pressed:
+				print(to_local(event_position))
 				var new_position : Vector3= snap_to_grid(to_local(event_position))
 				if add_to_grid(Vector2(new_position.x, new_position.z),  Global.merch_manager.get_last_held_merch().grid_shape) == true: 
-					Global.merch_manager.place_held_merch(self, new_position)
+					if  Global.merch_manager.get_last_held_merch().ghost != null:
+						Global.merch_manager.place_held_merch(self, Global.merch_manager.get_last_held_merch().ghost.global_position)
+						print("ghost placement")
+					else:
+						Global.merch_manager.place_held_merch(self, new_position)
 				if ghost != null: 
 					ghost.queue_free()
 	if event is InputEventMouseMotion:
@@ -142,8 +146,8 @@ func is_grid_place_valid(snap_position: Vector2, shape: String)->bool:
 	var grid_update : Array[Array] = get_grid_placement(snap_position, shape)
 	if grid_update == [[-1]]:
 		return false
-	for row in range(grid_update.size()-1):
-		for column in range(grid_update.size()-1):
+	for row in range(grid_update.size()):
+		for column in range(grid_update[row].size()):
 			if grid_statuses[row][column] == true and grid_update[row][column] == true:
 				return false
 	return true
@@ -232,7 +236,8 @@ func camera_changed() -> void:
 		box_collision_shape.shape.size = size
 		box_collision_shape.global_position = global_position
 		if ghost != null:
-			ghost.hide()
+			ghost.orignal_merch.ghost = null
+			ghost.queue_free()
 
 func _on_box_bottom_3d_mouse_entered() -> void:
 	if ghost != null:

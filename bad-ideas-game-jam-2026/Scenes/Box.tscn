@@ -1,4 +1,4 @@
-[gd_scene load_steps=5 format=3 uid="uid://hg2wuymgg6bs"]
+[gd_scene load_steps=7 format=3 uid="uid://hg2wuymgg6bs"]
 
 [ext_resource type="Script" uid="uid://cdi0harqoraet" path="res://Scripts/box.gd" id="1_8s0t8"]
 [ext_resource type="PackedScene" uid="uid://7bjbuyexxyn3" path="res://Scenes/order_form.tscn" id="2_42nxc"]
@@ -6,6 +6,13 @@
 [sub_resource type="BoxShape3D" id="BoxShape3D_8s0t8"]
 resource_local_to_scene = true
 size = Vector3(0.26644897, 0.052085876, 0.2673645)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_8s0t8"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_42nxc"]
+resource_local_to_scene = true
+material = SubResource("StandardMaterial3D_8s0t8")
+size = Vector3(0.15, 0.15, 0.001)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_42nxc"]
 resource_local_to_scene = true
@@ -34,7 +41,7 @@ debug_color = Color(0.9647059, 0, 0.5058824, 0.60784316)
 
 [node name="order_form" parent="CSGBox3D2" instance=ExtResource("2_42nxc")]
 transform = Transform3D(0.9999999, 0, 0, 0, -4.371139e-08, 0.9999999, 0, -1, -4.3711385e-08, 0, -0.058887437, 2.5740514e-09)
-visible = false
+mesh = SubResource("BoxMesh_42nxc")
 
 [node name="Area3D" type="Area3D" parent="."]
 

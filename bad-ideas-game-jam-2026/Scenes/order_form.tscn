@@ -1,0 +1,36 @@
+[gd_scene load_steps=5 format=3 uid="uid://7bjbuyexxyn3"]
+
+[ext_resource type="Script" uid="uid://wsx447ht2xmq" path="res://Scenes/order_form.gd" id="1_tcv0s"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_8s0t8"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_8s0t8"]
+resource_local_to_scene = true
+material = SubResource("StandardMaterial3D_8s0t8")
+size = Vector3(0.15, 0.15, 0.001)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_pnu8e"]
+size = Vector3(0.17421874, 0.2, 0.15)
+
+[node name="order_form" type="MeshInstance3D" node_paths=PackedStringArray("label", "collision_shape")]
+transform = Transform3D(0.1, 0, 0, 0, -4.371139e-09, 0.1, 0, -0.1, -4.371139e-09, 0, 0, 0)
+mesh = SubResource("BoxMesh_8s0t8")
+skeleton = NodePath("../..")
+script = ExtResource("1_tcv0s")
+label = NodePath("Label3D")
+collision_shape = NodePath("Area3D/CollisionShape3D")
+
+[node name="Label3D" type="Label3D" parent="."]
+transform = Transform3D(1, 9.55316e-10, -1.9106325e-09, -9.553162e-10, 1, -5.7127444e-08, 1.9106325e-09, 5.7127444e-08, 1, 1.2943532e-05, 0.054046944, 0.0011854785)
+modulate = Color(0, 0, 0, 1)
+text = "order form
+"
+outline_size = 0
+
+[node name="Area3D" type="Area3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
+transform = Transform3D(1, 0, 0, 0, 1, -1.7692514e-12, 0, 1.7692514e-12, 1, 0.0128906, -2.7644468e-08, 0.009521484)
+shape = SubResource("BoxShape3D_pnu8e")
+
+[connection signal="input_event" from="Area3D" to="." method="_on_area_3d_input_event"]

@@ -29,7 +29,11 @@ func get_last_held_merch()-> Merchandise:
 	return held_merch.back()
 
 func place_held_merch(new_parent : Node3D, offset : Vector3):
-	place_merch(new_parent, offset, pop_last_held_merch())
+	var merch :Merchandise = pop_last_held_merch()
+	if merch.ghost != null:
+		place_merch_from_ghost(new_parent, merch)
+	else: 
+		place_merch(new_parent, offset, merch)
 
 
 func place_merch(new_parent : Node3D, offset : Vector3, merch : Merchandise):
@@ -37,9 +41,24 @@ func place_merch(new_parent : Node3D, offset : Vector3, merch : Merchandise):
 	merch.is_held = false
 	merch.scale = Vector3.ONE
 	merch.reparent(new_parent)
-	offset -= merch.center_offset * Global.grid_size
-	merch.global_position = new_parent.global_position + offset
+	merch.position = merch.get_pivot_offset()
+	#offset -= merch.center_offset * Global.grid_size
+	#merch.position = offset
 
+
+
+func place_merch_from_ghost(new_parent : Node3D, merch : Merchandise):
+	Global.camera_manager.held_object = null
+	merch.is_held = false
+	merch.scale = Vector3.ONE
+	merch.reparent(new_parent)
+	merch.global_position = merch.ghost.global_position
+	merch.rotation = merch.ghost.rotation
+	merch.object_mesh.position = merch.ghost.object_mesh.position
+	merch.object_mesh.rotation = merch.ghost.object_mesh.rotation
+	
+	
+	
 func get_object_by_code(code: String) -> MerchData:
 	for prototype in prototypes:
 		if prototype.code == code: 
@@ -59,3 +78,12 @@ func create_from_code(code : String) -> Merchandise:
 	new_item.merch_name = item_Data.item_name
 	new_item.rotate_axis = item_Data.get_rotate_axis_string()
 	return new_item 
+	
+func get_size_from_code(code: String)-> int:
+	var item_Data : MerchData = get_object_by_code(code)
+	var rows : int = item_Data.grid_shape.count("\n") 
+	if rows == -1 : rows = 1
+	else: rows += +1
+	var columns : int = item_Data.grid_shape.find("\n")
+	if columns == -1 : columns = item_Data.grid_shape.length()
+	return rows * columns
