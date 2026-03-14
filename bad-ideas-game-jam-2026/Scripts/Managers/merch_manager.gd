@@ -28,24 +28,26 @@ func get_last_held_merch()-> Merchandise:
 		return null
 	return held_merch.back()
 
-func place_held_merch(new_parent : Node3D, offset : Vector3):
+func place_held_merch(new_parent : Node3D):
 	var merch :Merchandise = pop_last_held_merch()
 	if merch.ghost != null:
 		place_merch_from_ghost(new_parent, merch)
 	else: 
-		place_merch(new_parent, offset, merch)
+		place_merch(new_parent, merch)
 
 
-func place_merch(new_parent : Node3D, offset : Vector3, merch : Merchandise):
+func place_merch(new_parent : Node3D, merch : Merchandise):
 	Global.camera_manager.held_object = null
 	merch.is_held = false
 	merch.scale = Vector3.ONE
 	merch.reparent(new_parent)
 	merch.position = merch.get_pivot_offset()
-	#offset -= merch.center_offset * Global.grid_size
-	#merch.position = offset
-
-
+	if new_parent is Box: 
+		merch.location = merch.Location.BOX
+	elif new_parent is Camera3D: 
+		merch.location = merch.Location.HELD
+	elif new_parent is OrderTube: 
+		merch.location = merch.Location.ORDER_TUBE
 
 func place_merch_from_ghost(new_parent : Node3D, merch : Merchandise):
 	Global.camera_manager.held_object = null
@@ -70,7 +72,7 @@ func create_from_code(code : String) -> Merchandise:
 	if item_Data == null : return null
 	var new_item : Node3D = item_Data.item.instantiate()
 	new_item.set_script(MerchandiseScript)
-	#new_item.rotation_degrees = item_Data.item_rotation 
+	new_item.rotation_degrees = Vector3.ZERO
 	new_item.get_child(0).rotation_degrees = item_Data.item_rotation 
 	new_item.grid_shape = item_Data.grid_shape
 	new_item.center_offset = item_Data.center_offset

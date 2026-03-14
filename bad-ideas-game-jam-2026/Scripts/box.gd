@@ -107,9 +107,17 @@ func create_grid_mesh(grid_size: Vector2i, cell_size: float) -> MeshInstance3D:
 	return mesh_instance
 
 func snap_to_grid(world_pos: Vector3) -> Vector3:
-	var snap_position :  Vector3 = Vector3 ((floor(snapped(world_pos.x / Global.grid_size, .1)) * Global.grid_size) ,
-		world_pos.y, # keep Y as-is, or snap it too if needed
-		(floor(snapped(world_pos.z / Global.grid_size, 1)) * Global.grid_size) 
+	var x_pos : float = floor(snapped(world_pos.x / Global.grid_size, .1))
+	var z_pos : float = floor(snapped(world_pos.z / Global.grid_size, .1))
+	if Global.box_manager.sizes[current_size].x % 2 != 0: 
+		x_pos = floor(snapped(world_pos.x / Global.grid_size, 1))
+	if Global.box_manager.sizes[current_size].z % 2 != 0: 
+		z_pos = floor(snapped(world_pos.z / Global.grid_size, 1))
+	
+	
+	var snap_position :  Vector3 = Vector3 (x_pos * Global.grid_size ,
+		world_pos.y, 
+		z_pos * Global.grid_size
 	)
 	# offset center of snap for even rows.colums
 	if Global.box_manager.sizes[current_size].x % 2 == 0: 
@@ -127,20 +135,31 @@ func _box_bottom_on_area_3d_input_event(_camera: Node, event: InputEvent, event_
 		if Global.merch_manager.held_merch.is_empty() == false:
 			move_ghost(snap_to_grid(to_local(event_position)))
 
-func add_to_box(event_position: Vector3,):
+func add_to_box(event_position: Vector3):
 	var new_position : Vector3= snap_to_grid(to_local(event_position))
 	if add_to_grid(Vector2(new_position.x, new_position.z),  Global.merch_manager.get_last_held_merch().grid_shape) == true: 
+		Global.merch_manager.get_last_held_merch().location = Global.merch_manager.get_last_held_merch().Location.BOX
+		Global.merch_manager.get_last_held_merch().remove_from_box.connect(remove_from_box)
 		if held_objects.has(Global.merch_manager.get_last_held_merch().merch_name): 
 			held_objects[Global.merch_manager.get_last_held_merch().merch_name] += 1
 		else: 
 			held_objects[Global.merch_manager.get_last_held_merch().merch_name] = 1
 			
 		if  Global.merch_manager.get_last_held_merch().ghost != null:
-			Global.merch_manager.place_held_merch(self, Global.merch_manager.get_last_held_merch().ghost.global_position)
+			Global.merch_manager.place_held_merch(self)
 		else:
-			Global.merch_manager.place_held_merch(self, new_position)
-	if ghost != null: 
-		ghost.queue_free()
+			Global.merch_manager.place_held_merch(self)
+		if ghost != null: 
+			ghost.queue_free()
+		
+
+func remove_from_box(world_position: Vector3, merch : Merchandise):
+	var old_position : Vector3= snap_to_grid(to_local(world_position))
+	merch.remove_from_box.disconnect(remove_from_box)
+	remove_from_grid(Vector2(old_position.x, old_position.z), merch.grid_shape)
+	
+	print("Remove from box")
+	print(old_position)
 	
 	
 func is_grid_place_valid(snap_position: Vector2, shape: String)->bool:
@@ -158,10 +177,17 @@ func add_to_grid(snap_position: Vector2, shape: String)->bool:
 		return false
 	var grid_update : Array[Array] = get_grid_placement(snap_position, shape)
 	for row in range(grid_update.size()):##testing had size - 1
-		for column in range(grid_update[row].size()):##testing had size - 1
+		for column in range(grid_update[row].size()):##testing had size - 1 
 			if grid_update[row][column] == true:
 				grid_statuses[row][column] = true
 	return true
+
+func remove_from_grid(snap_position: Vector2, shape: String):
+	var grid_update : Array[Array] = get_grid_placement(snap_position, shape)
+	for row in range(grid_update.size()):##testing had size - 1
+		for column in range(grid_update[row].size()):##testing had size - 1
+			if grid_update[row][column] == true:
+				grid_statuses[row][column] = false
 
 
 func get_grid_placement(snap_position: Vector2, shape: String)-> Array[Array]:
@@ -217,14 +243,13 @@ func move_ghost(ghost_position : Vector3):
 		
 	if is_grid_place_valid(Vector2(ghost_position.x, ghost_position.z), Global.merch_manager.get_last_held_merch().grid_shape) == false:
 		is_grid_place_valid(Vector2(ghost_position.x, ghost_position.z), Global.merch_manager.get_last_held_merch().grid_shape)
-		if ghost_position.x > size.x/2 or ghost_position.x < -size.x/2 or ghost_position.z > size.x/2 or ghost_position.z < -size.y/2:
-			ghost.hide()
+		#if ghost_position.x > self.size.x/2.0 or ghost_position.x < -self.size.x/2.0 or ghost_position.z > self.size.x/2.0 or ghost_position.z < -self.size.y/2.0:
+			#ghost.hide()
 		turn_ghost_red()
 	else:
-		ghost.show()
+		#ghost.show()
 		ghost.object_mesh.material_override = null
 
-	#ghost.rotation_degrees = Global.merch_manager.get_last_held_merch().rotation_degrees 
 	ghost.position = ghost_position - (Global.merch_manager.get_last_held_merch().center_offset * Global.grid_size)
 
 

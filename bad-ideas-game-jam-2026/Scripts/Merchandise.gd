@@ -16,7 +16,9 @@ signal changgeGhostPivot(pivot_change : Vector3)
 var current_pivot_offset : Vector3
 var ghost : Merchandise
 var orignal_merch : Merchandise
-
+enum Location{ORDER_TUBE, HELD, BOX}
+var location : Location
+signal remove_from_box(location : Vector3, merch : Merchandise)
 
 func _ready() -> void:
 	if is_ghost: 
@@ -84,10 +86,10 @@ func get_size_from_shape() -> Vector3:
 	return scale_factor
 
 
-func _on_area_3d_input_event(_camera: Node, event: InputEvent, _event_position: Vector3, _normal: Vector3, _shape_idx: int):
+func _on_area_3d_input_event(_camera: Node, event: InputEvent, event_position: Vector3, _normal: Vector3, _shape_idx: int):
 	if event is InputEventMouseButton:
 		if event.button_index == MOUSE_BUTTON_LEFT and event.pressed:
-			select_object()
+			select_object(event_position)
 			get_viewport().set_input_as_handled()
 
 func _unhandled_input(event: InputEvent) -> void:
@@ -103,16 +105,25 @@ func _unhandled_input(event: InputEvent) -> void:
 func get_mesh()-> MeshInstance3D:
 	return object_mesh
 
-func select_object():
-	if is_held:
-		pass
-	else:
-		if Global.camera_manager.held_object != null: 
-			return
-		is_held = true
+func select_object(event_position : Vector3):
+	match location: 
+		Location.HELD: 
+			pass
+		Location.ORDER_TUBE:
+			hold_object()
+		Location.BOX: 
+			remove_from_box.emit(global_position, self)
+			hold_object(rotation_degrees - Vector3(0, -90, -90))
+	
+	
+func hold_object(rotation_offset : Vector3 = Vector3.ZERO): 
+	if Global.camera_manager.held_object != null: 
+		return
+	is_held = true
 #		
-		Global.camera_manager.hold_item(self, object_mesh)
-		Global.merch_manager.hold_merch(self)
+	Global.camera_manager.hold_item(self, object_mesh, rotation_offset)
+	Global.merch_manager.hold_merch(self)
+	
 
 func turn(is_right : bool):
 	if is_right: 
