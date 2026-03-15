@@ -15,4 +15,5 @@ func entered_conveyer(area: Area3D) -> void:
 
 func exited_conveyer(area: Area3D) -> void:
 	if area.get_parent() is Box:
-		area.get_parent().ship()
+		Global.box_manager.ship(area.get_parent())
+		#area.get_parent().ship()

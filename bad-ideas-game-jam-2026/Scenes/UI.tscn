@@ -1,0 +1,63 @@
+[gd_scene load_steps=3 format=3 uid="uid://5bo23abi3m8c"]
+
+[ext_resource type="Script" uid="uid://bv4sf2asekh6w" path="res://Scripts/ui.gd" id="1_w371h"]
+[ext_resource type="Script" uid="uid://y8xgidbk47pa" path="res://Scripts/metrics_report.gd" id="2_nxvpl"]
+
+[node name="UI" type="Control" node_paths=PackedStringArray("metrics_card")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("1_w371h")
+metrics_card = NodePath("Metrics_Report")
+
+[node name="Metrics_Report" type="CanvasLayer" parent="." node_paths=PackedStringArray("missing_items_label", "incorrect_items_label", "shipped_items_label")]
+visible = false
+script = ExtResource("2_nxvpl")
+missing_items_label = NodePath("VBoxContainer/Missing_Items")
+incorrect_items_label = NodePath("VBoxContainer/Incorrect_Items")
+shipped_items_label = NodePath("VBoxContainer/Shipped_Items")
+
+[node name="ColorRect" type="ColorRect" parent="Metrics_Report"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Metrics_Report"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Header" type="Label" parent="Metrics_Report/VBoxContainer"]
+layout_mode = 2
+text = "Metrics Report"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Shipped_Items" type="Label" parent="Metrics_Report/VBoxContainer"]
+layout_mode = 2
+text = "Missing Items: "
+
+[node name="Missing_Items" type="Label" parent="Metrics_Report/VBoxContainer"]
+layout_mode = 2
+text = "Missing Items: "
+
+[node name="Incorrect_Items" type="Label" parent="Metrics_Report/VBoxContainer"]
+layout_mode = 2
+text = "Incorrect Items: "
+
+[node name="ContinueButton" type="Button" parent="Metrics_Report/VBoxContainer"]
+layout_mode = 2
+text = "Continue"
+
+[connection signal="button_down" from="Metrics_Report/VBoxContainer/ContinueButton" to="Metrics_Report" method="_on_continue_button_button_down"]

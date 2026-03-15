@@ -67,13 +67,17 @@ func decrease_empty_box_space(box : String) -> bool :
 
 func generate_box_sizes() -> Array:
 	var largest_active_box : String = get_largest_active_box()
-	#var smallest_inactive_box : String = get_smallest_inactive_box()
+	var smallest_inactive_box : String = get_smallest_inactive_box()
 	
 	if largest_active_box == "": 
 		add_box_to_available()
 		return create_box_odds_array()
 	if decrease_empty_box_space(largest_active_box) == false: 
-		add_box_to_available()
+		if smallest_inactive_box != "":
+			add_box_to_available()
+		else:
+			pass
+			## TODO increase conveyrer speed
 	return create_box_odds_array()
 
 func create_box_odds_array()->Array[String]:
@@ -84,4 +88,15 @@ func create_box_odds_array()->Array[String]:
 	return box_array
 	
 	
+func ship(box : Box):
+	Global.score_manager.score_box(box)
+	if Global.score_manager.boxes_sent % Global.current_boxes_per_day != 0:
+		Global.box_manager.box_dropper.drop_box()
+	
+	await get_tree().create_timer(1).timeout
+	for child in box.get_children():
+		child.queue_free()
+	box.queue_free()
+	if Global.score_manager.boxes_sent % Global.current_boxes_per_day == 0:
+		Global.ui.show_metrics_card()
 	

@@ -61,13 +61,13 @@ func conveying(delta: float):
 func exiting(delta: float):
 	position.y -= Global.box_drop_speed * delta
 
-func ship():
-	Global.box_manager.box_dropper.drop_box()
-	Global.score_manager.score_box(self)
-	await get_tree().create_timer(1).timeout
-	for child in get_children():
-		child.queue_free()
-	self.queue_free()
+#func ship():
+	#Global.box_manager.box_dropper.drop_box()
+	#Global.score_manager.score_box(self)
+	#await get_tree().create_timer(1).timeout
+	#for child in get_children():
+		#child.queue_free()
+	#self.queue_free()
 
 func _on_area_3d_input_event(_camera: Node, event: InputEvent, _event_position: Vector3, _normal: Vector3, _shape_idx: int) -> void:
 	if event is InputEventMouseButton and event.pressed:
@@ -280,8 +280,3 @@ func _on_box_bottom_3d_mouse_entered() -> void:
 func _on_box_bottom_3d_mouse_exited() -> void:
 	if ghost != null:
 		turn_ghost_red()
-
-#func _exit_tree() -> void:
-	#if is_queued_for_deletion():
-		#print(order_form.requested_items)
-		#Global.score_manager.score_box(self)
