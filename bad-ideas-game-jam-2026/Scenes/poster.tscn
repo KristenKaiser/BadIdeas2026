@@ -1,0 +1,20 @@
+[gd_scene load_steps=3 format=3 uid="uid://c84e18kdng3pf"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_xktcx"]
+albedo_color = Color(0.95686275, 0.9254902, 0.81960785, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_xktcx"]
+material = SubResource("StandardMaterial3D_xktcx")
+size = Vector3(0.01, 1, 1)
+
+[node name="poster" type="MeshInstance3D"]
+mesh = SubResource("BoxMesh_xktcx")
+
+[node name="Label3D" type="Label3D" parent="."]
+transform = Transform3D(5.424551e-08, -1.8663495e-07, 9.231949, -1.510464e-08, 0.7199039, -3.4531843e-07, -0.62049633, -5.650576e-08, 8.070826e-07, 0.0070531145, 0.00808084, 0)
+text = "84460 - Apple
+69128 - Banana
+07590 - Bread
+71411 - EggPLant
+63389 - Sauce
+"
