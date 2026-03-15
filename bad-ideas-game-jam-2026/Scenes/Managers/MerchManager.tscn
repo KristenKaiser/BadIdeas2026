@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://cpxhjnah05wv6"]
+[gd_scene load_steps=13 format=3 uid="uid://cpxhjnah05wv6"]
 
 [ext_resource type="Script" uid="uid://ddgtuurbafg7k" path="res://Scripts/Managers/merch_manager.gd" id="1_qb7xf"]
 [ext_resource type="Script" uid="uid://d06to0talnada" path="res://Scripts/Classes/MerchData.gd" id="2_y8k13"]
@@ -53,24 +53,6 @@ item = ExtResource("7_ayf3q")
 grid_shape = "xox"
 metadata/_custom_type_script = "uid://d06to0talnada"
 
-[sub_resource type="Resource" id="Resource_ossd1"]
-script = ExtResource("2_y8k13")
-code = "0"
-item_name = "Apple-Cheat"
-item = ExtResource("3_ossd1")
-grid_shape = "o"
-metadata/_custom_type_script = "uid://d06to0talnada"
-
-[sub_resource type="Resource" id="Resource_ayf3q"]
-script = ExtResource("2_y8k13")
-code = "1"
-item_name = "banana test"
-item = ExtResource("4_ayf3q")
-grid_shape = "ox
-x_"
-item_rotation = Vector3(45, 0, 0)
-metadata/_custom_type_script = "uid://d06to0talnada"
-
 [node name="MerchManager" type="Node"]
 script = ExtResource("1_qb7xf")
-prototypes = Array[ExtResource("2_y8k13")]([SubResource("Resource_sgreg"), SubResource("Resource_kkwcq"), SubResource("Resource_0vlwy"), SubResource("Resource_sspri"), SubResource("Resource_j6e08"), SubResource("Resource_ossd1"), SubResource("Resource_ayf3q")])
+prototypes = Array[ExtResource("2_y8k13")]([SubResource("Resource_sgreg"), SubResource("Resource_kkwcq"), SubResource("Resource_0vlwy"), SubResource("Resource_sspri"), SubResource("Resource_j6e08")])

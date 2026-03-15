@@ -48,14 +48,17 @@ func _on_area_3d_input_event(_camera: Node, event: InputEvent, _event_position: 
 				position.y += .2
 
 func generate_order():
-	var box_size : String = Global.box_manager.sizes.keys().pick_random()
+	var possible_boxes = Global.box_manager.generate_box_sizes()
+	var box_size : String = possible_boxes.pick_random()
+	var max_empty_spaces : int = Global.box_manager.box_empty_fill[box_size]
 	var box_area : int = Global.box_manager.sizes[box_size].x * Global.box_manager.sizes[box_size].y * Global.box_manager.sizes[box_size].z
 	var available_box_area : int = box_area
 	parent_box.set_box_size(box_size)
 	write_requested_items()
 	
+	print("box size: %s | max empty space : %s"%[box_size, max_empty_spaces])
 	var max_attempts : int = 20
-	while available_box_area > 1 and max_attempts > 0:
+	while available_box_area > max_empty_spaces and max_attempts > 0:
 		place_merch(box_size, available_box_area)
 		available_box_area = 0
 		for y in range(parent_box.grid_statuses.size()):

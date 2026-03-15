@@ -49,7 +49,7 @@ mesh = SubResource("BoxMesh_42nxc")
 shape = SubResource("BoxShape3D_42nxc")
 
 [node name="Camera3D" type="Camera3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 0.4, 0)
+transform = Transform3D(1, 0, 0, 0, 0.38268346, 0.9238795, 0, -0.92387956, 0.38268346, 0, 0.49396315, 0.19485459)
 
 [connection signal="input_event" from="CSGBox3D2/Area3D" to="." method="_box_bottom_on_area_3d_input_event"]
 [connection signal="mouse_entered" from="CSGBox3D2/Area3D" to="." method="_on_box_bottom_3d_mouse_entered"]

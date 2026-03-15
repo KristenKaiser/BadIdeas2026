@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://d0nk4t02xe8ik"]
+[gd_scene load_steps=16 format=3 uid="uid://d0nk4t02xe8ik"]
 
 [ext_resource type="PackedScene" uid="uid://uvo3k3alfmfd" path="res://Scenes/food_can.tscn" id="1_kln2b"]
 [ext_resource type="PackedScene" uid="uid://ccmmb1u17r8a0" path="res://Scenes/keypad.tscn" id="1_r150o"]
@@ -11,6 +11,7 @@
 [ext_resource type="Script" uid="uid://b238gl40bbarg" path="res://Scripts/trash_can.gd" id="5_bmxlf"]
 [ext_resource type="PackedScene" uid="uid://denvefmpnolys" path="res://Scenes/conveyer.tscn" id="5_vy5pj"]
 [ext_resource type="Script" uid="uid://0i2ldxgwgruq" path="res://Scripts/trash_compactor.gd" id="11_4kpch"]
+[ext_resource type="PackedScene" uid="uid://c84e18kdng3pf" path="res://Scenes/poster.tscn" id="12_grg3l"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_c1w88"]
 size = Vector3(0.33112794, 0.4994873, 0.5165771)
@@ -258,6 +259,9 @@ transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, -1.4
 text = "Trash
 Compactor"
 font_size = 28
+
+[node name="poster" parent="Right" instance=ExtResource("12_grg3l")]
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 2.3402822, 0.39999998, -1)
 
 [node name="Hand" type="Node3D" parent="."]
 transform = Transform3D(0.69453704, 0, -1.7763568e-15, 0, 0.10020816, 0, 0, 0, 0.38678715, 1.8000002, 0.8, -1.2)
