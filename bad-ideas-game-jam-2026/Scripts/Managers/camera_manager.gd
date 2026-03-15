@@ -60,7 +60,7 @@ func hold_item(item : Node3D, mesh_instance : MeshInstance3D, rotation_offset : 
 	held_object = item
 	
 	
-func follow_mouse(camera : Camera3D, base_rotaton : Vector3, x_max_change : float, y_max_change : float, delta: float, speed : float):
+func follow_mouse(camera : Camera3D, base_rotaton : Vector3, x_max_change : float, y_max_change : float, delta: float, speed : float, dead_zone_ratio : Vector2):
 	if is_screen_locked: return
 	##TODO make max chage greater towards center so drift area is round not square
 	var change : float = 1 ##TODO replace this with speed
@@ -70,17 +70,17 @@ func follow_mouse(camera : Camera3D, base_rotaton : Vector3, x_max_change : floa
 	var y_change : float = 0
 	var y_dist_to_center : float = abs(mouse_pos.x - screen_center.x)/screen_center.x
 	var x_dist_to_center : float = abs(mouse_pos.y - screen_center.y)/screen_center.y
-	if mouse_pos.y > screen_center.y:
+	if mouse_pos.y > screen_center.y + ( (screen_center.y * dead_zone_ratio.y) / 2):
 		if camera.rotation_degrees.x - change > base_rotaton.x - x_max_change:
 			x_change = -smoothstep(0.0, 1.0, x_dist_to_center) 
-	elif mouse_pos.y < screen_center.y:
+	elif mouse_pos.y < screen_center.y - ( (screen_center.y  * dead_zone_ratio.y) / 2):
 		if camera.rotation_degrees.x + change < base_rotaton.x + x_max_change:
 			x_change = smoothstep(0.0, 1.0, x_dist_to_center) 
 		
-	if mouse_pos.x > screen_center.x:
+	if mouse_pos.x > screen_center.x + ( (screen_center.x * dead_zone_ratio.x )/ 2):
 		if camera.rotation_degrees.y - change > base_rotaton.y - y_max_change:
 			y_change = -smoothstep(0.0, 1.0, y_dist_to_center) 
-	elif mouse_pos.x < screen_center.x:
+	elif mouse_pos.x < screen_center.x - ( (screen_center.x * dead_zone_ratio.x )/ 2):
 		if camera.rotation_degrees.y + change < base_rotaton.y + y_max_change:
 			y_change = smoothstep(0.0, 1.0, y_dist_to_center) 
 	
