@@ -154,12 +154,13 @@ func add_to_box(event_position: Vector3):
 		
 
 func remove_from_box(world_position: Vector3, merch : Merchandise):
+	if held_objects.has(merch.merch_name):
+		held_objects[merch.merch_name] -= 1
+		if held_objects[merch.merch_name] == 0: 
+			held_objects.erase(merch.merch_name)
 	var old_position : Vector3= snap_to_grid(to_local(world_position))
 	merch.remove_from_box.disconnect(remove_from_box)
 	remove_from_grid(Vector2(old_position.x, old_position.z), merch.grid_shape)
-	
-	print("Remove from box")
-	print(old_position)
 	
 	
 func is_grid_place_valid(snap_position: Vector2, shape: String)->bool:

@@ -114,6 +114,7 @@ func select_object(event_position : Vector3):
 		Location.BOX: 
 			remove_from_box.emit(global_position, self)
 			hold_object(rotation_degrees - Vector3(0, -90, -90))
+
 	
 	
 func hold_object(rotation_offset : Vector3 = Vector3.ZERO): 
