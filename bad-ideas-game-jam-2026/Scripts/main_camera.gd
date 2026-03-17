@@ -23,7 +23,7 @@ func _ready() -> void:
 
 func _process(delta: float) -> void:
 	if current_direction == Direction.CENTER:
-		Global.camera_manager.follow_mouse(self, center_rotation, x_max_rotation_change, y_max_rotation_change, delta, 30., Vector2(.75,.75))
+		Global.camera_manager.follow_mouse(self, center_rotation, x_max_rotation_change, y_max_rotation_change, delta, 100.0, Vector2(.75,.75))
 
 func _unhandled_input(event: InputEvent):
 	if event.is_action_pressed("ui_right"):

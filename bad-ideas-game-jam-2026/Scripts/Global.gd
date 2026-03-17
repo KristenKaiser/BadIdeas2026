@@ -6,7 +6,7 @@ var slow_conveyer_speed: float =.1
 var fast_conveyer_speed: float = 1
 var box_drop_speed: float =.8
 var grid_size : float  = .1 # 1.0/6.0
-var base_boxes_per_day : int = 2 #7
+var base_boxes_per_day : int = 1 #7
 var current_boxes_per_day : int 
 
 const MERCH_MANAGER = preload("uid://cpxhjnah05wv6")

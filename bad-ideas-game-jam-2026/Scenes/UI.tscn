@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=3 uid="uid://5bo23abi3m8c"]
+[gd_scene load_steps=4 format=3 uid="uid://5bo23abi3m8c"]
 
 [ext_resource type="Script" uid="uid://bv4sf2asekh6w" path="res://Scripts/ui.gd" id="1_w371h"]
 [ext_resource type="Script" uid="uid://y8xgidbk47pa" path="res://Scripts/metrics_report.gd" id="2_nxvpl"]
+[ext_resource type="Script" uid="uid://c8fj70611m1yu" path="res://Scripts/score_graph.gd" id="3_dewlx"]
 
 [node name="UI" type="Control" node_paths=PackedStringArray("metrics_card")]
 layout_mode = 3
@@ -14,12 +15,16 @@ mouse_filter = 2
 script = ExtResource("1_w371h")
 metrics_card = NodePath("Metrics_Report")
 
-[node name="Metrics_Report" type="CanvasLayer" parent="." node_paths=PackedStringArray("missing_items_label", "incorrect_items_label", "shipped_items_label")]
+[node name="Metrics_Report" type="CanvasLayer" parent="." node_paths=PackedStringArray("missing_items_label", "incorrect_items_label", "shipped_items_label", "missing_items_graph", "incorrect_items_graph", "mistakes_graph", "graphs")]
 visible = false
 script = ExtResource("2_nxvpl")
 missing_items_label = NodePath("VBoxContainer/Missing_Items")
 incorrect_items_label = NodePath("VBoxContainer/Incorrect_Items")
 shipped_items_label = NodePath("VBoxContainer/Shipped_Items")
+missing_items_graph = NodePath("VBoxContainer/Graphs/HBoxContainer/VBoxContainer/missing_items_graph")
+incorrect_items_graph = NodePath("VBoxContainer/Graphs/HBoxContainer/VBoxContainer2/wrong_items_graph")
+mistakes_graph = NodePath("VBoxContainer/Graphs/HBoxContainer2/mistakes_graph")
+graphs = NodePath("VBoxContainer/Graphs")
 
 [node name="ColorRect" type="ColorRect" parent="Metrics_Report"]
 anchors_preset = 15
@@ -27,7 +32,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-color = Color(0, 0, 0, 1)
+color = Color(0.9515795, 0.95157963, 0.9515795, 1)
 
 [node name="VBoxContainer" type="VBoxContainer" parent="Metrics_Report"]
 anchors_preset = 15
@@ -40,24 +45,81 @@ size_flags_vertical = 3
 
 [node name="Header" type="Label" parent="Metrics_Report/VBoxContainer"]
 layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
 text = "Metrics Report"
 horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="Shipped_Items" type="Label" parent="Metrics_Report/VBoxContainer"]
 layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
 text = "Missing Items: "
 
 [node name="Missing_Items" type="Label" parent="Metrics_Report/VBoxContainer"]
 layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
 text = "Missing Items: "
 
 [node name="Incorrect_Items" type="Label" parent="Metrics_Report/VBoxContainer"]
 layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
 text = "Incorrect Items: "
+
+[node name="Graphs" type="VBoxContainer" parent="Metrics_Report/VBoxContainer"]
+visible = false
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Metrics_Report/VBoxContainer/Graphs"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Metrics_Report/VBoxContainer/Graphs/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Label" type="Label" parent="Metrics_Report/VBoxContainer/Graphs/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+text = "Percent Items Missing"
+
+[node name="missing_items_graph" type="ColorRect" parent="Metrics_Report/VBoxContainer/Graphs/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+script = ExtResource("3_dewlx")
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="Metrics_Report/VBoxContainer/Graphs/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Label2" type="Label" parent="Metrics_Report/VBoxContainer/Graphs/HBoxContainer/VBoxContainer2"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+text = "Percent Wrong Items Shipped"
+
+[node name="wrong_items_graph" type="ColorRect" parent="Metrics_Report/VBoxContainer/Graphs/HBoxContainer/VBoxContainer2"]
+layout_mode = 2
+size_flags_vertical = 3
+script = ExtResource("3_dewlx")
+
+[node name="HBoxContainer2" type="VBoxContainer" parent="Metrics_Report/VBoxContainer/Graphs"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Label3" type="Label" parent="Metrics_Report/VBoxContainer/Graphs/HBoxContainer2"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+text = "Percent Mistakes compared to successes "
+
+[node name="mistakes_graph" type="ColorRect" parent="Metrics_Report/VBoxContainer/Graphs/HBoxContainer2"]
+layout_mode = 2
+size_flags_vertical = 3
+script = ExtResource("3_dewlx")
 
 [node name="ContinueButton" type="Button" parent="Metrics_Report/VBoxContainer"]
 layout_mode = 2
+size_flags_vertical = 10
 text = "Continue"
 
 [connection signal="button_down" from="Metrics_Report/VBoxContainer/ContinueButton" to="Metrics_Report" method="_on_continue_button_button_down"]

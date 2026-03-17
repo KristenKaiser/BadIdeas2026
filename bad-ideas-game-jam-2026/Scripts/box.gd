@@ -236,7 +236,7 @@ func move_ghost(ghost_position : Vector3):
 		ghost.is_ghost = true
 		Global.merch_manager.get_last_held_merch().get_parent().add_child(ghost)
 		ghost.reparent(self)
-		#self.add_child(ghost)
+		ghost.rotation_degrees = Vector3(0, -90, -90)
 		ghost.duplicate_globals(Global.merch_manager.get_last_held_merch())
 		ghost.collision_shape.disabled = true
 		ghost.object_mesh.transparency =.5
