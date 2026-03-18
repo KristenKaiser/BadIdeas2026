@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://q5yi5h1cx1fa"]
 
 [ext_resource type="PackedScene" uid="uid://dnhn7dlqx41c8" path="res://Art/box/box1.fbx" id="1_365iy"]
-[ext_resource type="Script" uid="uid://cwlq6ipfv2hxj" path="res://box_model.gd" id="2_kndle"]
+[ext_resource type="Script" uid="uid://cwlq6ipfv2hxj" path="res://Scripts/box_model.gd" id="2_kndle"]
 
 [node name="box1" node_paths=PackedStringArray("cube", "front_flap", "back_flap", "right_flap", "left_flap") instance=ExtResource("1_365iy")]
 script = ExtResource("2_kndle")
@@ -10,3 +10,6 @@ front_flap = NodePath("flap-front")
 back_flap = NodePath("flap-back")
 right_flap = NodePath("flap-right")
 left_flap = NodePath("flap-left")
+
+[node name="Cube" parent="." index="0"]
+transform = Transform3D(100, -4.3711393e-06, -1.9106857e-13, 0, -4.371139e-06, 100, -4.3711393e-06, -100, -4.371139e-06, 0, 0, 0)
