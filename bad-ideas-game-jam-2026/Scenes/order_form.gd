@@ -19,6 +19,7 @@ func _ready() -> void:
 	
 func write_to_label(text :String):
 	label.text += text
+	resize_mesh_to_label.call_deferred()
 
 func resize_mesh_to_label():
 	var label_aabb = label.get_aabb()
@@ -55,8 +56,6 @@ func generate_order():
 	var available_box_area : int = box_area
 	parent_box.set_box_size(box_size)
 	write_requested_items()
-	
-	print("box size: %s | max empty space : %s"%[box_size, max_empty_spaces])
 	var max_attempts : int = 20
 	while available_box_area > max_empty_spaces and max_attempts > 0:
 		place_merch(box_size, available_box_area)

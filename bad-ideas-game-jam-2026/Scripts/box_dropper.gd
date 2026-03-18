@@ -8,11 +8,11 @@ func _ready() -> void:
 
 func drop_box():
 	var new_box : Box = BOX.instantiate()
-	new_box.set_box_size("Medium")
+	#new_box.set_box_size("Medium")
 	
 	Global.box_manager.add_box(new_box)
 	new_box.global_position = global_position
-	new_box.global_position.z = global_position.z + size.z/2 - new_box.size.z/2
+	new_box.global_position.z = global_position.z + size.z/2 - new_box.box_collision_shape.shape.size.z/2
 	new_box.current_state = new_box.State.ENTERING
 
 func _unhandled_input(event: InputEvent) -> void:

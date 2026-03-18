@@ -1,11 +1,12 @@
-extends CSGBox3D
+extends Node3D
 class_name Box
 
 enum State {ENTERING, CONVEYING, EXITING, STILL}
 var current_state : State
 @export var camera : Camera3D
+@export var box : BoxModel
 var current_size: String
-@export var box_interior : CSGBox3D ##TODO only needed for whiteboxing
+@export var box_interior : CollisionShape3D ##TODO only needed for whiteboxing
 @export var box_collision_shape : CollisionShape3D
 @export var bottom_box_collision_shape : CollisionShape3D
 var ghost: Merchandise= null
@@ -14,21 +15,22 @@ var is_zoomed_in : bool = false
 var grid_statuses : Array[Array]
 @export var order_form : OrderForm
 var held_objects : Dictionary[String, int]
-
+var is_shipped : bool = false
 
 func _ready() -> void:
 	Global.camera_manager.camera_changed.connect(camera_changed)
-	order_form.position = bottom_box_collision_shape.position
-	order_form.position.y = box_interior.size.y/2 +.001
+	
 	order_form.parent_box = self
 	order_form.generate_order()
 	current_state = State.STILL
 	var grid : MeshInstance3D=  create_grid_mesh(Vector2i(Global.box_manager.sizes[current_size].x,Global.box_manager.sizes[current_size].z), Global.grid_size)
+	
 	box_interior.add_child(grid)
-	grid.position = Vector3(-box_interior.size.x/2, -box_interior.size.y/2.9, -box_interior.size.z/2)
-	bottom_box_collision_shape.shape.size = Vector3(box_interior.size.x, .01, box_interior.size.z)
-	bottom_box_collision_shape.position.y = box_interior.position.y - box_interior.size.y/2 + .01
-	box_collision_shape.shape.size = size
+	grid.position = Vector3(-box_interior.shape.size.x/2, -box_interior.shape.size.y/2.9, -box_interior.shape.size.z/2)
+	#bottom_box_collision_shape.scale = Vector3.ONE
+	bottom_box_collision_shape.shape.size = Vector3(box_interior.shape.size.x, .01, box_interior.shape.size.z)
+	bottom_box_collision_shape.global_position.y = box_interior.global_position.y - box_interior.shape.size.y/2 + .01
+	Global.fit_collision_to_meshes(box, box_collision_shape)
 
 
 func set_grid_size():
@@ -61,15 +63,8 @@ func conveying(delta: float):
 func exiting(delta: float):
 	position.y -= Global.box_drop_speed * delta
 
-#func ship():
-	#Global.box_manager.box_dropper.drop_box()
-	#Global.score_manager.score_box(self)
-	#await get_tree().create_timer(1).timeout
-	#for child in get_children():
-		#child.queue_free()
-	#self.queue_free()
 
-func _on_area_3d_input_event(_camera: Node, event: InputEvent, _event_position: Vector3, _normal: Vector3, _shape_idx: int) -> void:
+func _on_box_input_event(_camera: Node, event: InputEvent, _event_position: Vector3, _normal: Vector3, _shape_idx: int) -> void:
 	if event is InputEventMouseButton and event.pressed:
 			if event.button_index == MOUSE_BUTTON_LEFT and event.pressed:
 				if Global.camera_manager.current != camera: 
@@ -78,10 +73,12 @@ func _on_area_3d_input_event(_camera: Node, event: InputEvent, _event_position: 
 func set_box_size(box_size : String):
 	current_size = box_size
 	var size_vector : Vector3 = Vector3(Global.box_manager.sizes[box_size]) * Global.grid_size
-	var change_vector : Vector3 = size_vector/box_interior.size
-	size *= change_vector
-	box_interior.size = size_vector
-	box_collision_shape.shape.size *= change_vector
+	var change_vector : Vector3 = size_vector/box_interior.shape.size
+	
+	box_interior.shape.size = size_vector
+
+	#box_collision_shape.shape.size = box.get_box_size()
+	box.scale *= change_vector
 	grid_statuses.clear()
 	set_grid_size()
 
@@ -126,7 +123,7 @@ func snap_to_grid(world_pos: Vector3) -> Vector3:
 		snap_position.z +=  Global.grid_size/2
 	return snap_position
 
-func _box_bottom_on_area_3d_input_event(_camera: Node, event: InputEvent, event_position: Vector3, _normal: Vector3, _shape_idx: int) -> void:
+func _box_bottom_input_event(_camera: Node, event: InputEvent, event_position: Vector3, _normal: Vector3, _shape_idx: int) -> void:
 	if event is InputEventMouseButton:
 		if Global.merch_manager.held_merch.is_empty() == false:
 			if event.pressed:
@@ -262,14 +259,12 @@ func turn_ghost_red():
 func camera_changed() -> void:
 	if camera == Global.camera_manager.current:
 		is_zoomed_in = true
-		box_collision_shape.shape.size.y = .01
-		box_collision_shape.position.y = position.y - size.y/2 + .01
+		box_collision_shape.disabled = true
 		if ghost != null:
 			ghost.show()
 	elif is_zoomed_in == true: 
+		box_collision_shape.disabled = false
 		is_zoomed_in = false
-		box_collision_shape.shape.size = size
-		box_collision_shape.global_position = global_position
 		if ghost != null:
 			ghost.orignal_merch.ghost = null
 			ghost.queue_free()
@@ -281,3 +276,16 @@ func _on_box_bottom_3d_mouse_entered() -> void:
 func _on_box_bottom_3d_mouse_exited() -> void:
 	if ghost != null:
 		turn_ghost_red()
+		
+func _unhandled_input(event: InputEvent) -> void:
+		if event is InputEventKey:
+			if is_zoomed_in:
+				if OS.get_keycode_string(event.keycode) == "W" and event.pressed:
+					box.move_flap("left")
+				if OS.get_keycode_string(event.keycode) == "S" and event.pressed:
+					box.move_flap("right")
+				if OS.get_keycode_string(event.keycode) == "A" and event.pressed:
+					box.move_flap("front")
+				if OS.get_keycode_string(event.keycode) == "D" and event.pressed:
+					box.move_flap("back")
+					

@@ -1,0 +1,27 @@
+[gd_scene load_steps=3 format=3 uid="uid://btsc7ll27su0y"]
+
+[ext_resource type="PackedScene" uid="uid://dcrwjm4bqiud2" path="res://Art/box/box.fbx" id="1_602yy"]
+[ext_resource type="Script" uid="uid://cwlq6ipfv2hxj" path="res://box_model.gd" id="2_7v3uj"]
+
+[node name="box" node_paths=PackedStringArray("cube", "front_flap", "back_flap", "right_flap", "left_flap") instance=ExtResource("1_602yy")]
+script = ExtResource("2_7v3uj")
+cube = NodePath("Cube")
+front_flap = NodePath("flap-front")
+back_flap = NodePath("flap-back")
+right_flap = NodePath("flap-right")
+left_flap = NodePath("flap-left")
+
+[node name="Cube" parent="." index="0"]
+transform = Transform3D(100, 0, 0, 0, -4.3711384e-06, 99.99999, 0, -99.99999, -4.3711384e-06, 0, 0, 0)
+
+[node name="flap-back" parent="." index="1"]
+transform = Transform3D(40.149204, -6.2477184e-06, 59.60009, 29.800045, -4.6372593e-06, -80.29841, 4.3711398e-06, 89, 1.9106864e-13, 0.99992514, 1.00344, 5.9604645e-08)
+
+[node name="flap-front" parent="." index="2"]
+transform = Transform3D(-35.66252, -6.6650814e-06, -70.09094, 35.045467, 2.726757e-06, -71.32505, 3.7444279e-06, -89, 3.0637723e-06, -1, 1.00344, 0)
+
+[node name="flap-left" parent="." index="3"]
+transform = Transform3D(-1.8320985e-06, 100, -3.4439488e-06, 19.697094, -1.7219745e-06, -91.91353, -45.956768, -4.72461e-06, -39.394184, -8.881784e-15, 0.99396646, -1)
+
+[node name="flap-right" parent="." index="4"]
+transform = Transform3D(-2.1855697e-06, 100, 0, 35.293583, 3.0854628e-06, -70.83398, -35.41699, -3.0962515e-06, -70.587166, 1.1920929e-07, 0.9920181, 1)
