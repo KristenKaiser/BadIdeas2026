@@ -42,8 +42,8 @@ func _on_area_3d_input_event(_camera: Node, event: InputEvent, _event_position: 
 		if event.button_index == MOUSE_BUTTON_LEFT and event.pressed:
 			if is_zoomed:
 				is_zoomed = false
-				position.y -= .2
-				position.x = (-parent_box.size.x / 2) - (get_aabb().size.x * scale.x)
+				position.y = -parent_box.box_collision_shape.shape.size.y / 2 + .03
+				position.x = (-parent_box.box_collision_shape.shape.size.x / 2) - (get_aabb().size.x * scale.x)
 			else: 
 				is_zoomed = true
 				position.y += .2

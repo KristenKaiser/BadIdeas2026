@@ -27,9 +27,9 @@ albedo_color = Color(1, 0.07450981, 0, 1)
 
 [sub_resource type="BoxMesh" id="BoxMesh_cmh7u"]
 material = SubResource("StandardMaterial3D_mckbn")
-size = Vector3(0.031, 0.18, 0.08)
+size = Vector3(0.08, 0.08, 0.08)
 
-[node name="Box" type="Node3D" node_paths=PackedStringArray("camera", "box", "box_interior", "box_collision_shape", "bottom_box_collision_shape", "order_form")]
+[node name="Box" type="Node3D" node_paths=PackedStringArray("camera", "box", "box_interior", "box_collision_shape", "bottom_box_collision_shape", "order_form", "tape")]
 script = ExtResource("1_8s0t8")
 camera = NodePath("Camera3D")
 box = NodePath("box2")
@@ -37,6 +37,7 @@ box_interior = NodePath("inside_collision/inside_collision")
 box_collision_shape = NodePath("box_collision/BoxCollisionShape")
 bottom_box_collision_shape = NodePath("bottom_collision/BottomCollisionShape")
 order_form = NodePath("order_form")
+tape = NodePath("tape")
 
 [node name="box2" parent="." instance=ExtResource("2_mckbn")]
 
@@ -72,6 +73,7 @@ debug_color = Color(6.016344e-06, 0.63065207, 0.47360188, 0.41960785)
 
 [node name="tape" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.9943556, 0.9849585, 0)
+visible = false
 mesh = SubResource("BoxMesh_cmh7u")
 
 [connection signal="input_event" from="box_collision" to="." method="_on_box_input_event"]

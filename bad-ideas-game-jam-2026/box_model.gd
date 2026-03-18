@@ -58,28 +58,17 @@ func move_flap(flap : String):
 
 
 
-#func _unhandled_input(event: InputEvent) -> void:
-		#if event is InputEventKey:
-			#if OS.get_keycode_string(event.keycode) == "Z" and event.pressed:
-				#move_flap("back")
-			#if OS.get_keycode_string(event.keycode) == "X" and event.pressed:
-				#move_flap("front")
-			#if OS.get_keycode_string(event.keycode) == "C" and event.pressed:
-				#move_flap("left")
-			#if OS.get_keycode_string(event.keycode) == "V" and event.pressed:
-				#move_flap("right")
-				
-## y and z are flipped in th modela
-func get_box_size() -> Vector3:
-	var size :Vector3  = cube.mesh.get_aabb().size
-	#size.x = cube.mesh.get_aabb().size.x
-	#size.y = cube.mesh.get_aabb().size.z
-	#size.z = cube.mesh.get_aabb().size.y
-	#size.x += back_flap.get_aabb().size.x + front_flap.get_aabb().size.x
-	#size.z += get_flap_z_offset()
-	#size.y += right_flap.get_aabb().size.z + left_flap.get_aabb().size.z
-	return size/scale
-	
+### y and z are flipped in th modela
+#func get_box_size() -> Vector3:
+	#var size :Vector3  = cube.mesh.get_aabb().size
+	##size.x = cube.mesh.get_aabb().size.x
+	##size.y = cube.mesh.get_aabb().size.z
+	##size.z = cube.mesh.get_aabb().size.y
+	##size.x += back_flap.get_aabb().size.x + front_flap.get_aabb().size.x
+	##size.z += get_flap_z_offset()
+	##size.y += right_flap.get_aabb().size.z + left_flap.get_aabb().size.z
+	#return size/scale
+	#
 
 func get_flap_z_offset()->float:
 	var biggest_z : float = 0.0
@@ -88,4 +77,8 @@ func get_flap_z_offset()->float:
 			biggest_z = flap.get_aabb().size.z
 	return biggest_z
 	
-	
+func get_is_box_closed()->bool:
+	if !is_left_open and !is_right_open and !is_back_open and !is_front_open: 
+		return true
+	return false
+		

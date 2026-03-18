@@ -4,10 +4,13 @@ class_name ScoreManager
 var boxes_sent : int = 0 
 var count_missing_items : int = 0 
 var count_sent_items : int = 0 
+var count_untaped : int = 0
 var count_incorrect_items : int = 0 
 var count_missing_items_by_day : Array[int]
 var count_sent_items_by_day : Array[int]
 var count_incorrect_items_by_day : Array[int]
+var count_untaped_items_by_day : Array[int]
+
 
 func _ready() -> void:
 	reset_todays_metrics()
@@ -16,6 +19,7 @@ func reset_todays_metrics():
 	count_incorrect_items_by_day.append(0)
 	count_missing_items_by_day.append(0)
 	count_sent_items_by_day.append(0)
+	count_untaped_items_by_day.append(0)
 
 func score_box(box : Box):
 	var requested_items : Dictionary[String , int] = box.order_form.requested_items.duplicate()
@@ -41,6 +45,10 @@ func score_box(box : Box):
 		count_sent_items_by_day[count_sent_items_by_day.size() - 1] += sent_items[item]
 		count_incorrect_items += sent_items[item]
 		count_incorrect_items_by_day[count_incorrect_items_by_day.size() - 1] += sent_items[item]
+	if box.is_taped == false: 
+		count_untaped += 1
+		count_untaped_items_by_day[count_untaped_items_by_day.size() - 1] += 1
+		
 		
 func end_round():
 	reset_todays_metrics()

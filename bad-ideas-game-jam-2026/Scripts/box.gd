@@ -16,6 +16,8 @@ var grid_statuses : Array[Array]
 @export var order_form : OrderForm
 var held_objects : Dictionary[String, int]
 var is_shipped : bool = false
+@export var tape : MeshInstance3D
+var is_taped : bool = false
 
 func _ready() -> void:
 	Global.camera_manager.camera_changed.connect(camera_changed)
@@ -288,4 +290,24 @@ func _unhandled_input(event: InputEvent) -> void:
 					box.move_flap("front")
 				if OS.get_keycode_string(event.keycode) == "D" and event.pressed:
 					box.move_flap("back")
-					
+				if event.pressed and event.keycode == KEY_SPACE:
+					tape_box()
+
+func tape_box():
+	if box.get_is_box_closed():
+		
+		if tape.visible == false: 
+			Global.fit_collision_to_meshes(box, box_collision_shape)
+			tape.global_position = box_collision_shape.global_position
+			var grow_amount : float = (box_collision_shape.shape.size.x + .02) / (Global.box_manager.sizes[current_size].x * 4.0)
+			tape.mesh.size.x = grow_amount
+			tape.global_position.x -= box_collision_shape.shape.size.x/2.0 - tape.mesh.size.x/2 + .01
+			tape.global_position.y -= box_collision_shape.shape.size.y/2.0 - tape.mesh.size.y/2 - .04
+			tape.show()
+		elif tape.mesh.size.x > box_collision_shape.shape.size.x: 
+			is_taped = true
+			return
+		else: 
+			var grow_amount : float = (box_collision_shape.shape.size.x + .02)  / (Global.box_manager.sizes[current_size].x * 4.0)
+			tape.mesh.size.x += grow_amount
+			tape.global_position.x += grow_amount/2
