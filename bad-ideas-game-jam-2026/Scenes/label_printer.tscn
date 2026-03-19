@@ -1,0 +1,21 @@
+[gd_scene load_steps=4 format=3 uid="uid://cgmv47jd02vt"]
+
+[ext_resource type="Script" uid="uid://da4xaslr5abik" path="res://Scripts/label_printer.gd" id="1_jumuj"]
+[ext_resource type="PackedScene" uid="uid://dki82342476vv" path="res://Scenes/KeypadButton.tscn" id="2_jumuj"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_b7tt3"]
+size = Vector3(0.455, 0.375, 0.5)
+
+[node name="LabelPrinter" type="Node3D" node_paths=PackedStringArray("printer", "button")]
+script = ExtResource("1_jumuj")
+printer = NodePath("LabelPrinter")
+button = NodePath("Button")
+
+[node name="LabelPrinter" type="MeshInstance3D" parent="."]
+mesh = SubResource("BoxMesh_b7tt3")
+
+[node name="Button" parent="." instance=ExtResource("2_jumuj")]
+transform = Transform3D(-1, 0, -6.9850796e-07, 0, 2.615, 0, 8.742278e-08, 0, -7.99, 0.26637465, -0.05921936, 0)
+text = "Print"
+functionality = 3
+color = Color(0, 1, 0, 1)

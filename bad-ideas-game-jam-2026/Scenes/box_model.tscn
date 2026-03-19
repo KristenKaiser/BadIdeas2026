@@ -1,9 +1,12 @@
-[gd_scene load_steps=3 format=3 uid="uid://q5yi5h1cx1fa"]
+[gd_scene load_steps=4 format=3 uid="uid://q5yi5h1cx1fa"]
 
-[ext_resource type="PackedScene" uid="uid://dnhn7dlqx41c8" path="res://Art/box/box1.fbx" id="1_365iy"]
+[ext_resource type="PackedScene" uid="uid://dcrwjm4bqiud2" path="res://Art/box/box.fbx" id="1_yocxd"]
 [ext_resource type="Script" uid="uid://cwlq6ipfv2hxj" path="res://Scripts/box_model.gd" id="2_kndle"]
 
-[node name="box1" node_paths=PackedStringArray("cube", "front_flap", "back_flap", "right_flap", "left_flap") instance=ExtResource("1_365iy")]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_yocxd"]
+albedo_color = Color(0.6156863, 0.42352942, 0.21568628, 1)
+
+[node name="box" node_paths=PackedStringArray("cube", "front_flap", "back_flap", "right_flap", "left_flap") instance=ExtResource("1_yocxd")]
 script = ExtResource("2_kndle")
 cube = NodePath("Cube")
 front_flap = NodePath("flap-front")
@@ -12,4 +15,21 @@ right_flap = NodePath("flap-right")
 left_flap = NodePath("flap-left")
 
 [node name="Cube" parent="." index="0"]
-transform = Transform3D(100, -4.3711393e-06, -1.9106857e-13, 0, -4.371139e-06, 100, -4.3711393e-06, -100, -4.371139e-06, 0, 0, 0)
+transform = Transform3D(100, 0, 0, 0, -4.3711384e-06, 99.99999, 0, -99.99999, -4.3711384e-06, 0, 0, 0)
+surface_material_override/0 = SubResource("StandardMaterial3D_yocxd")
+
+[node name="flap-back" parent="." index="1"]
+transform = Transform3D(40.149204, -6.2477184e-06, 59.60009, 29.800045, -4.6372593e-06, -80.29841, 4.3711398e-06, 89, 1.9106864e-13, 0.99992514, 1.00344, 5.9604645e-08)
+surface_material_override/0 = SubResource("StandardMaterial3D_yocxd")
+
+[node name="flap-front" parent="." index="2"]
+transform = Transform3D(-35.66252, -6.6650814e-06, -70.09094, 35.045467, 2.726757e-06, -71.32505, 3.7444279e-06, -89, 3.0637723e-06, -1, 1.00344, 0)
+surface_material_override/0 = SubResource("StandardMaterial3D_yocxd")
+
+[node name="flap-left" parent="." index="3"]
+transform = Transform3D(-1.8320985e-06, 100, -3.4439488e-06, 19.697094, -1.7219745e-06, -91.91353, -45.956768, -4.72461e-06, -39.394184, -8.881784e-15, 0.99396646, -1)
+surface_material_override/0 = SubResource("StandardMaterial3D_yocxd")
+
+[node name="flap-right" parent="." index="4"]
+transform = Transform3D(-2.1855697e-06, 100, 0, 35.293583, 3.0854628e-06, -70.83398, -35.41699, -3.0962515e-06, -70.587166, 1.1920929e-07, 0.9920181, 1)
+surface_material_override/0 = SubResource("StandardMaterial3D_yocxd")

@@ -21,8 +21,9 @@ var back_open : Vector3 = Vector3(45, 90, 90)
 
 var is_front_open :bool = true
 var front_closed: Vector3 = Vector3(270, 90, -90)
-var front_open : Vector3 = Vector3(135
-, 90, -90)
+var front_open : Vector3 = Vector3(135, 90, -90)
+
+var tween : Tween
 
 
 func _ready() -> void:
@@ -33,7 +34,7 @@ func _ready() -> void:
 
 func move_flap(flap : String): 
 	print("move flap")
-	var tween = get_tree().create_tween()
+	tween = get_tree().create_tween()
 	var active_flap : MeshInstance3D
 	var new_rotation : Vector3
 	match flap: 

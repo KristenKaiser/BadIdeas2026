@@ -14,6 +14,7 @@ signal enter_button_pressed
 
 
 func _ready() -> void:
+
 	if label: 
 		label.text = str(text)
 	create_material()

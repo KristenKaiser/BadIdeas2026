@@ -71,6 +71,20 @@ func _on_box_input_event(_camera: Node, event: InputEvent, _event_position: Vect
 			if event.button_index == MOUSE_BUTTON_LEFT and event.pressed:
 				if Global.camera_manager.current != camera: 
 					Global.camera_manager.change_camera(camera, true)
+				elif box.get_is_box_closed() and Global.camera_manager.held_object is ShippingLabel:
+					add_label_to_box(Global.camera_manager.held_object)
+
+
+func add_label_to_box(label : ShippingLabel):
+	label.reparent(self)
+	label.rotation_degrees = Vector3(0, -90, -90)
+	label.scale = Vector3(1,1,1)
+	label.get_node("mesh").scale = Vector3(.05, .05, .05)
+	label.position = box_collision_shape.position
+	label.position.x += box_collision_shape.shape.size.x/2.0 - tape.mesh.size.x/2 - ((label.get_node("mesh").mesh.size.x/2) * label.get_node("mesh").scale.x)
+	label.position.y -= box_collision_shape.shape.size.y/2.0 - tape.mesh.size.y/2 - .1
+	label.position.z -= box_collision_shape.shape.size.z/2.0 - tape.mesh.size.z/2 - (label.get_node("mesh").mesh.size.y/2 * label.get_node("mesh").scale.z)
+	Global.camera_manager.held_object = null
 
 func set_box_size(box_size : String):
 	current_size = box_size
@@ -261,10 +275,14 @@ func turn_ghost_red():
 func camera_changed() -> void:
 	if camera == Global.camera_manager.current:
 		is_zoomed_in = true
-		box_collision_shape.disabled = true
-		if ghost != null:
-			ghost.show()
+		if box.get_is_box_closed():
+			Global.fit_collision_to_meshes(box, box_collision_shape)
+		else:
+			box_collision_shape.disabled = true
+			if ghost != null:
+				ghost.show()
 	elif is_zoomed_in == true: 
+		Global.fit_collision_to_meshes(box, box_collision_shape)
 		box_collision_shape.disabled = false
 		is_zoomed_in = false
 		if ghost != null:
@@ -281,17 +299,27 @@ func _on_box_bottom_3d_mouse_exited() -> void:
 		
 func _unhandled_input(event: InputEvent) -> void:
 		if event is InputEventKey:
-			if is_zoomed_in:
+			if is_zoomed_in and is_taped == false:
 				if OS.get_keycode_string(event.keycode) == "W" and event.pressed:
-					box.move_flap("left")
+					move_box_flap("left")
 				if OS.get_keycode_string(event.keycode) == "S" and event.pressed:
-					box.move_flap("right")
+					move_box_flap("right")
 				if OS.get_keycode_string(event.keycode) == "A" and event.pressed:
-					box.move_flap("front")
+					move_box_flap("front")
 				if OS.get_keycode_string(event.keycode) == "D" and event.pressed:
-					box.move_flap("back")
+					move_box_flap("back")
 				if event.pressed and event.keycode == KEY_SPACE:
 					tape_box()
+
+func move_box_flap(flap : String):
+	box.move_flap(flap)
+	if box.get_is_box_closed():
+		if box.tween and box.tween.is_running():
+			await box.tween.finished
+		Global.fit_collision_to_meshes(box, box_collision_shape)
+		box_collision_shape.disabled = false
+	else: 
+		box_collision_shape.disabled = true
 
 func tape_box():
 	if box.get_is_box_closed():

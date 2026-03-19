@@ -1,0 +1,35 @@
+[gd_scene load_steps=4 format=3 uid="uid://yxmuymbdq6df"]
+
+[ext_resource type="Script" uid="uid://dj02a3tbgjoia" path="res://Scripts/shipping_label.gd" id="1_l30jy"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_l30jy"]
+size = Vector3(0.35, 0.15, 0.001)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_l30jy"]
+size = Vector3(0.15, 0.15, 0.001)
+
+[node name="ShippingLabel" type="Node3D" node_paths=PackedStringArray("label", "collision_shape", "label_mesh")]
+script = ExtResource("1_l30jy")
+label = NodePath("mesh/Label3D")
+collision_shape = NodePath("mesh/Area3D/CollisionShape3D")
+label_mesh = NodePath("mesh")
+
+[node name="mesh" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0)
+mesh = SubResource("BoxMesh_l30jy")
+
+[node name="Label3D" type="Label3D" parent="mesh"]
+transform = Transform3D(1, 0, 0, 0, -1, 8.742278e-08, 0, -8.742278e-08, -1, 0, 0, -0.001)
+modulate = Color(0, 0, 0, 1)
+text = "To: Larry Ipsum
+123 Dolor St
+New York, NY 98765"
+outline_size = 0
+
+[node name="Area3D" type="Area3D" parent="mesh"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="mesh/Area3D"]
+transform = Transform3D(1, 0, 0, 0, 1, -1.7692514e-12, 0, 1.7692514e-12, 1, 0, 0, 0)
+shape = SubResource("BoxShape3D_l30jy")
+
+[connection signal="input_event" from="mesh/Area3D" to="." method="_on_area_3d_input_event"]

@@ -13,8 +13,12 @@ func remove_merch(merch : Merchandise):
 	while all_merch.has(merch):
 		all_merch.erase(merch)
 
-func hold_merch(merch : Merchandise):
-	held_merch.append(merch)
+func hold_merch(merch : Merchandise)-> bool:
+	if Global.camera_manager.held_object == null:
+		Global.camera_manager.held_object = merch
+		held_merch.append(merch)
+		return true
+	return false
 
 func drop_merch(merch : Merchandise):
 	while held_merch.has(merch):

@@ -118,13 +118,10 @@ func select_object(event_position : Vector3):
 	
 	
 func hold_object(rotation_offset : Vector3 = Vector3.ZERO): 
-	if Global.camera_manager.held_object != null: 
-		return
-	is_held = true
-#		
-	Global.camera_manager.hold_item(self, object_mesh, rotation_offset)
-	Global.merch_manager.hold_merch(self)
-	
+	if Global.merch_manager.hold_merch(self):
+		is_held = true
+		Global.camera_manager.hold_item(self, object_mesh, rotation_offset)
+
 
 func turn(is_right : bool):
 	if is_right: 
