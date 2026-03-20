@@ -1,0 +1,35 @@
+[gd_scene load_steps=6 format=3 uid="uid://n1ub7lcpw7du"]
+
+[ext_resource type="Script" uid="uid://doo6wyiffabrp" path="res://Scenes/tv.gd" id="1_lksma"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_lksma"]
+albedo_color = Color(0, 0, 0, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_k0xlo"]
+material = SubResource("StandardMaterial3D_lksma")
+size = Vector3(0.965, 0.559, 0.025)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_k0xlo"]
+emission_enabled = true
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_k0xlo"]
+material = SubResource("StandardMaterial3D_k0xlo")
+size = Vector2(0.9, 0.5)
+
+[node name="Tv" type="Node3D" node_paths=PackedStringArray("tv_mesh", "light")]
+script = ExtResource("1_lksma")
+tv_mesh = NodePath("tv_mesh/screen_mesh")
+light = NodePath("tv_mesh/screen_mesh/OmniLight3D")
+
+[node name="tv_mesh" type="MeshInstance3D" parent="."]
+mesh = SubResource("BoxMesh_k0xlo")
+
+[node name="screen_mesh" type="MeshInstance3D" parent="tv_mesh"]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0.015)
+mesh = SubResource("PlaneMesh_k0xlo")
+skeleton = NodePath("../..")
+
+[node name="OmniLight3D" type="OmniLight3D" parent="tv_mesh/screen_mesh"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.017, 0)
+light_color = Color(0.10980392, 0.1882353, 0.54509807, 1)
+omni_range = 19.928

@@ -1,7 +1,7 @@
 extends Node
 class_name CameraManager
 
-var cameras : Array[Camera3D]
+@export var cameras : Array[Camera3D]
 var current : Camera3D
 var prev_cameras : Array[Camera3D]
 var is_zoomed_in : bool = false
@@ -11,6 +11,7 @@ var held_object : Node3D
 
 func _ready() -> void:
 	current = get_viewport().get_camera_3d()
+
 
 func add_camera(camera: Camera3D):
 	cameras.append(camera)

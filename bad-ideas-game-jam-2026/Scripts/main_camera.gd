@@ -1,4 +1,4 @@
-extends Camera3D
+extends BaseCamera
 
 enum Direction {LEFT, CENTER, RIGHT}
 var current_direction : Direction 
@@ -18,7 +18,7 @@ var center_rotation = Vector3(-57 + x_max_rotation_change, 5, 0)
 var right_position = Vector3(0, 1.75, -1.5)
 var right_rotation = Vector3(-15, -101.5, 0)
 
-func _ready() -> void:
+func child_ready() -> void:
 	move_camera(Direction.CENTER)
 
 func _process(delta: float) -> void:

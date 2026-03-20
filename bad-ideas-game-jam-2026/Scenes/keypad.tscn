@@ -1,7 +1,8 @@
-[gd_scene load_steps=6 format=3 uid="uid://ccmmb1u17r8a0"]
+[gd_scene load_steps=7 format=3 uid="uid://ccmmb1u17r8a0"]
 
 [ext_resource type="Script" uid="uid://dn0o66irphsce" path="res://Scripts/keypad.gd" id="1_ohrw4"]
 [ext_resource type="PackedScene" uid="uid://dki82342476vv" path="res://Scenes/KeypadButton.tscn" id="1_v31qc"]
+[ext_resource type="Script" uid="uid://6yl2vsaktf5n" path="res://Scripts/Base_camera.gd" id="2_oo0pj"]
 [ext_resource type="PackedScene" uid="uid://bbbeto6mvhhx" path="res://Scenes/Button.tscn" id="3_cam67"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_phgvv"]
@@ -22,6 +23,8 @@ size = Vector3(0.1, 0.55, 0.3)
 
 [node name="Camera3D" type="Camera3D" parent="."]
 transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, -0.6156454, 0, -2.2231497e-08)
+script = ExtResource("2_oo0pj")
+metadata/_custom_type_script = "uid://6yl2vsaktf5n"
 
 [node name="Display" type="MeshInstance3D" parent="."]
 transform = Transform3D(0.01867259, 0, 0, 0, 0.099999964, 0, 0, 0, 0.19999999, -0.041587293, 0.116999954, 0)

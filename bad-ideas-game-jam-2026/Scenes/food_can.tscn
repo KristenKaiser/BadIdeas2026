@@ -12,6 +12,7 @@ height = 0.2
 
 [node name="Label3D" type="Label3D" parent="CSGCylinder3D"]
 transform = Transform3D(-1.2321801e-08, 0.44379148, 0, -0.28188995, -1.9398742e-08, 0, 0, 0, 1, 0, 0, 0.0704083)
+shaded = true
 text = "FOOD"
 
 [node name="Area3D" type="Area3D" parent="CSGCylinder3D"]

@@ -1,9 +1,7 @@
 extends Node3D
 class_name LabelPrinter
 
-
 const SHIPPING_LABEL = preload("uid://yxmuymbdq6df")
-
 
 @export var printer : MeshInstance3D
 @export var button : Button3D

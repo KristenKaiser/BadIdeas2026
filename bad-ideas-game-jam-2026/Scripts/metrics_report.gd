@@ -4,13 +4,17 @@ class_name MetricsReport
 @export var missing_items_label :Label
 @export var incorrect_items_label :Label
 @export var shipped_items_label :Label
+@export var writeup_label : Label
 @export var missing_items_graph : ScoreGraph
 @export var incorrect_items_graph : ScoreGraph
 @export var mistakes_graph : ScoreGraph
 @export var graphs : VBoxContainer
 
+enum Writeup {SLACKING}
+
 
 func close_metrics_card():
+	writeup_label.hide()
 	self.hide()
 
 func _on_continue_button_button_down() -> void:
@@ -60,3 +64,8 @@ func fill_metrics_card():
 	else:
 		mistakes_graph.update_graph(mistakes_over_time)
 		
+func writeup(reason : Writeup):
+	writeup_label.show()
+	match reason:
+		Writeup.SLACKING:
+			writeup_label.text = "WRITEUP REASON - FOUND SLACKING ON THE JOB"

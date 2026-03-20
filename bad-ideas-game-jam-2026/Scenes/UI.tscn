@@ -15,12 +15,13 @@ mouse_filter = 2
 script = ExtResource("1_w371h")
 metrics_card = NodePath("Metrics_Report")
 
-[node name="Metrics_Report" type="CanvasLayer" parent="." node_paths=PackedStringArray("missing_items_label", "incorrect_items_label", "shipped_items_label", "missing_items_graph", "incorrect_items_graph", "mistakes_graph", "graphs")]
+[node name="Metrics_Report" type="CanvasLayer" parent="." node_paths=PackedStringArray("missing_items_label", "incorrect_items_label", "shipped_items_label", "writeup_label", "missing_items_graph", "incorrect_items_graph", "mistakes_graph", "graphs")]
 visible = false
 script = ExtResource("2_nxvpl")
 missing_items_label = NodePath("VBoxContainer/Missing_Items")
 incorrect_items_label = NodePath("VBoxContainer/Incorrect_Items")
 shipped_items_label = NodePath("VBoxContainer/Shipped_Items")
+writeup_label = NodePath("VBoxContainer/Writeup")
 missing_items_graph = NodePath("VBoxContainer/Graphs/HBoxContainer/VBoxContainer/missing_items_graph")
 incorrect_items_graph = NodePath("VBoxContainer/Graphs/HBoxContainer/VBoxContainer2/wrong_items_graph")
 mistakes_graph = NodePath("VBoxContainer/Graphs/HBoxContainer2/mistakes_graph")
@@ -49,6 +50,12 @@ theme_override_colors/font_color = Color(0, 0, 0, 1)
 text = "Metrics Report"
 horizontal_alignment = 1
 vertical_alignment = 1
+
+[node name="Writeup" type="Label" parent="Metrics_Report/VBoxContainer"]
+visible = false
+layout_mode = 2
+theme_override_colors/font_color = Color(0.76020277, 3.706068e-06, 4.813075e-07, 1)
+text = "WRITEUP"
 
 [node name="Shipped_Items" type="Label" parent="Metrics_Report/VBoxContainer"]
 layout_mode = 2

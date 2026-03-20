@@ -1,0 +1,41 @@
+[gd_scene load_steps=4 format=3 uid="uid://bk8gshk5vwo18"]
+
+[ext_resource type="Shader" uid="uid://euts5ackdyy2" path="res://Scenes/blur.gdshader" id="1_kl7qe"]
+[ext_resource type="Script" uid="uid://cbfshp0m7sdkf" path="res://Scenes/blur.gd" id="1_p6kjw"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_p6kjw"]
+shader = ExtResource("1_kl7qe")
+shader_parameter/blur_strength = 0.0
+shader_parameter/blur_radius = 0.15200000722
+
+[node name="Blur" type="Control" node_paths=PackedStringArray("rect", "black")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_p6kjw")
+rect = NodePath("blur")
+black = NodePath("black")
+
+[node name="blur" type="ColorRect" parent="."]
+material = SubResource("ShaderMaterial_p6kjw")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(1, 1, 1, 0)
+
+[node name="black" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0, 0, 0, 0)

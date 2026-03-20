@@ -1,8 +1,9 @@
-[gd_scene load_steps=11 format=3 uid="uid://hg2wuymgg6bs"]
+[gd_scene load_steps=12 format=3 uid="uid://hg2wuymgg6bs"]
 
 [ext_resource type="Script" uid="uid://cdi0harqoraet" path="res://Scripts/box.gd" id="1_8s0t8"]
 [ext_resource type="PackedScene" uid="uid://7bjbuyexxyn3" path="res://Scenes/order_form.tscn" id="2_42nxc"]
 [ext_resource type="PackedScene" uid="uid://q5yi5h1cx1fa" path="res://Scenes/box_model.tscn" id="2_mckbn"]
+[ext_resource type="Script" uid="uid://6yl2vsaktf5n" path="res://Scripts/Base_camera.gd" id="3_cmh7u"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_42nxc"]
 resource_local_to_scene = true
@@ -20,6 +21,7 @@ material = SubResource("StandardMaterial3D_8s0t8")
 size = Vector3(0.15, 0.15, 0.001)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_mckbn"]
+resource_local_to_scene = true
 size = Vector3(1.8, 1.88, 1.8)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_mckbn"]
@@ -50,6 +52,8 @@ debug_color = Color(0, 0.6, 0.69803923, 0.85882354)
 
 [node name="Camera3D" type="Camera3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 0.38268346, 0.9238795, 0, -0.92387956, 0.38268346, 0, 0.49396315, 0.19485459)
+script = ExtResource("3_cmh7u")
+metadata/_custom_type_script = "uid://6yl2vsaktf5n"
 
 [node name="bottom_collision" type="Area3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0967742, 0)

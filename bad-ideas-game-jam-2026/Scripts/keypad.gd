@@ -9,8 +9,6 @@ var keypad_input : String = ""
 #@export var codes_and_items : Dictionary[String, PackedScene]
 signal order_item(PackedScene)
 
-
-
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	display_label.text = keypad_input

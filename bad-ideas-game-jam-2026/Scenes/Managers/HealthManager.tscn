@@ -1,0 +1,12 @@
+[gd_scene load_steps=2 format=3 uid="uid://84chghh6wnhi"]
+
+[ext_resource type="Script" uid="uid://rurvh2y2yswr" path="res://Scripts/Managers/health_manager.gd" id="1_s1dhe"]
+
+[node name="HealthManager" type="Node" node_paths=PackedStringArray("thirst_timer")]
+script = ExtResource("1_s1dhe")
+thirst_timer = NodePath("Thirst_Timer")
+
+[node name="Thirst_Timer" type="Timer" parent="."]
+autostart = true
+
+[connection signal="timeout" from="Thirst_Timer" to="." method="_on_thirst_timer_timeout"]

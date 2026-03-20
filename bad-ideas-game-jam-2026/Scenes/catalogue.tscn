@@ -23,6 +23,7 @@ shape = SubResource("BoxShape3D_ehiis")
 
 [node name="Label3D" type="Label3D" parent="."]
 transform = Transform3D(-1.510464e-08, 0.7199039, 5.8223137e-08, 0, -2.1810294e-07, 9.231949, 0.62049633, 5.650574e-08, 0, 3.204314e-09, 0.50808084, 2.646978e-23)
+shaded = true
 text = "84460 - Apple
 69128 - Banana
 07590 - Bread

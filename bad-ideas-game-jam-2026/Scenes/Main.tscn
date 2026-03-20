@@ -1,19 +1,23 @@
-[gd_scene load_steps=18 format=3 uid="uid://d0nk4t02xe8ik"]
+[gd_scene load_steps=23 format=3 uid="uid://d0nk4t02xe8ik"]
 
 [ext_resource type="PackedScene" uid="uid://uvo3k3alfmfd" path="res://Scenes/food_can.tscn" id="1_kln2b"]
 [ext_resource type="PackedScene" uid="uid://ccmmb1u17r8a0" path="res://Scenes/keypad.tscn" id="1_r150o"]
 [ext_resource type="Script" uid="uid://dxx1jykm0t1k6" path="res://Scripts/main.gd" id="1_v1gob"]
 [ext_resource type="Script" uid="uid://ojqvaarbbc86" path="res://Scripts/main_camera.gd" id="2_jw32o"]
 [ext_resource type="PackedScene" uid="uid://dg21mddb1l2b5" path="res://Scenes/Water.tscn" id="2_rgh2o"]
+[ext_resource type="PackedScene" uid="uid://bk8gshk5vwo18" path="res://Scenes/blur.tscn" id="3_346fj"]
 [ext_resource type="PackedScene" uid="uid://dc2ar543euyj6" path="res://Scenes/catalogue.tscn" id="3_pbw6q"]
 [ext_resource type="Script" uid="uid://cd6s54ejg8gtm" path="res://Scripts/order_tube.gd" id="3_rgh2o"]
 [ext_resource type="Script" uid="uid://1jf6gby3db6p" path="res://Scripts/box_dropper.gd" id="5_50glp"]
 [ext_resource type="Script" uid="uid://b238gl40bbarg" path="res://Scripts/trash_can.gd" id="5_bmxlf"]
 [ext_resource type="PackedScene" uid="uid://denvefmpnolys" path="res://Scenes/conveyer.tscn" id="5_vy5pj"]
+[ext_resource type="PackedScene" uid="uid://behm6cuvx6tka" path="res://Scenes/HealthScreen.tscn" id="7_2w5on"]
 [ext_resource type="PackedScene" uid="uid://cgmv47jd02vt" path="res://Scenes/label_printer.tscn" id="8_1p5hy"]
 [ext_resource type="Script" uid="uid://0i2ldxgwgruq" path="res://Scripts/trash_compactor.gd" id="11_4kpch"]
 [ext_resource type="PackedScene" uid="uid://c84e18kdng3pf" path="res://Scenes/poster.tscn" id="12_grg3l"]
 [ext_resource type="PackedScene" uid="uid://5bo23abi3m8c" path="res://Scenes/UI.tscn" id="13_frkhe"]
+[ext_resource type="PackedScene" uid="uid://n1ub7lcpw7du" path="res://Scenes/TV.tscn" id="14_erwvk"]
+[ext_resource type="PackedScene" uid="uid://chjvnkghiybor" path="res://Scenes/MetricsScreen.tscn" id="15_2w5on"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_c1w88"]
 size = Vector3(0.33112794, 0.4994873, 0.5165771)
@@ -24,23 +28,41 @@ size = Vector3(0.4, 1.4, 1)
 [sub_resource type="BoxShape3D" id="BoxShape3D_idj7w"]
 size = Vector3(0.82, 1, 0.71999997)
 
+[sub_resource type="Environment" id="Environment_erwvk"]
+background_mode = 1
+ambient_light_source = 1
+ambient_light_energy = 0.0
+glow_levels/1 = 3.81
+glow_levels/2 = 6.95
+glow_levels/3 = 7.31
+glow_levels/4 = 7.01
+glow_levels/5 = 9.7
+glow_levels/6 = 6.49
+glow_levels/7 = 9.35
+
 [node name="Main" type="Node3D" node_paths=PackedStringArray("main_camera")]
 script = ExtResource("1_v1gob")
-main_camera = NodePath("Camera3D")
+main_camera = NodePath("MainCamera")
+
+[node name="Blur" parent="." instance=ExtResource("3_346fj")]
+mouse_filter = 2
 
 [node name="LightmapGI" type="LightmapGI" parent="."]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 3.1608565, 0, -0.7691581)
 
 [node name="OmniLight3D" type="OmniLight3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.9, 0)
+visible = false
 light_energy = 0.41
 shadow_enabled = true
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, -0.9031855, 0.4292505, 0, -0.4292505, -0.9031855, 0, 2.7360015, -2.8512096)
+light_color = Color(0.7541423, 0.80429894, 0.999999, 1)
+light_energy = 0.103
 shadow_enabled = true
 
-[node name="Camera3D" type="Camera3D" parent="."]
+[node name="MainCamera" type="Camera3D" parent="."]
 transform = Transform3D(-4.371139e-08, 0.3907311, -0.9205048, 0, 0.9205048, 0.3907311, 1, 1.7079397e-08, -4.0236543e-08, -0.3, 1.75, -2.025)
 script = ExtResource("2_jw32o")
 
@@ -187,6 +209,10 @@ height = 0.825
 transform = Transform3D(-2.0981467e-08, 0, -1, -0.48000002, -2.1855692e-08, 4.371139e-08, -2.0981467e-08, 0.5, 3.5527137e-15, -0.10800011, -0.011999927, -7.681809e-08)
 text = "wrapping paper Red"
 
+[node name="health_stats_tv" parent="Left" instance=ExtResource("14_erwvk")]
+transform = Transform3D(-4.2715644e-08, 0.21222883, 0.97722, 9.276817e-09, 0.97722, -0.21222883, -1, 0, -4.371139e-08, -2.841237, 0.9762604, -0.5484333)
+tv_content = ExtResource("7_2w5on")
+
 [node name="Center" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.2, -0.2)
 
@@ -260,10 +286,17 @@ font_size = 28
 [node name="poster" parent="Right" instance=ExtResource("12_grg3l")]
 transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 2.3402822, 0.39999998, -1)
 
+[node name="metrics_tv" parent="Right" instance=ExtResource("14_erwvk")]
+transform = Transform3D(-4.3711385e-08, -0.28401536, -0.9588197, 0, 0.95881975, -0.28401533, 0.99999994, -1.2414706e-08, -4.191134e-08, 2.0490103, 1.1942539, -0.8563823)
+tv_content = ExtResource("15_2w5on")
+
 [node name="Hand" type="Node3D" parent="."]
 transform = Transform3D(0.69453704, 0, -1.7763568e-15, 0, 0.10020816, 0, 0, 0, 0.38678715, 1.8000002, 0.8, -1.2)
 
 [node name="ReportCard" parent="." instance=ExtResource("13_frkhe")]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_erwvk")
 
 [connection signal="input_event" from="Left/TrashCan/Area3D" to="Left/TrashCan" method="_on_area_3d_input_event"]
 [connection signal="area_entered" from="Center/Conveyer/CSGBox3D/Area3D" to="Center/Conveyer" method="exited_conveyer"]

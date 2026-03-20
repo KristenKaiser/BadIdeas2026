@@ -6,8 +6,11 @@ var slow_conveyer_speed: float =.1
 var fast_conveyer_speed: float = 1
 var box_drop_speed: float =.8
 var grid_size : float  = .1 # 1.0/6.0
-var base_boxes_per_day : int = 1 #7
+var base_boxes_per_day : int = 7
 var current_boxes_per_day : int 
+var metrics_tv : MetricsScreen
+var health_tv : HealthScreen
+var blur : Blur
 
 const MERCH_MANAGER = preload("uid://cpxhjnah05wv6")
 var merch_manager : MerchManager 
@@ -20,6 +23,9 @@ var box_manager : BoxManager
 
 const SCORE_MANAGER = preload("uid://7ho1x50016pi")
 var score_manager : ScoreManager
+
+const HEALTH_MANAGER = preload("uid://84chghh6wnhi")
+var healh_manager : HealthManager
 
 var ui : UI
 
@@ -39,6 +45,9 @@ func start_game():
 	
 	score_manager = SCORE_MANAGER.instantiate()
 	add_child(score_manager)
+	
+	healh_manager = HEALTH_MANAGER.instantiate()
+	add_child(healh_manager)
 	
 	
 func _unhandled_input(event: InputEvent) -> void:

@@ -90,13 +90,13 @@ func create_box_odds_array()->Array[String]:
 	
 func ship(box : Box):
 	Global.score_manager.score_box(box)
-	if Global.score_manager.boxes_sent % Global.current_boxes_per_day != 0:
+	if Global.score_manager.count_boxes_sent % Global.current_boxes_per_day != 0:
 		Global.box_manager.box_dropper.drop_box()
 	
 	await get_tree().create_timer(1).timeout
 	for child in box.get_children():
 		child.queue_free()
 	box.queue_free()
-	if Global.score_manager.boxes_sent % Global.current_boxes_per_day == 0:
+	if (Global.score_manager.count_boxes_sent + Global.score_manager.count_missed_boxes) % Global.current_boxes_per_day == 0:
 		Global.ui.show_metrics_card()
 	

@@ -7,6 +7,7 @@ label = NodePath("Label3D2")
 
 [node name="Label3D2" type="Label3D" parent="." index="1"]
 transform = Transform3D(-2.4103647e-08, 0, -1, 0, 0.5034887, 0, 0.5514272, 0, -4.371139e-08, -0.025572527, 0.0018492063, -1.1178107e-09)
+shaded = true
 text = "1"
 font_size = 16
 outline_size = 5
