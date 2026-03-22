@@ -11,11 +11,11 @@ var water_value : int = 25
 var current_hydration : int
 var current_dehydration : int = 0
 
-var pee_escrow : int = 100
+var pee_escrow : int = 0
 var pee_transfer_rate : int = 2
 
 var pee_level : int
-var pee_max : int
+
 ### the number of bottles of water the pee meeter can hold 
 var bladder_multiplier : float = 2.25
 
@@ -33,14 +33,15 @@ func restart_hydration_timer():
 func drink():
 	var water : int = water_value
 	current_dehydration -= water
-	if current_dehydration >  0: 
+	if current_dehydration <  0 : 
 		water = -current_dehydration
 		current_dehydration = 0
 	current_hydration += water
 	if current_hydration > max_hydration: 
 		water = current_hydration - max_hydration
 		current_hydration = max_hydration
-	if Global.blur.visible == true and current_dehydration >= 0:
+	else: water = 0
+	if Global.blur.is_blurred == true and current_dehydration >= 0:
 		Global.blur.transition_out()
 	pee_escrow += water_value - water
 
@@ -73,9 +74,10 @@ func pass_out():
 	Global.score_manager.count_missed_boxes += todays_missed_boxes
 	Global.score_manager.count_missed_boxes_by_day[Global.score_manager.count_missed_boxes_by_day.size() - 1] += todays_missed_boxes
 	await get_tree().create_timer(1).timeout
+	Global.ui.metrics_card.writeup(Global.ui.metrics_card.Writeup.SLACKING)
 	Global.ui.show_metrics_card()
 	Global.blur.rect.material.set_shader_parameter("blur_strength", 0)
-	Global.ui.metrics_card.writeup(Global.ui.metrics_card.Writeup.SLACKING)
+	
 
 func convert_water_to_pee():
 	if pee_escrow < pee_transfer_rate:
@@ -85,9 +87,17 @@ func convert_water_to_pee():
 		pee_level += pee_transfer_rate
 		pee_escrow -= pee_transfer_rate
 	Global.health_tv.update_value(pee_level, ceil(water_value  * bladder_multiplier), Global.health_tv.Metric.PEE)
+	#check for too much pee
+	if pee_level > water_value * bladder_multiplier: 
+		wet_self()
 	
 func pee():
 	pee_level -= water_value
 	if pee_level < 0: 
 		pee_level = 0 
 	Global.health_tv.update_value(pee_level, ceil(water_value  * bladder_multiplier), Global.health_tv.Metric.PEE)
+
+func wet_self():
+	pee_level = 0
+	pee_escrow = 0
+	Global.ui.metrics_card.writeup(Global.ui.metrics_card.Writeup.URIN)

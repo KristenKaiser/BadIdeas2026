@@ -10,8 +10,16 @@ class_name MetricsReport
 @export var mistakes_graph : ScoreGraph
 @export var graphs : VBoxContainer
 
-enum Writeup {SLACKING}
+enum Writeup {SLACKING, URIN}
+var writeups : Array[Array]
 
+
+func _ready() -> void:
+	init_todays_writeups()
+	
+func init_todays_writeups():
+	var new_writeups : Array[Writeup] = []
+	writeups.append(new_writeups)
 
 func close_metrics_card():
 	writeup_label.hide()
@@ -21,9 +29,11 @@ func _on_continue_button_button_down() -> void:
 	Global.score_manager.reset_todays_metrics()
 	close_metrics_card()
 	Global.box_manager.box_dropper.drop_box()
+	init_todays_writeups()
 
 
 func fill_metrics_card(): 
+	display_writeups()
 	shipped_items_label.text = "Shipped Merchandise: %s units" %Global.score_manager.count_sent_items_by_day.back()
 	missing_items_label.text = "Missing Merchandise: %s units" %Global.score_manager.count_missing_items_by_day.back()
 	incorrect_items_label.text = "Incorrect Merchandise Shipped: %s units" %Global.score_manager.count_incorrect_items_by_day.back()
@@ -65,7 +75,17 @@ func fill_metrics_card():
 		mistakes_graph.update_graph(mistakes_over_time)
 		
 func writeup(reason : Writeup):
+	writeups[writeups.size() - 1].append(reason)
+
+func display_writeups():
+	if writeups[writeups.size() - 1].is_empty():
+		return
 	writeup_label.show()
-	match reason:
-		Writeup.SLACKING:
-			writeup_label.text = "WRITEUP REASON - FOUND SLACKING ON THE JOB"
+	for citation in range(writeups[writeups.size() - 1].size()):
+		writeup_label.text +="\n"
+		match writeups[writeups.size() - 1][citation]:
+			Writeup.SLACKING:
+				writeup_label.text += "WRITEUP REASON - FOUND SLACKING ON THE JOB"
+			Writeup.URIN:
+				writeup_label.text += "WRITEUP REASON - SANITATION NON-COMPLIANCE "
+			

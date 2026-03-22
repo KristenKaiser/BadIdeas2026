@@ -60,6 +60,7 @@ func score_box(box : Box):
 	Global.metrics_tv.update_value(count_boxes_sent, Global.metrics_tv.Metric.BOXES)
 	Global.metrics_tv.update_value(count_missing_items, Global.metrics_tv.Metric.MISSING)
 	Global.metrics_tv.update_value(count_incorrect_items, Global.metrics_tv.Metric.WRONG)
+	Global.box_manager.boxes.erase(box)
 func end_round():
 	reset_todays_metrics()
 	
