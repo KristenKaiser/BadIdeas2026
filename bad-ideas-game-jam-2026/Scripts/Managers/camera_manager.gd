@@ -8,6 +8,7 @@ var is_zoomed_in : bool = false
 var is_screen_locked :bool = false
 signal camera_changed
 var held_object : Node3D
+var is_locked :bool = false
 
 func _ready() -> void:
 	current = get_viewport().get_camera_3d()
@@ -17,6 +18,8 @@ func add_camera(camera: Camera3D):
 	cameras.append(camera)
 
 func change_camera(new_camera : Camera3D, is_zoom : bool = false): 
+	if is_locked:
+		return
 	prev_cameras.append(current)
 	current = new_camera
 	if is_zoom == true: 
@@ -32,20 +35,14 @@ func change_camera(new_camera : Camera3D, is_zoom : bool = false):
 		child.reparent(new_camera)
 		child.position = child_position
 		child.rotation = child_rotation
-		#if child.is_in_group("pickupable"):
-			#if child.has_method("get_mesh"):
-				#hold_item(child, child.get_mesh())
-			#else: 
-				#printerr("%s is in group pickuppable but does not have method get_mesh" % child)
-		
-		
-		
 	camera_changed.emit()
 
 func add_child_to_active(child : Node3D):
 	child.reparent(get_viewport().get_camera_3d())
 
 func change_camera_to_prev():
+	if is_locked:
+		return
 	change_camera(prev_cameras.pop_back())
 
 func hold_item(item : Node3D, mesh_instance : MeshInstance3D, rotation_offset : Vector3 = Vector3.ZERO):
@@ -62,6 +59,8 @@ func hold_item(item : Node3D, mesh_instance : MeshInstance3D, rotation_offset : 
 	
 	
 func follow_mouse(camera : Camera3D, base_rotaton : Vector3, x_max_change : float, y_max_change : float, delta: float, speed : float, dead_zone_ratio : Vector2):
+	if is_locked:
+		return
 	if is_screen_locked: return
 	##TODO make max chage greater towards center so drift area is round not square
 	var change : float = 1 ##TODO replace this with speed

@@ -1,10 +1,11 @@
-[gd_scene load_steps=23 format=3 uid="uid://d0nk4t02xe8ik"]
+[gd_scene load_steps=24 format=3 uid="uid://d0nk4t02xe8ik"]
 
 [ext_resource type="PackedScene" uid="uid://uvo3k3alfmfd" path="res://Scenes/food_can.tscn" id="1_kln2b"]
 [ext_resource type="PackedScene" uid="uid://ccmmb1u17r8a0" path="res://Scenes/keypad.tscn" id="1_r150o"]
 [ext_resource type="Script" uid="uid://dxx1jykm0t1k6" path="res://Scripts/main.gd" id="1_v1gob"]
 [ext_resource type="Script" uid="uid://ojqvaarbbc86" path="res://Scripts/main_camera.gd" id="2_jw32o"]
 [ext_resource type="PackedScene" uid="uid://dg21mddb1l2b5" path="res://Scenes/Water.tscn" id="2_rgh2o"]
+[ext_resource type="PackedScene" uid="uid://dxcp2l666dwpx" path="res://Scenes/bucket.tscn" id="2_sxkr1"]
 [ext_resource type="PackedScene" uid="uid://bk8gshk5vwo18" path="res://Scenes/blur.tscn" id="3_346fj"]
 [ext_resource type="PackedScene" uid="uid://dc2ar543euyj6" path="res://Scenes/catalogue.tscn" id="3_pbw6q"]
 [ext_resource type="Script" uid="uid://cd6s54ejg8gtm" path="res://Scripts/order_tube.gd" id="3_rgh2o"]
@@ -44,6 +45,9 @@ glow_levels/7 = 9.35
 script = ExtResource("1_v1gob")
 main_camera = NodePath("MainCamera")
 
+[node name="bucket" parent="." instance=ExtResource("2_sxkr1")]
+transform = Transform3D(0.415, 1.4901161e-08, 1.3274253e-09, 0, 0.415, -5.634586e-10, -1.3274235e-09, 5.634577e-10, 0.415, -0.70000017, 0.99999994, -2.3)
+
 [node name="Blur" parent="." instance=ExtResource("3_346fj")]
 mouse_filter = 2
 
@@ -59,7 +63,7 @@ shadow_enabled = true
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, -0.9031855, 0.4292505, 0, -0.4292505, -0.9031855, 0, 2.7360015, -2.8512096)
 light_color = Color(0.7541423, 0.80429894, 0.999999, 1)
-light_energy = 0.103
+light_energy = 0.374
 shadow_enabled = true
 
 [node name="MainCamera" type="Camera3D" parent="."]

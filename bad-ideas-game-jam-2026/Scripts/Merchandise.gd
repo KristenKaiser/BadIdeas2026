@@ -105,7 +105,7 @@ func _unhandled_input(event: InputEvent) -> void:
 func get_mesh()-> MeshInstance3D:
 	return object_mesh
 
-func select_object(event_position : Vector3):
+func select_object(_event_position : Vector3):
 	match location: 
 		Location.HELD: 
 			pass

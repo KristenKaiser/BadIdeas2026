@@ -1,21 +1,32 @@
-[gd_scene load_steps=2 format=3 uid="uid://dg21mddb1l2b5"]
+[gd_scene load_steps=4 format=3 uid="uid://dg21mddb1l2b5"]
+
+[ext_resource type="Script" uid="uid://dyhv27lfw0dir" path="res://Scenes/water.gd" id="1_5v6ty"]
+[ext_resource type="PackedScene" uid="uid://wigmfigw2ikj" path="res://Scenes/bottle.tscn" id="2_aq4x0"]
 
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_g6c1a"]
 height = 0.2
 radius = 0.07
 
-[node name="Water" type="Node3D"]
+[node name="Water" type="Node3D" node_paths=PackedStringArray("bottle")]
+script = ExtResource("1_5v6ty")
+bottle = NodePath("Bottle")
 
-[node name="CSGCylinder3D" type="CSGCylinder3D" parent="."]
-radius = 0.05
-height = 0.3
+[node name="Bottle" parent="." instance=ExtResource("2_aq4x0")]
 
-[node name="Label3D" type="Label3D" parent="CSGCylinder3D"]
+[node name="Label3D" type="Label3D" parent="Bottle"]
 transform = Transform3D(-1.2321801e-08, 0.44379148, 0, -0.28188995, -1.9398742e-08, 0, 0, 0, 1, 0, 0.0006167367, 0.050496913)
+visible = false
 shaded = true
 text = "WATER"
 
-[node name="Area3D" type="Area3D" parent="CSGCylinder3D"]
+[node name="Area3D" type="Area3D" parent="Bottle"]
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="CSGCylinder3D/Area3D"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Bottle/Area3D"]
 shape = SubResource("CylinderShape3D_g6c1a")
+
+[node name="CSGCylinder3D" type="CSGCylinder3D" parent="Bottle"]
+visible = false
+radius = 0.05
+height = 0.3
+
+[connection signal="input_event" from="Bottle/Area3D" to="." method="_on_area_3d_input_event"]

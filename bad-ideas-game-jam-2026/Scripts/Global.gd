@@ -52,11 +52,11 @@ func start_game():
 	
 func _unhandled_input(event: InputEvent) -> void:
 		if event is InputEventKey:
-			if OS.get_keycode_string(event.keycode) == "T" and event.pressed:
+			if OS.get_keycode_string(event.keycode) == "2" and event.pressed:
 				conveyer_speed = fast_conveyer_speed
-			if OS.get_keycode_string(event.keycode) == "T" and event.pressed == false:
+			if OS.get_keycode_string(event.keycode) == "2" and event.pressed == false:
 				conveyer_speed = slow_conveyer_speed
-			if OS.get_keycode_string(event.keycode) == "P" and event.pressed:
+			if OS.get_keycode_string(event.keycode) == "1" and event.pressed:
 				if conveyer_speed == 0:
 					conveyer_speed = slow_conveyer_speed
 				else:

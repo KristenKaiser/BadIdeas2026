@@ -38,6 +38,8 @@ func _unhandled_input(event: InputEvent):
 			move_camera(Direction.LEFT)
 
 func move_camera(direction : Direction): 
+	if Global.camera_manager.is_locked:
+		return
 	current_direction = direction
 	match direction:
 		Direction.RIGHT:
