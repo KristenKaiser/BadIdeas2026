@@ -44,9 +44,9 @@ func create_flicker():
 	var tween = create_tween()
 	tween.set_parallel(true)  
 	tween.tween_property(light, "light_energy", 0.3, 0.08)
-	tween.tween_property(light, "light_color", color_shift, 0.08)
+	#tween.tween_property(light, "light_color", color_shift, 0.08)
 	tween.tween_property(light, "light_energy", base_energy, 0.15)
-	tween.tween_property(light, "light_color", light_color, 0.15)
+	#tween.tween_property(light, "light_color", light_color, 0.15)
 	
 
 

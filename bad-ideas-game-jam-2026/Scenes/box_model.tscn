@@ -9,7 +9,7 @@ vertex_color_use_as_albedo = true
 albedo_color = Color(0.9063318, 0.9063318, 0.9063318, 1)
 emission_enabled = true
 emission = Color(1, 1, 1, 1)
-emission_energy_multiplier = 0.0
+emission_energy_multiplier = 2.78
 
 [sub_resource type="ArrayMesh" id="ArrayMesh_g3dmk"]
 resource_local_to_scene = true
@@ -47,6 +47,9 @@ shadow_mesh = SubResource("ArrayMesh_g3dmk")
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_yocxd"]
 albedo_color = Color(0.6156863, 0.42352942, 0.21568628, 1)
+emission_enabled = true
+emission = Color(0.6240938, 0.45679426, 0.26029164, 1)
+emission_energy_multiplier = 0.01
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_xuvfq"]
 

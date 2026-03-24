@@ -8,7 +8,7 @@ var is_zoomed_in : bool = false
 var is_screen_locked :bool = false
 signal camera_changed
 var held_object : Node3D
-var is_locked :bool = false
+var is_locked :bool = false 
 
 func _ready() -> void:
 	current = get_viewport().get_camera_3d()

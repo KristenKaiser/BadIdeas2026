@@ -5,6 +5,7 @@
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_yocxd"]
 albedo_color = Color(0.6156863, 0.42352942, 0.21568628, 1)
+emission_enabled = true
 
 [node name="box" node_paths=PackedStringArray("cube", "front_flap", "back_flap", "right_flap", "left_flap") instance=ExtResource("1_lcvec")]
 script = ExtResource("2_1abiq")
