@@ -24,6 +24,7 @@ func _ready() -> void:
 	if disable_hydration_testing: 
 		hydration_timer.stop()
 	current_hydration = max_hydration
+	
 
 func restart_hydration_timer(): 
 	hydration_timer.stop()

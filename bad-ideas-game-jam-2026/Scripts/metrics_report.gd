@@ -10,7 +10,7 @@ class_name MetricsReport
 @export var mistakes_graph : ScoreGraph
 @export var graphs : VBoxContainer
 
-enum Writeup {SLACKING, URIN}
+enum Writeup {SLACKING, URIN, DRINKING, PEEING}
 var writeups : Array[Array]
 
 
@@ -75,6 +75,7 @@ func fill_metrics_card():
 		mistakes_graph.update_graph(mistakes_over_time)
 		
 func writeup(reason : Writeup):
+	print("WRITEUP %s"% Writeup.find_key(reason))
 	writeups[writeups.size() - 1].append(reason)
 
 func display_writeups():
@@ -87,5 +88,8 @@ func display_writeups():
 			Writeup.SLACKING:
 				writeup_label.text += "WRITEUP REASON - FOUND SLACKING ON THE JOB"
 			Writeup.URIN:
-				writeup_label.text += "WRITEUP REASON - SANITATION NON-COMPLIANCE "
-			
+				writeup_label.text += "WRITEUP REASON - SANITATION NON-COMPLIANCE"
+			Writeup.DRINKING: 
+				writeup_label.text += "WRITEUP REASON - HYDRATION WHILE ON COMPANY TIME"
+			Writeup.PEEING: 
+				writeup_label.text += "WRITEUP REASON - URINATION WHILE ON COMPANY TIME"

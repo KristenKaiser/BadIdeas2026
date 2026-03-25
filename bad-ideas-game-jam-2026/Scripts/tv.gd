@@ -8,10 +8,33 @@ var base_energy = .1
 var flicker_timer = 0.0
 var next_flicker_time = 0.0
 var current_energy = .1
+#enum LightColor  {BASE, WARNING, SPOTLIGHT, FAIL}
 @export var light_color = Color(0.297, 0.401, 0.634, 1.0) 
+@export var warning_light_color: Color = Color(1.0, 0.561, 0.0, 1.0)
+@export var spotlight_light_color : Color= Color(0.778, 0.92, 1.0, 1.0)
+@export var fail_light_color : Color= Color(1.0, 0.194, 0.144, 1.0)
+@export var fail_light_time : float = .5
+var is_base_color : bool = true
 
 func  _ready() -> void:
 	create_screen(tv_content)
+
+func reset_color_to_base():
+	if is_base_color == false:
+		change_light_color(Global.tv_manager.LightColor.BASE)
+
+func change_light_color(new_color : TVManager.LightColor):
+	match new_color:
+		Global.tv_manager.LightColor.BASE:
+			light.light_color = light_color
+		Global.tv_manager.LightColor.WARNING:
+			light.light_color = warning_light_color
+		Global.tv_manager.LightColor.SPOTLIGHT:
+			light.light_color = spotlight_light_color
+		Global.tv_manager.LightColor.FAIL:
+			light.light_color = fail_light_color
+			await get_tree().create_timer(fail_light_time).timeout
+			light.light_color = light_color
 
 func _process(delta):
 	flicker_timer += delta
@@ -81,7 +104,8 @@ func create_screen(sub_scene : PackedScene):
 	add_child(sub_viewport)
 	
 	# Load and add your 2D scene
-	var ui_scene = sub_scene.instantiate()
+	var ui_scene :Screen = sub_scene.instantiate()
+	ui_scene.parent_tv = self
 	sub_viewport.add_child(ui_scene)
 	
 	# Create material with viewport texture

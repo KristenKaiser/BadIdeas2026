@@ -103,7 +103,7 @@ func create_grid_mesh(grid_size: Vector2i, cell_size: float) -> MeshInstance3D:
 	var immediate_mesh = ImmediateMesh.new()
 	var mesh_material = StandardMaterial3D.new()
 	mesh_material.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED
-	mesh_material.albedo_color = Color(1, 1, 1, 0.3)
+	mesh_material.albedo_color = Color(0.48, 0.271, 0.0, 0.302)
 	mesh_material.transparency = BaseMaterial3D.TRANSPARENCY_ALPHA
 
 	immediate_mesh.surface_begin(Mesh.PRIMITIVE_LINES, mesh_material)

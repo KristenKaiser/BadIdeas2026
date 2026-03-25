@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=3 uid="uid://clxeuiaqqfm7v"]
 
-[ext_resource type="Script" uid="uid://bgvhf77q8becj" path="res://Scenes/pee.gd" id="1_6qe0f"]
+[ext_resource type="Script" uid="uid://bgvhf77q8becj" path="res://Scripts/pee.gd" id="1_6qe0f"]
 
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_6qe0f"]
 particle_flag_align_y = true

@@ -1,4 +1,4 @@
-extends Control
+extends Screen
 class_name MetricsScreen
 @export var boxes_sent_label : Label
 @export var missing_item_label : Label
@@ -7,6 +7,7 @@ enum Metric {BOXES, MISSING, WRONG}
 
 func _ready() -> void:
 	Global.metrics_tv = self
+	Global.tv_manager.metrics_tv = parent_tv
 
 
 func update_value(value: int, metric : Metric):

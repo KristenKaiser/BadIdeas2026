@@ -1,4 +1,4 @@
-[gd_scene load_steps=27 format=3 uid="uid://d0nk4t02xe8ik"]
+[gd_scene load_steps=29 format=3 uid="uid://d0nk4t02xe8ik"]
 
 [ext_resource type="PackedScene" uid="uid://uvo3k3alfmfd" path="res://Scenes/food_can.tscn" id="1_kln2b"]
 [ext_resource type="PackedScene" uid="uid://ccmmb1u17r8a0" path="res://Scenes/keypad.tscn" id="1_r150o"]
@@ -18,7 +18,33 @@
 [ext_resource type="PackedScene" uid="uid://5bo23abi3m8c" path="res://Scenes/UI.tscn" id="13_frkhe"]
 [ext_resource type="PackedScene" uid="uid://n1ub7lcpw7du" path="res://Scenes/TV.tscn" id="14_erwvk"]
 [ext_resource type="PackedScene" uid="uid://chjvnkghiybor" path="res://Scenes/MetricsScreen.tscn" id="15_2w5on"]
-[ext_resource type="Script" uid="uid://cm3uftokymxn6" path="res://Scenes/penopticon.gd" id="19_sxkr1"]
+[ext_resource type="Script" uid="uid://cm3uftokymxn6" path="res://Scripts/penopticon.gd" id="19_sxkr1"]
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_346fj"]
+flip_faces = true
+top_radius = 25.0
+bottom_radius = 25.0
+height = 100.0
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_0sclb"]
+transparency = 1
+albedo_color = Color(1, 1, 1, 0)
+emission_enabled = true
+
+[sub_resource type="BoxMesh" id="BoxMesh_sxkr1"]
+material = SubResource("StandardMaterial3D_0sclb")
+size = Vector3(6.5, 3, 2)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_sxkr1"]
+transparency = 1
+albedo_color = Color(1, 1, 1, 0.18039216)
+emission_enabled = true
+emission = Color(1, 1, 1, 1)
+emission_energy_multiplier = 1.54
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_fq0cl"]
+material = SubResource("StandardMaterial3D_sxkr1")
+size = Vector2(8.07, 3.475)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_c1w88"]
 size = Vector3(0.33112794, 0.4994873, 0.5165771)
@@ -41,21 +67,6 @@ glow_levels/5 = 9.7
 glow_levels/6 = 6.49
 glow_levels/7 = 9.35
 
-[sub_resource type="CylinderMesh" id="CylinderMesh_346fj"]
-flip_faces = true
-top_radius = 25.0
-bottom_radius = 25.0
-height = 100.0
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_0sclb"]
-transparency = 1
-albedo_color = Color(1, 1, 1, 0)
-emission_enabled = true
-
-[sub_resource type="BoxMesh" id="BoxMesh_sxkr1"]
-material = SubResource("StandardMaterial3D_0sclb")
-size = Vector3(6.5, 3, 2)
-
 [node name="Main" type="Node3D" node_paths=PackedStringArray("main_camera")]
 script = ExtResource("1_v1gob")
 main_camera = NodePath("MainCamera")
@@ -66,15 +77,60 @@ mouse_filter = 2
 [node name="LightmapGI" type="LightmapGI" parent="."]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 3.1608565, 0, -0.7691581)
 
-[node name="OmniLight3D" type="OmniLight3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.9, 0)
-visible = false
-light_energy = 0.41
-shadow_enabled = true
-
 [node name="MainCamera" type="Camera3D" parent="."]
 transform = Transform3D(-4.371139e-08, 0.3907311, -0.9205048, 0, 0.9205048, 0.3907311, 1, 1.7079397e-08, -4.0236543e-08, -0.3, 1.75, -2.025)
 script = ExtResource("2_jw32o")
+
+[node name="Penopticon" type="MeshInstance3D" parent="." node_paths=PackedStringArray("player_window", "spotlight", "spotlight_glare")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -28.20585)
+mesh = SubResource("CylinderMesh_346fj")
+script = ExtResource("19_sxkr1")
+player_window = NodePath("MeshInstance3D")
+spotlight = NodePath("SpotLight3D")
+spotlight_glare = NodePath("spotlight_glare")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Penopticon"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.41163844, 1.5190206, 24.750862)
+visible = false
+mesh = SubResource("BoxMesh_sxkr1")
+
+[node name="OmniLight3D2" type="OmniLight3D" parent="Penopticon"]
+light_color = Color(0.040649988, 0.27519545, 0.9999389, 1)
+light_energy = 0.507
+omni_range = 53.966
+
+[node name="OmniLight3D4" type="OmniLight3D" parent="Penopticon"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -39.238033, 0)
+light_color = Color(0.040649988, 0.27519545, 0.9999389, 1)
+light_energy = 0.507
+omni_range = 53.966
+
+[node name="OmniLight3D3" type="OmniLight3D" parent="Penopticon"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 33.03034, 0)
+light_color = Color(0.040649988, 0.27519545, 0.9999389, 1)
+light_energy = 0.507
+omni_range = 53.966
+
+[node name="SpotLight3D" type="SpotLight3D" parent="Penopticon"]
+light_energy = 16.0
+light_indirect_energy = 2.231
+spot_range = 30.51
+spot_angle = 8.08858
+
+[node name="spotlight_glare" type="MeshInstance3D" parent="Penopticon"]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 1.5519029, 24.802128)
+visible = false
+mesh = SubResource("PlaneMesh_fq0cl")
+skeleton = NodePath("../..")
+
+[node name="OmniLight3D" type="OmniLight3D" parent="Penopticon/spotlight_glare"]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, -0.4218806, 0.2299254, -0.31811845)
+light_energy = 2.921
+light_size = 1.0
+light_specular = 1.77
+shadow_enabled = true
+omni_range = 7.43
+omni_attenuation = 0.365
 
 [node name="room" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.2, -0.2)
@@ -307,34 +363,6 @@ transform = Transform3D(0.69453704, 0, -1.7763568e-15, 0, 0.10020816, 0, 0, 0, 0
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_erwvk")
-
-[node name="Penopticon" type="MeshInstance3D" parent="." node_paths=PackedStringArray("player_window")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -28.20585)
-mesh = SubResource("CylinderMesh_346fj")
-script = ExtResource("19_sxkr1")
-player_window = NodePath("MeshInstance3D")
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Penopticon"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.41163844, 1.5190206, 24.750862)
-visible = false
-mesh = SubResource("BoxMesh_sxkr1")
-
-[node name="OmniLight3D2" type="OmniLight3D" parent="Penopticon"]
-light_color = Color(0.040649988, 0.27519545, 0.9999389, 1)
-light_energy = 0.507
-omni_range = 53.966
-
-[node name="OmniLight3D4" type="OmniLight3D" parent="Penopticon"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -39.238033, 0)
-light_color = Color(0.040649988, 0.27519545, 0.9999389, 1)
-light_energy = 0.507
-omni_range = 53.966
-
-[node name="OmniLight3D3" type="OmniLight3D" parent="Penopticon"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 33.03034, 0)
-light_color = Color(0.040649988, 0.27519545, 0.9999389, 1)
-light_energy = 0.507
-omni_range = 53.966
 
 [connection signal="input_event" from="Left/TrashCan/Area3D" to="Left/TrashCan" method="_on_area_3d_input_event"]
 [connection signal="area_entered" from="Center/Conveyer/CSGBox3D/Area3D" to="Center/Conveyer" method="exited_conveyer"]

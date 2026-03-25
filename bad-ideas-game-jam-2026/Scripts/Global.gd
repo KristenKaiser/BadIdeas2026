@@ -11,6 +11,7 @@ var current_boxes_per_day : int
 var metrics_tv : MetricsScreen
 var health_tv : HealthScreen
 var blur : Blur
+var penopticon : Penopticon
 
 const MERCH_MANAGER = preload("uid://cpxhjnah05wv6")
 var merch_manager : MerchManager 
@@ -26,6 +27,10 @@ var score_manager : ScoreManager
 
 const HEALTH_MANAGER = preload("uid://84chghh6wnhi")
 var healh_manager : HealthManager
+
+const TV_MANAGER = preload("uid://6wrtdlanfrtg")
+var tv_manager : TVManager
+
 
 var ui : UI
 
@@ -48,6 +53,9 @@ func start_game():
 	
 	healh_manager = HEALTH_MANAGER.instantiate()
 	add_child(healh_manager)
+	
+	tv_manager = TV_MANAGER.instantiate()
+	add_child(tv_manager)
 	
 	
 func _unhandled_input(event: InputEvent) -> void:

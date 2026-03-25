@@ -46,6 +46,9 @@ cull_mode = 2
 albedo_color = Color(0.23529412, 0.8039216, 1, 0.8980392)
 metallic = 0.26
 metallic_specular = 0.55
+emission_enabled = true
+emission = Color(0.022093965, 4.3702723e-05, 0.2558101, 1)
+emission_energy_multiplier = 0.02
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_4rean"]
 resource_name = "Main_material"
@@ -85,6 +88,9 @@ blend_shape_mode = 0
 shadow_mesh = SubResource("ArrayMesh_h1he0")
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_6a73h"]
+emission_enabled = true
+emission = Color(1, 1, 1, 1)
+emission_energy_multiplier = 0.01
 
 [node name="Bottle" type="Node3D" node_paths=PackedStringArray("bottle", "cap")]
 script = ExtResource("2_6a73h")
