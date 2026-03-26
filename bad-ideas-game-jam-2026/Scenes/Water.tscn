@@ -10,6 +10,10 @@ radius = 0.07
 [node name="Water" type="Node3D" node_paths=PackedStringArray("bottle")]
 script = ExtResource("1_5v6ty")
 bottle = NodePath("Bottle")
+merch_name = "Water"
+grid_shape = "o"
+trash_fill = 1
+rotate_axis = "Z"
 
 [node name="Bottle" parent="." instance=ExtResource("2_aq4x0")]
 
@@ -19,9 +23,9 @@ visible = false
 shaded = true
 text = "WATER"
 
-[node name="Area3D" type="Area3D" parent="Bottle"]
+[node name="area3D" type="Area3D" parent="Bottle"]
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Bottle/Area3D"]
+[node name="collision_shape" type="CollisionShape3D" parent="Bottle/area3D"]
 shape = SubResource("CylinderShape3D_g6c1a")
 
 [node name="CSGCylinder3D" type="CSGCylinder3D" parent="Bottle"]
@@ -29,4 +33,4 @@ visible = false
 radius = 0.05
 height = 0.3
 
-[connection signal="input_event" from="Bottle/Area3D" to="." method="_on_area_3d_input_event"]
+[connection signal="input_event" from="Bottle/area3D" to="." method="_on_area_3d_input_event"]

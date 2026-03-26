@@ -1,4 +1,4 @@
-[gd_scene load_steps=29 format=3 uid="uid://d0nk4t02xe8ik"]
+[gd_scene load_steps=30 format=3 uid="uid://d0nk4t02xe8ik"]
 
 [ext_resource type="PackedScene" uid="uid://uvo3k3alfmfd" path="res://Scenes/food_can.tscn" id="1_kln2b"]
 [ext_resource type="PackedScene" uid="uid://ccmmb1u17r8a0" path="res://Scenes/keypad.tscn" id="1_r150o"]
@@ -19,6 +19,7 @@
 [ext_resource type="PackedScene" uid="uid://n1ub7lcpw7du" path="res://Scenes/TV.tscn" id="14_erwvk"]
 [ext_resource type="PackedScene" uid="uid://chjvnkghiybor" path="res://Scenes/MetricsScreen.tscn" id="15_2w5on"]
 [ext_resource type="Script" uid="uid://cm3uftokymxn6" path="res://Scripts/penopticon.gd" id="19_sxkr1"]
+[ext_resource type="PackedScene" uid="uid://qy7nbc03t04r" path="res://Scenes/shelf.tscn" id="20_sxkr1"]
 
 [sub_resource type="CylinderMesh" id="CylinderMesh_346fj"]
 flip_faces = true
@@ -364,6 +365,9 @@ transform = Transform3D(0.69453704, 0, -1.7763568e-15, 0, 0.10020816, 0, 0, 0, 0
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_erwvk")
+
+[node name="Shelf" parent="." instance=ExtResource("20_sxkr1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.4448454, 0.8547646, -0.180361)
 
 [connection signal="input_event" from="Left/TrashCan/Area3D" to="Left/TrashCan" method="_on_area_3d_input_event"]
 [connection signal="area_entered" from="Center/Conveyer/CSGBox3D/Area3D" to="Center/Conveyer" method="exited_conveyer"]

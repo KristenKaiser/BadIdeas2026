@@ -145,11 +145,11 @@ func _box_bottom_input_event(_camera: Node, event: InputEvent, event_position: V
 			ghost.hide()
 		return
 	if event is InputEventMouseButton:
-		if Global.merch_manager.held_merch.is_empty() == false:
+		if Global.camera_manager.held_object != null:
 			if event.pressed:
 				add_to_box(event_position)
 	if event is InputEventMouseMotion:
-		if Global.merch_manager.held_merch.is_empty() == false:
+		if Global.camera_manager.held_object != null:
 			move_ghost(snap_to_grid(to_local(event_position)))
 
 func add_to_box(event_position: Vector3):
@@ -291,7 +291,7 @@ func camera_changed() -> void:
 		box_collision_shape.disabled = false
 		is_zoomed_in = false
 		if ghost != null:
-			ghost.orignal_merch.ghost = null
+			ghost.orignal_object.ghost = null
 			ghost.queue_free()
 
 func _on_box_bottom_3d_mouse_entered() -> void:

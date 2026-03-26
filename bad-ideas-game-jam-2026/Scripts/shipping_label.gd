@@ -31,7 +31,7 @@ func resize_mesh_to_label():
 func _on_area_3d_input_event(_camera: Node, event: InputEvent, _event_position: Vector3, _normal: Vector3, _shape_idx: int) -> void:
 	if event is InputEventMouseButton:
 		if event.button_index == MOUSE_BUTTON_LEFT and event.pressed:
-			if Global.merch_manager.held_merch.is_empty():
+			if Global.camera_manager.held_object == null:
 				if !is_held: 
 					label_mesh.rotation_degrees = Vector3(360, 90, 0)
 					Global.camera_manager.hold_item(self, label_mesh)

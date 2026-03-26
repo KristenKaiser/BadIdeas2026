@@ -2,7 +2,7 @@ extends Node
 class_name MerchManager
 @export var prototypes : Array[MerchData]
 var all_merch : Array[Merchandise]
-var held_merch : Array[Merchandise]
+#var held_merch : Array[Merchandise]
 const MerchandiseScript = preload("uid://8d86k6wj4m5x")
 
 
@@ -16,21 +16,25 @@ func remove_merch(merch : Merchandise):
 func hold_merch(merch : Merchandise)-> bool:
 	if Global.camera_manager.held_object == null:
 		Global.camera_manager.held_object = merch
-		held_merch.append(merch)
+		#held_merch.append(merch)
 		return true
 	return false
 
-func drop_merch(merch : Merchandise):
-	while held_merch.has(merch):
-		held_merch.erase(merch)
+#func drop_merch(merch : Merchandise):
+	#while held_merch.has(merch):
+		#held_merch.erase(merch)
 
 func pop_last_held_merch()-> Merchandise:
-	return held_merch.pop_back()
+	var merch : Merchandise = Global.camera_manager.held_object
+	Global.camera_manager.held_object = null
+	return merch
+	#return held_merch.pop_back()
 
 func get_last_held_merch()-> Merchandise:
-	if held_merch.is_empty():
-		return null
-	return held_merch.back()
+	return Global.camera_manager.held_object
+	#if held_merch.is_empty():
+		#return null
+	#return held_merch.back()
 
 func place_held_merch(new_parent : Node3D):
 	var merch :Merchandise = pop_last_held_merch()

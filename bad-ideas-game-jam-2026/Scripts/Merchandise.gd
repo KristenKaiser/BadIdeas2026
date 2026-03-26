@@ -2,15 +2,15 @@ extends Node3D
 class_name Merchandise
 
 var object_mesh : MeshInstance3D
-var merch_name : String
+@export var merch_name : String
 var is_held : bool = false
 var area3d : Area3D
 var collision_shape : CollisionShape3D
-var grid_shape : String
-var center_offset: Vector3 
-var trash_fill : int
+@export var grid_shape : String
+@export var center_offset: Vector3 
+@export var trash_fill : int
 var is_ghost: bool = false
-var rotate_axis : String
+@export var rotate_axis : String
 signal rotateghost(amount : Vector3)
 signal changgeGhostPivot(pivot_change : Vector3)
 var current_pivot_offset : Vector3
@@ -24,7 +24,6 @@ func _ready() -> void:
 	if is_ghost: 
 		return
 	Global.merch_manager.add_merch(self)
-	print("merch ready")
 	add_to_group("pickupable")
 	object_mesh = get_child(0)
 	area3d  = Area3D.new()
@@ -59,13 +58,20 @@ func get_pivot_offset()-> Vector3:
 	offset *= Global.grid_size
 	return Vector3(0, offset.y, -offset.x)
 
+func get_mesh()-> MeshInstance3D:
+	return get_child(0)
+
+func get_area3d()->Area3D:
+	return object_mesh.get_node("area3d")
+	
+
 func duplicate_globals(orgin :Merchandise):
 	orignal_merch = orgin
 	orgin.ghost = self
-	object_mesh = get_child(0)
+	object_mesh = get_mesh()
 	merch_name = orgin.merch_name
 	is_held = orgin.is_held
-	area3d = object_mesh.get_node("area3d")
+	area3d = get_area3d()
 	collision_shape = area3d.get_node("collision_shape")
 	grid_shape = orgin.grid_shape
 	center_offset = orgin.center_offset
@@ -102,8 +108,6 @@ func _unhandled_input(event: InputEvent) -> void:
 					turn(true)
 					get_viewport().set_input_as_handled()
 	
-func get_mesh()-> MeshInstance3D:
-	return object_mesh
 
 func select_object(_event_position : Vector3):
 	match location: 
@@ -128,16 +132,10 @@ func turn(is_right : bool):
 		rotate_shape(true)
 		#update_center_offset(true)
 		rotate_node(90.0)
-		print("turn right")
 	else:
 		rotate_shape(false)
 		#update_center_offset(false)
 		rotate_node(-90.0)
-		print("turn left")
-	#var temp_offset = current_pivot_offset
-	#current_pivot_offset = get_pivot_offset()
-	#object_mesh.position += -current_pivot_offset + temp_offset
-	#changgeGhostPivot.emit(-current_pivot_offset + temp_offset)
 	
 func change_ghost_pivot(pivot_change : Vector3):
 	object_mesh.position += pivot_change
@@ -324,4 +322,5 @@ func get_grid_size() -> Vector2:
 	
 func _exit_tree() -> void:
 	if self.is_queued_for_deletion():
-		Global.merch_manager.held_merch.erase(self)
+		if Global.camera_manager.held_object == self: 
+			Global.camera_manager.held_object = null

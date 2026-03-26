@@ -1,0 +1,27 @@
+[gd_scene load_steps=4 format=3 uid="uid://qy7nbc03t04r"]
+
+[ext_resource type="Script" uid="uid://oaufytxobcd5" path="res://Scenes/grid_surface.gd" id="1_ndc05"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_pp4lf"]
+size = Vector3(1, 0.01, 1)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_ndc05"]
+size = Vector3(1, 0.04296875, 1)
+
+[node name="Shelf" type="Node3D"]
+
+[node name="grid_surface" type="MeshInstance3D" parent="." node_paths=PackedStringArray("surface_collision_shape")]
+mesh = SubResource("BoxMesh_pp4lf")
+script = ExtResource("1_ndc05")
+surface_collision_shape = NodePath("Area3D/CollisionShape3D")
+
+[node name="Area3D" type="Area3D" parent="grid_surface"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="grid_surface/Area3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.01171875, 0)
+shape = SubResource("BoxShape3D_ndc05")
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 0.6535801, -9.43447e-09)
+
+[connection signal="input_event" from="grid_surface/Area3D" to="grid_surface" method="_on_area_3d_input_event"]

@@ -1,5 +1,5 @@
-extends Node3D
-var is_held : bool = false
+extends Merchandise
+#var is_held : bool = false
 @export var bottle : Bottle
 var tween: Tween
 var pee_time : float = 1.0
@@ -13,7 +13,13 @@ var is_observed : bool = false
 func _ready() -> void:
 	Global.penopticon.spotlight_on_cell.connect(observed)
 	Global.penopticon.spotlight_off_cell.connect(unobserved)
+	object_mesh = bottle.bottle
+	
+func get_mesh()-> MeshInstance3D:
+	return bottle.bottle
 
+func get_area3d()->Area3D:
+	return bottle.get_node("area3D")
 
 func observed():
 	is_observed = true
