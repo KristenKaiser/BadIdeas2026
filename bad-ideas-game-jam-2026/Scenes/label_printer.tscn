@@ -16,6 +16,10 @@ mesh = SubResource("BoxMesh_b7tt3")
 
 [node name="Button" parent="." instance=ExtResource("2_jumuj")]
 transform = Transform3D(-1, 0, -6.9850796e-07, 0, 2.615, 0, 8.742278e-08, 0, -7.99, 0.26637465, -0.05921936, 0)
-text = "Print"
 functionality = 3
 color = Color(0, 1, 0, 1)
+
+[node name="Label3D" type="Label3D" parent="Button"]
+transform = Transform3D(-5.4639244e-09, 0, -0.125, 0, 0.12499999, 0, 0.125, 0, -5.463923e-09, -0.027296603, 0, -2.9866642e-10)
+shaded = true
+text = "Print"

@@ -6,16 +6,17 @@ var parent_box : Box
 var is_zoomed : bool = false
 var requested_items : Dictionary[String, int]
 var generated_items : Array[Merchandise] = []
+var flat_rotation = Vector3(-90, 0, 0)
 
 
-func _ready() -> void:
-	#collision_shape.shape.size = get_aabb().size
-	
+func _ready() -> void:	
 	await get_tree().process_frame
 	resize_mesh_to_label()
 	scale = Vector3(.1,.1,.1)
 	collision_shape.shape.size = get_aabb().size
 	collision_shape.position = Vector3.ZERO
+	position = get_home_position()
+	rotation_degrees = flat_rotation
 	
 func write_to_label(text :String):
 	label.text += text
@@ -37,16 +38,27 @@ func write_requested_items():
 	for item in requested_items:
 		write_to_label("%s x %s\n"% [item, requested_items[item]])
 
+func get_home_position()-> Vector3:
+	var home_position : Vector3
+	home_position.y = -parent_box.box_collision_shape.shape.size.y / 2 + .03
+	home_position.x = (-parent_box.box_collision_shape.shape.size.x / 2) - (get_aabb().size.x * scale.x)
+	home_position.z = 0
+	return home_position
+	
+
 func _on_area_3d_input_event(_camera: Node, event: InputEvent, _event_position: Vector3, _normal: Vector3, _shape_idx: int) -> void:
 	if event is InputEventMouseButton:
 		if event.button_index == MOUSE_BUTTON_LEFT and event.pressed:
 			if is_zoomed:
 				is_zoomed = false
-				position.y = -parent_box.box_collision_shape.shape.size.y / 2 + .03
-				position.x = (-parent_box.box_collision_shape.shape.size.x / 2) - (get_aabb().size.x * scale.x)
+				position = get_home_position()
+				rotation_degrees = flat_rotation
 			else: 
 				is_zoomed = true
-				position.y += .2
+				global_position = parent_box.global_position
+				position.y += .3
+				rotation = Global.camera_manager.current.rotation
+				
 
 func generate_order():
 	var possible_boxes = Global.box_manager.generate_box_sizes()

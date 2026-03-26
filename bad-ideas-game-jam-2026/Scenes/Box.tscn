@@ -64,7 +64,7 @@ shape = SubResource("BoxShape3D_8s0t8")
 debug_color = Color(0.9647059, 0, 0.5058824, 0.60784316)
 
 [node name="order_form" parent="." instance=ExtResource("2_42nxc")]
-transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 0, 0)
+transform = Transform3D(1, 0, 0, 0, 0.70288575, 0.7113027, 0, -0.7113027, 0.70288575, 0, 0.83924377, 1.155424)
 mesh = SubResource("BoxMesh_42nxc")
 skeleton = NodePath("")
 
