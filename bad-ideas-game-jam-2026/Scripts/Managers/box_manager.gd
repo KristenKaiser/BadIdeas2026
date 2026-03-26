@@ -6,7 +6,8 @@ var box_dropper : BoxDropper
 @export var sizes : Dictionary [String, Vector3i]
 var box_odds : Dictionary[String, float]
 var box_empty_fill: Dictionary[String, int]
-#@export var difficulties: Array[Difficulty]
+var is_box_difficulty_maxed : bool = false
+
 
 func _ready() -> void:
 	for size in sizes:
@@ -76,8 +77,7 @@ func generate_box_sizes() -> Array:
 		if smallest_inactive_box != "":
 			add_box_to_available()
 		else:
-			pass
-			## TODO increase conveyrer speed
+			is_box_difficulty_maxed = true
 	return create_box_odds_array()
 
 func create_box_odds_array()->Array[String]:

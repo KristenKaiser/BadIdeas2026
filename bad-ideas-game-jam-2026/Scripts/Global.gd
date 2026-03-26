@@ -1,6 +1,6 @@
 extends Node
 
-@export var conveyer_speed: float =.1
+@export var conveyer_speed: float =.15
 var conveyer_speed_increase: float =.05
 var slow_conveyer_speed: float =.1
 var fast_conveyer_speed: float = 1
@@ -101,7 +101,7 @@ func fit_collision_to_meshes(node_3d: Node3D, collision_shape: CollisionShape3D)
 	# Convert global AABB into the Area3D's parent local space.
 	# collision_shape is a child of Area3D, so we work in Area3D's transform space.
 	var area_3d: Area3D = collision_shape.get_parent()
-	var area_global_xform: Transform3D = area_3d.global_transform
+	var area_global_xform: Transform3D = area_3d.global_transform 
 
 	# Transform the 8 corners of the global AABB into Area3D local space,
 	# then re-compute the AABB (handles rotation differences)
@@ -129,4 +129,9 @@ func fit_collision_to_meshes(node_3d: Node3D, collision_shape: CollisionShape3D)
 	box.size = local_aabb_final.size
 	collision_shape.shape = box
 	collision_shape.position = local_aabb_final.get_center()
+	
+func start_new_day():
+	if box_manager.is_box_difficulty_maxed: 
+		conveyer_speed += conveyer_speed_increase
+	box_manager.box_dropper.drop_box()
 	
