@@ -140,6 +140,10 @@ func snap_to_grid(world_pos: Vector3) -> Vector3:
 	return snap_position
 
 func _box_bottom_input_event(_camera: Node, event: InputEvent, event_position: Vector3, _normal: Vector3, _shape_idx: int) -> void:
+	if order_form.is_zoomed: 
+		if ghost:
+			ghost.hide()
+		return
 	if event is InputEventMouseButton:
 		if Global.merch_manager.held_merch.is_empty() == false:
 			if event.pressed:
@@ -263,7 +267,8 @@ func move_ghost(ghost_position : Vector3):
 	else:
 		#ghost.show()
 		ghost.object_mesh.material_override = null
-
+	if ghost.visible == false: 
+		ghost.show()
 	ghost.position = ghost_position - (Global.merch_manager.get_last_held_merch().center_offset * Global.grid_size)
 
 
