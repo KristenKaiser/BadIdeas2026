@@ -1,14 +1,22 @@
-[gd_scene load_steps=9 format=3 uid="uid://ccmmb1u17r8a0"]
+[gd_scene load_steps=11 format=3 uid="uid://ccmmb1u17r8a0"]
 
 [ext_resource type="Script" uid="uid://dn0o66irphsce" path="res://Scripts/keypad.gd" id="1_ohrw4"]
 [ext_resource type="PackedScene" uid="uid://dki82342476vv" path="res://Scenes/KeypadButton.tscn" id="1_v31qc"]
 [ext_resource type="Script" uid="uid://6yl2vsaktf5n" path="res://Scripts/Base_camera.gd" id="2_oo0pj"]
 [ext_resource type="PackedScene" uid="uid://bbbeto6mvhhx" path="res://Scenes/Button.tscn" id="3_cam67"]
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_oo0pj"]
+albedo_color = Color(0, 0.107533656, 0.10765313, 1)
+
 [sub_resource type="BoxMesh" id="BoxMesh_oo0pj"]
+material = SubResource("StandardMaterial3D_oo0pj")
 size = Vector3(0.095, 0.565, 0.32)
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_h5lr6"]
+albedo_color = Color(0, 0.107533656, 0.10765313, 1)
+
 [sub_resource type="BoxMesh" id="BoxMesh_phgvv"]
+material = SubResource("StandardMaterial3D_h5lr6")
 size = Vector3(0.12, 0.02, 0.1)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_phgvv"]
@@ -30,11 +38,11 @@ mesh = SubResource("BoxMesh_oo0pj")
 skeleton = NodePath("../Device")
 
 [node name="light" type="MeshInstance3D" parent="bezil"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0540694, 0.27280575, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.09073588, 0.27280575, 0)
 mesh = SubResource("BoxMesh_phgvv")
 
 [node name="SpotLight3D" type="SpotLight3D" parent="bezil/light"]
-transform = Transform3D(-4.3711385e-08, 1, 4.371139e-08, 0, -4.371139e-08, 1, 1, 4.3711385e-08, 1.9106853e-15, -0.044507697, 0.0010526616, 2.5851916e-08)
+transform = Transform3D(-4.3711385e-08, 0.9807887, -0.19507316, 0, 0.19507316, 0.9807887, 1, 4.2871633e-08, -8.526918e-09, -0.044507697, 0.0010526616, 2.5851916e-08)
 light_color = Color(1, 0.98039216, 0.4117647, 1)
 spot_range = 0.77
 spot_angle = 49.490234
@@ -63,52 +71,52 @@ transform = Transform3D(0.99999994, 0, 0, 0, 1, 0, 0, 0, 0.99999994, 0, 0, 0)
 [node name="One" parent="Buttons" instance=ExtResource("1_v31qc")]
 transform = Transform3D(0.99999976, 0, 0, 0, 1, 0, 0, 0, 0.99999976, -0.059999987, 0.02, -0.079999976)
 text = "1"
-color = Color(0, 1, 0, 1)
+color = Color(0.7465834, 0.4575634, 0, 1)
 
 [node name="Two" parent="Buttons" instance=ExtResource("1_v31qc")]
 transform = Transform3D(0.99999976, 0, 0, 0, 1, 0, 0, 0, 0.99999976, -0.059999984, 0.02, 0)
 text = "2"
-color = Color(0, 1, 0, 1)
+color = Color(0.7465834, 0.4575634, 0, 1)
 
 [node name="Three" parent="Buttons" instance=ExtResource("1_v31qc")]
 transform = Transform3D(0.99999976, 0, 0, 0, 1, 0, 0, 0, 0.99999976, -0.059999984, 0.02, 0.079999976)
 text = "3"
-color = Color(0, 1, 0, 1)
+color = Color(0.7465834, 0.4575634, 0, 1)
 
 [node name="Four" parent="Buttons" instance=ExtResource("1_v31qc")]
 transform = Transform3D(0.99999976, 0, 0, 0, 1, 0, 0, 0, 0.99999976, -0.05999999, -0.06, -0.07999998)
 text = "4"
-color = Color(0, 1, 0, 1)
+color = Color(0.7465834, 0.4575634, 0, 1)
 
 [node name="Five" parent="Buttons" instance=ExtResource("1_v31qc")]
 transform = Transform3D(0.99999976, 0, 0, 0, 1, 0, 0, 0, 0.99999976, -0.059999987, -0.06, 0)
 text = "5"
-color = Color(0, 1, 0, 1)
+color = Color(0.7465834, 0.4575634, 0, 1)
 
 [node name="Six" parent="Buttons" instance=ExtResource("1_v31qc")]
 transform = Transform3D(0.99999976, 0, 0, 0, 1, 0, 0, 0, 0.99999976, -0.059999987, -0.06, 0.07999998)
 text = "6"
-color = Color(0, 1, 0, 1)
+color = Color(0.7465834, 0.4575634, 0, 1)
 
 [node name="Seven" parent="Buttons" instance=ExtResource("1_v31qc")]
 transform = Transform3D(0.99999976, 0, 0, 0, 1, 0, 0, 0, 0.99999976, -0.05999999, -0.14, -0.07999998)
 text = "7"
-color = Color(0, 1, 0, 1)
+color = Color(0.7465834, 0.4575634, 0, 1)
 
 [node name="Eight" parent="Buttons" instance=ExtResource("1_v31qc")]
 transform = Transform3D(0.99999976, 0, 0, 0, 1, 0, 0, 0, 0.99999976, -0.059999987, -0.14, 0)
 text = "8"
-color = Color(0, 1, 0, 1)
+color = Color(0.7465834, 0.4575634, 0, 1)
 
 [node name="Nine" parent="Buttons" instance=ExtResource("1_v31qc")]
 transform = Transform3D(0.99999976, 0, 0, 0, 1, 0, 0, 0, 0.99999976, -0.059999987, -0.14, 0.07999998)
 text = "9"
-color = Color(0, 1, 0, 1)
+color = Color(0.7465834, 0.4575634, 0, 1)
 
 [node name="Zero" parent="Buttons" instance=ExtResource("1_v31qc")]
 transform = Transform3D(0.99999976, 0, 0, 0, 1, 0, 0, 0, 0.99999976, -0.06, -0.22, 0)
 text = "0"
-color = Color(0, 1, 0, 1)
+color = Color(0.7465834, 0.4575634, 0, 1)
 
 [node name="Clear" parent="Buttons" instance=ExtResource("1_v31qc")]
 transform = Transform3D(0.99999976, 0, 0, 0, 1, 0, 0, 0, 0.99999976, -0.06, -0.22, -0.08)
@@ -125,4 +133,4 @@ color = Color(1, 0, 0, 1)
 [node name="Enter" parent="Buttons" instance=ExtResource("3_cam67")]
 transform = Transform3D(0.99999976, 0, 0, 0, 1, 0, 0, 0, 4.439999, -0.06, -0.3, 0)
 functionality = 3
-color = Color(0.9019608, 0, 0.84313726, 1)
+color = Color(0.6039216, 0.19607843, 0, 1)

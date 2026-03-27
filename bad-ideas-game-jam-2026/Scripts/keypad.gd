@@ -9,7 +9,7 @@ var keypad_input : String = ""
 #@export var codes_and_items : Dictionary[String, PackedScene]
 signal order_item(PackedScene)
 @export var light : SpotLight3D
-@export var light_colors : Dictionary[String, Color] = {"Base":Color(1.0, 0.98, 0.412), "Correct": Color(0.0, 1.0, 0.0, 1.0), "Wrong" : Color(1.0, 0.0, 0.0, 1.0)}
+@export var light_colors : Dictionary[String, Color] = {"Base":Color(1.0, 0.98, 0.412), "Correct": Color(0.0, 1.0, 1.0, 1.0), "Wrong" : Color(1.0, 0.216, 0.0, 1.0)}
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	display_label.text = keypad_input
@@ -37,9 +37,9 @@ func call_item():
 	if  Global.merch_manager.get_object_by_code(keypad_input) != null:
 		print("call item %s" % keypad_input)
 		order_item.emit(keypad_input)
-		await display_flash_color(Color.GREEN)
+		await display_flash_color(light_colors["Correct"])
 	else:
-		await display_flash_color(Color.RED)
+		await display_flash_color(light_colors["Wrong"])
 	clear_input()
 
 func display_flash_color(color : Color):
