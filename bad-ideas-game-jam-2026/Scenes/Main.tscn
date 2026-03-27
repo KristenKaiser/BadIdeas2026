@@ -1,6 +1,5 @@
-[gd_scene load_steps=30 format=3 uid="uid://d0nk4t02xe8ik"]
+[gd_scene load_steps=29 format=3 uid="uid://d0nk4t02xe8ik"]
 
-[ext_resource type="PackedScene" uid="uid://uvo3k3alfmfd" path="res://Scenes/food_can.tscn" id="1_kln2b"]
 [ext_resource type="PackedScene" uid="uid://ccmmb1u17r8a0" path="res://Scenes/keypad.tscn" id="1_r150o"]
 [ext_resource type="Script" uid="uid://dxx1jykm0t1k6" path="res://Scripts/main.gd" id="1_v1gob"]
 [ext_resource type="Script" uid="uid://ojqvaarbbc86" path="res://Scripts/main_camera.gd" id="2_jw32o"]
@@ -205,32 +204,17 @@ transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -2.7
 use_collision = true
 size = Vector3(2.8, 0.1, 1)
 
-[node name="FoodCan" parent="Left/Desk" instance=ExtResource("1_kln2b")]
-transform = Transform3D(0.9796559, 0, 0.20068464, 0, 1, 0, -0.20068464, 0, 0.9796559, 1.1737478, 0.1500001, 0.08294129)
-
-[node name="FoodCan2" parent="Left/Desk" instance=ExtResource("1_kln2b")]
-transform = Transform3D(0.9383785, 0, -0.3456094, 0, 1, 0, 0.3456094, 0, 0.9383785, 1.0967433, 0.15000004, 0.23876119)
-
-[node name="FoodCan3" parent="Left/Desk" instance=ExtResource("1_kln2b")]
-transform = Transform3D(0.9767846, 0, -0.21422394, 0, 1, 0, 0.21422394, 0, 0.9767846, 1.247808, 0.1500001, 0.2740724)
-
-[node name="FoodCan4" parent="Left/Desk" instance=ExtResource("1_kln2b")]
-transform = Transform3D(0.96870023, 0, 0.24823341, 0, 1, 0, -0.24823341, 0, 0.96870023, 1.1894307, 0.35000008, 0.23027015)
-
-[node name="FoodCan6" parent="Left/Desk" instance=ExtResource("1_kln2b")]
-transform = Transform3D(0.98710567, 0, -0.16007072, 0, 1, 0, 0.16007072, 0, 0.98710567, 1.0829349, 0.35000008, 0.118807554)
-
-[node name="FoodCan5" parent="Left/Desk" instance=ExtResource("1_kln2b")]
-transform = Transform3D(0.9698083, 0, -0.24386905, 0, 1, 0, 0.24386905, 0, 0.9698083, 1.012042, 0.15000004, 0.11278081)
-
 [node name="Water" parent="Left/Desk" instance=ExtResource("2_rgh2o")]
 transform = Transform3D(0.99125934, 0, 0.13192764, 0, 1, 0, -0.13192764, 0, 0.99125934, 0.651128, 0.19999999, 0.36162496)
+is_stash = true
 
 [node name="Water2" parent="Left/Desk" instance=ExtResource("2_rgh2o")]
 transform = Transform3D(0.9677136, 0, 0.25205243, 0, 1, 0, -0.25205243, 0, 0.9677136, 0.5277907, 0.19999999, 0.30339646)
+is_stash = true
 
 [node name="Water3" parent="Left/Desk" instance=ExtResource("2_rgh2o")]
 transform = Transform3D(0.4360794, 0, 0.8999082, 0, 1, 0, -0.8999082, 0, 0.4360794, 0.66453665, 0.19999999, 0.24769378)
+is_stash = true
 
 [node name="TrashCan" type="CSGBox3D" parent="Left" node_paths=PackedStringArray("label")]
 transform = Transform3D(0.8660254, 0, -0.5, 0, 1, 0, 0.5, 0, 0.8660254, -2.45, -1.05, -1.25)
@@ -367,7 +351,7 @@ transform = Transform3D(0.69453704, 0, -1.7763568e-15, 0, 0.10020816, 0, 0, 0, 0
 environment = SubResource("Environment_erwvk")
 
 [node name="Shelf" parent="." instance=ExtResource("20_sxkr1")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.4448454, 0.8547646, -0.180361)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.20771, 1.0389434, -1.4718161)
 
 [connection signal="input_event" from="Left/TrashCan/Area3D" to="Left/TrashCan" method="_on_area_3d_input_event"]
 [connection signal="area_entered" from="Center/Conveyer/CSGBox3D/Area3D" to="Center/Conveyer" method="exited_conveyer"]

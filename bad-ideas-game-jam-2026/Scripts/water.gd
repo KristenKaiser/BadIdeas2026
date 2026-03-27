@@ -1,4 +1,5 @@
 extends Merchandise
+class_name Water
 #var is_held : bool = false
 @export var bottle : Bottle
 var tween: Tween
@@ -8,6 +9,9 @@ var is_written_up_pee : bool = false
 var is_drinking : bool = false
 var is_written_up_drink : bool = false
 var is_observed : bool = false
+const WATER = preload("uid://dg21mddb1l2b5")
+@export var is_stash : bool = false # when true grabbing a water will instantiate a new water to grab
+
 
 
 func _ready() -> void:
@@ -43,8 +47,11 @@ func recieve_writeup(reason : MetricsReport.Writeup):
 func _on_area_3d_input_event(_camera: Node, event: InputEvent, _event_position: Vector3, _normal: Vector3, _shape_idx: int) -> void:
 	if event is InputEventMouseButton:
 		if event.button_index == MOUSE_BUTTON_LEFT and event.pressed:
-			if is_held == false: 
-				grab_water()
+			if is_held == false:
+				if is_stash: 
+					create_water()
+				else: 
+					grab_water()
 			
 
 func _unhandled_input(event: InputEvent) -> void:
@@ -61,12 +68,26 @@ func _unhandled_input(event: InputEvent) -> void:
 		if OS.get_keycode_string(event.keycode) == "P" and event.pressed:
 			pee()
 	
+func create_water():
+	if Global.camera_manager.held_object != null:
+		return
+	var new_water : Water = WATER.instantiate()
+	
+	Global.camera_manager.held_object = new_water 
+	new_water.is_held = true
+	Global.camera_manager.current.add_child(new_water)
+	new_water.position = Vector3(0, -.2 ,-.45)
+
 func grab_water():
 	if Global.camera_manager.held_object != null:
 		return
+	remove_from_box.emit(global_position, self)
 	Global.camera_manager.held_object = self
 	is_held = true
-	self.reparent(Global.camera_manager.current)
+	if self.get_parent() == null:
+		Global.camera_manager.current.add_child(self)
+	else:
+		reparent(Global.camera_manager.current)
 	position = Vector3(0, -.2 ,-.45)
 
 func drink_water():

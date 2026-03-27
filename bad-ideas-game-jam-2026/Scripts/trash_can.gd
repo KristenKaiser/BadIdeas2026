@@ -21,12 +21,15 @@ func throw_away_held_object():
 		#if trash_fill >= capacity: 
 			#return
 		if Global.merch_manager.get_last_held_merch() == Global.camera_manager.held_object:
-			Global.merch_manager.pop_last_held_merch()
+			Global.merch_manager.get_last_held_merch()
 		if Global.camera_manager.held_object.has_method("get_trash_fill"):
 			trash_fill += Global.camera_manager.held_object.get_trash_fill()
 		else:
 			trash_fill += 1
 		Global.camera_manager.held_object.queue_free()
+		if Global.merch_manager.get_last_held_merch().ghost != null:
+			Global.merch_manager.get_last_held_merch().ghost.queue_free()
+		Global.merch_manager.pop_last_held_merch()
 		if trash_fill >= capacity: 
 			show_trash_full()
 			

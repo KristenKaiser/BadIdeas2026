@@ -12,6 +12,7 @@ var metrics_tv : MetricsScreen
 var health_tv : HealthScreen
 var blur : Blur
 var penopticon : Penopticon
+var main_scene : MainScene
 
 const MERCH_MANAGER = preload("uid://cpxhjnah05wv6")
 var merch_manager : MerchManager 

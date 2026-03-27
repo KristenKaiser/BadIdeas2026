@@ -25,3 +25,5 @@ shape = SubResource("BoxShape3D_ndc05")
 transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 0.6535801, -9.43447e-09)
 
 [connection signal="input_event" from="grid_surface/Area3D" to="grid_surface" method="_on_area_3d_input_event"]
+[connection signal="mouse_entered" from="grid_surface/Area3D" to="grid_surface" method="_on_area_3d_mouse_entered"]
+[connection signal="mouse_exited" from="grid_surface/Area3D" to="grid_surface" method="_on_area_3d_mouse_exited"]

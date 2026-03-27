@@ -1,7 +1,7 @@
 extends Node
 class_name HealthManager
 
-var disable_hydration_testing : bool = true##TESTING
+var disable_hydration_testing : bool = false##TESTING
 
 
 @export var hydration_timer : Timer

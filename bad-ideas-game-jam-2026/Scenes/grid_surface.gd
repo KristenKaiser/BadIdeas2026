@@ -216,3 +216,13 @@ func turn_ghost_red():
 	#if ghost != null:
 		#turn_ghost_red()
 		#
+
+
+func _on_area_3d_mouse_entered() -> void:
+	if ghost != null and ghost.visible == false:
+		ghost.show()
+
+
+func _on_area_3d_mouse_exited() -> void:
+	if ghost != null and ghost.visible == true:
+		ghost.hide()
