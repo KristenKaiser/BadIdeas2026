@@ -8,7 +8,8 @@ class_name KeyPad
 var keypad_input : String = ""
 #@export var codes_and_items : Dictionary[String, PackedScene]
 signal order_item(PackedScene)
-
+@export var light : SpotLight3D
+@export var light_colors : Dictionary[String, Color] = {"Base":Color(1.0, 0.98, 0.412), "Correct": Color(0.0, 1.0, 0.0, 1.0), "Wrong" : Color(1.0, 0.0, 0.0, 1.0)}
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	display_label.text = keypad_input
@@ -41,7 +42,9 @@ func call_item():
 
 func display_flash_color(color : Color):
 	var display_material = display.mesh.surface_get_material(0) as StandardMaterial3D
-	var prev_color : Color = display_material.albedo_color
+	var prev_display_color : Color = display_material.albedo_color
 	display_material.albedo_color = color
+	light.light_color = color
 	await get_tree().create_timer(1).timeout
-	display_material.albedo_color = prev_color
+	display_material.albedo_color = prev_display_color
+	light.light_color = light_colors["Base"]

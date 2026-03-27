@@ -1,9 +1,15 @@
-[gd_scene load_steps=7 format=3 uid="uid://ccmmb1u17r8a0"]
+[gd_scene load_steps=9 format=3 uid="uid://ccmmb1u17r8a0"]
 
 [ext_resource type="Script" uid="uid://dn0o66irphsce" path="res://Scripts/keypad.gd" id="1_ohrw4"]
 [ext_resource type="PackedScene" uid="uid://dki82342476vv" path="res://Scenes/KeypadButton.tscn" id="1_v31qc"]
 [ext_resource type="Script" uid="uid://6yl2vsaktf5n" path="res://Scripts/Base_camera.gd" id="2_oo0pj"]
 [ext_resource type="PackedScene" uid="uid://bbbeto6mvhhx" path="res://Scenes/Button.tscn" id="3_cam67"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_oo0pj"]
+size = Vector3(0.095, 0.565, 0.32)
+
+[sub_resource type="BoxMesh" id="BoxMesh_phgvv"]
+size = Vector3(0.12, 0.02, 0.1)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_phgvv"]
 albedo_color = Color(0, 0, 0, 1)
@@ -11,14 +17,31 @@ albedo_color = Color(0, 0, 0, 1)
 [sub_resource type="BoxMesh" id="BoxMesh_h5lr6"]
 material = SubResource("StandardMaterial3D_phgvv")
 
-[node name="Keypad" type="Node3D" node_paths=PackedStringArray("buttons", "display_label", "display")]
+[node name="Keypad" type="Node3D" node_paths=PackedStringArray("buttons", "display_label", "display", "light")]
 script = ExtResource("1_ohrw4")
 buttons = [NodePath("Buttons/One"), NodePath("Buttons/Two"), NodePath("Buttons/Three"), NodePath("Buttons/Four"), NodePath("Buttons/Five"), NodePath("Buttons/Six"), NodePath("Buttons/Seven"), NodePath("Buttons/Eight"), NodePath("Buttons/Nine"), NodePath("Buttons/Zero"), NodePath("Buttons/Clear"), NodePath("Buttons/Backspace"), NodePath("Buttons/Enter")]
 display_label = NodePath("Display/Label3D")
 display = NodePath("Display")
+light = NodePath("bezil/light/SpotLight3D")
+
+[node name="bezil" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.99999994, 0, 0, 0, 1, 0, 0, 0, 0.99999994, 0, -0.075, 0)
+mesh = SubResource("BoxMesh_oo0pj")
+skeleton = NodePath("../Device")
+
+[node name="light" type="MeshInstance3D" parent="bezil"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0540694, 0.27280575, 0)
+mesh = SubResource("BoxMesh_phgvv")
+
+[node name="SpotLight3D" type="SpotLight3D" parent="bezil/light"]
+transform = Transform3D(-4.3711385e-08, 1, 4.371139e-08, 0, -4.371139e-08, 1, 1, 4.3711385e-08, 1.9106853e-15, -0.044507697, 0.0010526616, 2.5851916e-08)
+light_color = Color(1, 0.98039216, 0.4117647, 1)
+spot_range = 0.77
+spot_angle = 49.490234
 
 [node name="Device" type="CSGBox3D" parent="."]
 transform = Transform3D(0.99999994, 0, 0, 0, 1, 0, 0, 0, 0.99999994, 0, -0.075, 0)
+visible = false
 size = Vector3(0.1, 0.55, 0.3)
 
 [node name="Camera3D" type="Camera3D" parent="."]
