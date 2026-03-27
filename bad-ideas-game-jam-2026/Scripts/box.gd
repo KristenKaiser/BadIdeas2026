@@ -278,6 +278,8 @@ func turn_ghost_red():
 	ghost.object_mesh.material_override = new_material
 
 func camera_changed() -> void:
+	if is_queued_for_deletion(): 
+		return
 	if camera == Global.camera_manager.current:
 		is_zoomed_in = true
 		if box.get_is_box_closed():

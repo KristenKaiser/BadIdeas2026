@@ -8,11 +8,14 @@ func _ready() -> void:
 	child_ready()
 
 func _exit_tree() -> void:
-	Global.camera_manager.cameras.erase(self)
+	Global.camera_manager.remove_camera(self)
+
 
 func child_ready():
 	pass
 
 func add_blur():
 	pass
+	
+
 	

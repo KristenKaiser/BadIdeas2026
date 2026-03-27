@@ -19,6 +19,7 @@ var right_position = Vector3(0, 1.75, -1.5)
 var right_rotation = Vector3(-15, -101.5, 0)
 
 func child_ready() -> void:
+	Global.main_camera = self
 	move_camera(Direction.CENTER)
 
 func _process(delta: float) -> void:

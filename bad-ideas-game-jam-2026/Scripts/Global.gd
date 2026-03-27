@@ -1,6 +1,6 @@
 extends Node
 
-@export var conveyer_speed: float =.15
+@export var conveyer_speed: float =.1
 var conveyer_speed_increase: float =.05
 var slow_conveyer_speed: float =.1
 var fast_conveyer_speed: float = 1
@@ -14,6 +14,7 @@ var blur : Blur
 var penopticon : Penopticon
 var main_scene : MainScene
 var order_tube : OrderTube
+var main_camera : Camera3D
 
 const MERCH_MANAGER = preload("uid://cpxhjnah05wv6")
 var merch_manager : MerchManager 

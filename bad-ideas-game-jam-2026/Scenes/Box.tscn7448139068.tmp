@@ -1,0 +1,84 @@
+[gd_scene load_steps=12 format=3 uid="uid://hg2wuymgg6bs"]
+
+[ext_resource type="Script" uid="uid://cdi0harqoraet" path="res://Scripts/box.gd" id="1_8s0t8"]
+[ext_resource type="PackedScene" uid="uid://7bjbuyexxyn3" path="res://Scenes/order_form.tscn" id="2_42nxc"]
+[ext_resource type="PackedScene" uid="uid://q5yi5h1cx1fa" path="res://Scenes/box_model.tscn" id="2_mckbn"]
+[ext_resource type="Script" uid="uid://6yl2vsaktf5n" path="res://Scripts/Base_camera.gd" id="3_cmh7u"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_42nxc"]
+resource_local_to_scene = true
+size = Vector3(3.4761193, 2.7670383, 2.6614761)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_8s0t8"]
+resource_local_to_scene = true
+size = Vector3(0.26644897, 0.052085876, 0.2673645)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_8s0t8"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_42nxc"]
+resource_local_to_scene = true
+material = SubResource("StandardMaterial3D_8s0t8")
+size = Vector3(0.15, 0.15, 0.001)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_mckbn"]
+resource_local_to_scene = true
+size = Vector3(1.8, 1.88, 1.8)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_mckbn"]
+albedo_color = Color(1, 0.07450981, 0, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_cmh7u"]
+material = SubResource("StandardMaterial3D_mckbn")
+size = Vector3(0.08, 0.08, 0.08)
+
+[node name="Box" type="Node3D" node_paths=PackedStringArray("camera", "box", "box_interior", "box_collision_shape", "bottom_box_collision_shape", "order_form", "tape")]
+script = ExtResource("1_8s0t8")
+camera = NodePath("Camera3D")
+box = NodePath("box2")
+box_interior = NodePath("inside_collision/inside_collision")
+box_collision_shape = NodePath("box_collision/BoxCollisionShape")
+bottom_box_collision_shape = NodePath("bottom_collision/BottomCollisionShape")
+order_form = NodePath("order_form")
+tape = NodePath("tape")
+
+[node name="box2" parent="." instance=ExtResource("2_mckbn")]
+
+[node name="box_collision" type="Area3D" parent="."]
+
+[node name="BoxCollisionShape" type="CollisionShape3D" parent="box_collision"]
+transform = Transform3D(1, 0, 0, 0, 1, -8.351872e-23, 0, -8.351872e-23, 1, 0, 5.159163e-23, -0.6177254)
+shape = SubResource("BoxShape3D_42nxc")
+debug_color = Color(0, 0.6, 0.69803923, 0.85882354)
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.38268346, 0.9238795, 0, -0.92387956, 0.38268346, 0, 0.49396315, 0.19485459)
+script = ExtResource("3_cmh7u")
+metadata/_custom_type_script = "uid://6yl2vsaktf5n"
+
+[node name="bottom_collision" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0967742, 0)
+
+[node name="BottomCollisionShape" type="CollisionShape3D" parent="bottom_collision"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0001373291, -0.1369362, 7.6293945e-05)
+shape = SubResource("BoxShape3D_8s0t8")
+debug_color = Color(0.9647059, 0, 0.5058824, 0.60784316)
+
+[node name="order_form" parent="." instance=ExtResource("2_42nxc")]
+transform = Transform3D(1, 0, 0, 0, 0.70288575, 0.7113027, 0, -0.7113027, 0.70288575, 0, 0.83924377, 1.155424)
+mesh = SubResource("BoxMesh_42nxc")
+skeleton = NodePath("")
+
+[node name="inside_collision" type="Area3D" parent="."]
+
+[node name="inside_collision" type="CollisionShape3D" parent="inside_collision"]
+shape = SubResource("BoxShape3D_mckbn")
+disabled = true
+debug_color = Color(6.016344e-06, 0.63065207, 0.47360188, 0.41960785)
+
+[node name="tape" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.9943556, 0.9849585, 0)
+visible = false
+mesh = SubResource("BoxMesh_cmh7u")
+
+[connection signal="input_event" from="box_collision" to="." method="_on_box_input_event"]
+[connection signal="input_event" from="bottom_collision" to="." method="_box_bottom_input_event"]

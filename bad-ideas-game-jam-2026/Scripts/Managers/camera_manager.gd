@@ -100,3 +100,11 @@ func _unhandled_input(event: InputEvent) -> void:
 		if OS.get_keycode_string(event.keycode) == "L" and event.pressed:
 			is_screen_locked = !is_screen_locked
 			
+func remove_camera(camera : Camera3D):
+	while cameras.has(camera):
+		cameras.erase(camera) 
+	if current == camera: 
+		current = Global.main_camera 
+		change_camera(Global.main_camera) 
+	while prev_cameras.has(camera):
+		prev_cameras.erase(camera)
