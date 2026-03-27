@@ -2,11 +2,11 @@ extends MeshInstance3D
 class_name Penopticon
 
 var cylinder_radius : float = 24.9
-var cylinder_height : float= 12#60
+var cylinder_height : float= 60
 var cells_around : int = 19
-var cells_vertical : int = 3#15
+var cells_vertical : int = 15
 var cell_size : Vector3 = Vector3(6.5, 3, .1) 
-var prev_warning_move : Vector2i = Vector2(-1,1)
+var prev_warning_move : Vector2i = Vector2(1,0)
 @export var player_window : MeshInstance3D
 @export var spotlight : SpotLight3D
 var cell_positions : Array[Array] = []
@@ -33,10 +33,11 @@ func _ready() -> void:
 	
 	create_cells()
 	warning_cell = create_moving_cell(.1, Color(0.577, 0.376, 0.192, 1.0))
-	move_moving_cell(cell_positions[0][1], warning_cell)
+	move_moving_cell(cell_positions[floor(cells_vertical*.95)][floor(cells_vertical/2.0)], warning_cell)
+	current_warning_cell = Vector2i(floor(cells_vertical*.95),floor(cells_vertical/2.0))
 	spotlight_cell = create_moving_cell(0, Color(1.0, 1.0, 1.0, 1.0))
-	move_moving_cell(cell_positions[-1][1], spotlight_cell)
-	move_spotligt(Vector2(-1,1))
+	move_moving_cell(cell_positions[floor(cells_vertical*.95)-1][floor(cells_vertical/2.0)], spotlight_cell)
+	move_spotligt(Vector2(floor(cells_vertical*.95)-1,floor(cells_vertical/2.0)))
 	
 	timer = Timer.new()
 	timer.wait_time = 1.0
@@ -67,16 +68,16 @@ func get_next_focus_cell()-> Vector2i:
 	var south : Vector2i = Vector2i(0, 1)
 	var east : Vector2i = Vector2i(1, 0)
 	var west : Vector2i = Vector2i(-1, 0)
-	var directions: Array[Vector2i] = [east]
-	#var directions: Array[Vector2i] = [east, west]
+
+	var directions: Array[Vector2i] = [east, west]
 	
-	#if current_warning_cell.y == 0: 
-		#directions.append(south)
-	#elif current_warning_cell.y == cells_vertical - 1: 
-		#directions.append(north)
-	#else:
-		#directions.append(north)
-		#directions.append(south)
+	if current_warning_cell.y == 0: 
+		directions.append(south)
+	elif current_warning_cell.y == cells_vertical - 1: 
+		directions.append(north)
+	else:
+		directions.append(north)
+		directions.append(south)
 	
 	match prev_warning_move:
 		north:
