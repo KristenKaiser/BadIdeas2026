@@ -32,6 +32,8 @@ func append_num(value : String):
 	display_label.text = keypad_input
 
 func call_item():
+	if Global.order_tube.held_object != null:
+		return
 	if  Global.merch_manager.get_object_by_code(keypad_input) != null:
 		print("call item %s" % keypad_input)
 		order_item.emit(keypad_input)

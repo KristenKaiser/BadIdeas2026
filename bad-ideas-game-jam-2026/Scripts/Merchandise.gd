@@ -115,6 +115,8 @@ func select_object(_event_position : Vector3):
 		Location.HELD: 
 			pass
 		Location.ORDER_TUBE:
+			if self == Global.order_tube.held_object:
+				Global.order_tube.held_object = null
 			hold_object()
 		Location.BOX: 
 			remove_from_box.emit(global_position, self)
