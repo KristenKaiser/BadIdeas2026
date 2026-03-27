@@ -5,9 +5,9 @@ var disable_hydration_testing : bool = false##TESTING
 
 
 @export var hydration_timer : Timer
-var max_hydration : int = 60
+var max_hydration : int = 120
 var max_dehydration : int = 30
-var water_value : int = 25
+var water_value : int = 50
 var current_hydration : int
 var current_dehydration : int = 0
 

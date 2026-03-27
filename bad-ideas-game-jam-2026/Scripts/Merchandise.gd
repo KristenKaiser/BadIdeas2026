@@ -65,9 +65,9 @@ func get_area3d()->Area3D:
 	return object_mesh.get_node("area3d")
 	
 
-func duplicate_globals(orgin :Merchandise, is_ghost : bool = true):
+func duplicate_globals(orgin :Merchandise, new_is_ghost : bool = true):
 	orignal_merch = orgin
-	if is_ghost:
+	if new_is_ghost:
 		orgin.ghost = self
 	object_mesh = get_mesh()
 	merch_name = orgin.merch_name

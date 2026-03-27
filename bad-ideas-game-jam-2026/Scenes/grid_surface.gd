@@ -22,7 +22,7 @@ func _ready() -> void:
 	surface_collision_shape.global_position.y = global_position.y - mesh.size.y/2 + .01
 	set_grid_size()
 
-func _on_area_3d_input_event(camera: Node, event: InputEvent, event_position: Vector3, normal: Vector3, shape_idx: int) -> void:
+func _on_area_3d_input_event(_camera: Node, event: InputEvent, event_position: Vector3, _normal: Vector3, _shape_idx: int) -> void:
 	if event is InputEventMouseButton:
 		if Global.camera_manager.held_object != null:
 			if event.pressed:

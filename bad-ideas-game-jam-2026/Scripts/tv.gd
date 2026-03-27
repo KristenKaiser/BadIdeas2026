@@ -57,12 +57,12 @@ func create_flicker():
 			flicker_slow_fade()
 		2:  # Stuttering multiple flicks
 			flicker_stutter()
-	
-	var color_shift = Color(
-		randf_range(0.8, 1.0),
-		randf_range(0.7, 0.95),
-		randf_range(0.6, 0.85)
-	)
+	#
+	#var color_shift = Color(
+		#randf_range(0.8, 1.0),
+		#randf_range(0.7, 0.95),
+		#randf_range(0.6, 0.85)
+	#)
 	
 	var tween = create_tween()
 	tween.set_parallel(true)  
