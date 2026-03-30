@@ -70,17 +70,17 @@ func follow_mouse(camera : Camera3D, base_rotaton : Vector3, x_max_change : floa
 	var y_change : float = 0
 	var y_dist_to_center : float = abs(mouse_pos.x - screen_center.x)/screen_center.x
 	var x_dist_to_center : float = abs(mouse_pos.y - screen_center.y)/screen_center.y
-	if mouse_pos.y > screen_center.y + ( (screen_center.y * dead_zone_ratio.y) / 2):
+	if mouse_pos.y > screen_center.y + ( (screen_center.y * dead_zone_ratio.y) ):
 		if camera.rotation_degrees.x - change > base_rotaton.x - x_max_change:
 			x_change = -smoothstep(0.0, 1.0, x_dist_to_center) 
-	elif mouse_pos.y < screen_center.y - ( (screen_center.y  * dead_zone_ratio.y) / 2):
+	elif mouse_pos.y < screen_center.y - ( (screen_center.y  * dead_zone_ratio.y) ):
 		if camera.rotation_degrees.x + change < base_rotaton.x + x_max_change:
 			x_change = smoothstep(0.0, 1.0, x_dist_to_center) 
 		
-	if mouse_pos.x > screen_center.x + ( (screen_center.x * dead_zone_ratio.x )/ 2):
+	if mouse_pos.x > screen_center.x + ( (screen_center.x * dead_zone_ratio.x )):
 		if camera.rotation_degrees.y - change > base_rotaton.y - y_max_change:
 			y_change = -smoothstep(0.0, 1.0, y_dist_to_center) 
-	elif mouse_pos.x < screen_center.x - ( (screen_center.x * dead_zone_ratio.x )/ 2):
+	elif mouse_pos.x < screen_center.x - ( (screen_center.x * dead_zone_ratio.x )):
 		if camera.rotation_degrees.y + change < base_rotaton.y + y_max_change:
 			y_change = smoothstep(0.0, 1.0, y_dist_to_center) 
 	
