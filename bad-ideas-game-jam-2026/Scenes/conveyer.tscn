@@ -1,20 +1,23 @@
-[gd_scene load_steps=3 format=3 uid="uid://denvefmpnolys"]
+[gd_scene load_steps=5 format=3 uid="uid://denvefmpnolys"]
 
 [ext_resource type="Script" uid="uid://c2hnk6o6hj48r" path="res://Scripts/conveyer.gd" id="1_doyy2"]
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_x5p7y"]
-size = Vector3(4.4, 1, 1.4)
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_doyy2"]
+albedo_color = Color(0, 0, 0, 1)
 
-[node name="Conveyer" type="CSGBox3D" node_paths=PackedStringArray("collision_shape")]
-use_collision = true
-size = Vector3(4.4, 1, 1.4)
+[sub_resource type="BoxMesh" id="BoxMesh_doyy2"]
+material = SubResource("StandardMaterial3D_doyy2")
+size = Vector3(5.205, 0.11, 1.395)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_x5p7y"]
+size = Vector3(5.203931, 0.11946094, 1.391)
+
+[node name="Conveyer" type="MeshInstance3D" node_paths=PackedStringArray("collision_shape")]
+mesh = SubResource("BoxMesh_doyy2")
 script = ExtResource("1_doyy2")
 collision_shape = NodePath("Area3D/CollisionShape3D")
 
 [node name="Area3D" type="Area3D" parent="."]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.9604645e-08, 0, -5.9604645e-08)
 shape = SubResource("BoxShape3D_x5p7y")
-
-[connection signal="area_entered" from="Area3D" to="." method="entered_conveyer"]

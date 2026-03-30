@@ -1,4 +1,4 @@
-extends CSGCylinder3D
+extends Node3D
 class_name OrderTube
 @export var deposit : Node3D
 @export var keypad : KeyPad

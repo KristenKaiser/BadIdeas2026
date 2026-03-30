@@ -1,10 +1,10 @@
-extends CSGBox3D
+extends MeshInstance3D
 
 @export var collision_shape : CollisionShape3D 
 
 
 func _ready() -> void:
-	collision_shape.shape.size = size
+	collision_shape.shape.size = mesh.size
 
 
 #func entered_conveyer(area: Area3D) -> void:
@@ -18,3 +18,10 @@ func exited_conveyer(area: Area3D) -> void:
 		if area.get_parent().is_shipped == false: 
 			area.get_parent().is_shipped = true
 			Global.box_manager.ship(area.get_parent())
+
+
+func _on_area_3d_area_exited(area: Area3D) -> void:
+		if area.get_parent() is Box:
+			if area.get_parent().is_shipped == false: 
+				area.get_parent().is_shipped = true
+				Global.box_manager.ship(area.get_parent())

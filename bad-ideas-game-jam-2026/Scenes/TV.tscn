@@ -31,7 +31,7 @@ skeleton = NodePath("../..")
 
 [node name="OmniLight3D" type="OmniLight3D" parent="tv_mesh/screen_mesh"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.017, 0)
-light_color = Color(0.113338, 0.34413815, 0.9999916, 1)
-light_energy = 8.823
+light_color = Color(0.39353323, 0.5821878, 1, 1)
+light_energy = 12.526
 omni_range = 19.928
 omni_attenuation = -0.233

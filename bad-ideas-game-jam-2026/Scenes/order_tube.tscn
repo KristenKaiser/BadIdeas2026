@@ -1,0 +1,19 @@
+[gd_scene load_steps=4 format=3 uid="uid://cnp85vb4bwsuf"]
+
+[ext_resource type="PackedScene" uid="uid://bc4qbqelga445" path="res://Art/pipe.fbx" id="1_d5c1r"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_d5c1r"]
+transparency = 1
+albedo_color = Color(0.3647059, 0.3647059, 0.3647059, 0.85882354)
+roughness = 0.44
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_u17yc"]
+albedo_color = Color(6.738305e-07, 0.2719993, 0.44761956, 1)
+metallic = 0.28
+clearcoat = 0.0
+
+[node name="pipe" instance=ExtResource("1_d5c1r")]
+
+[node name="Pipe_01" parent="." index="0"]
+surface_material_override/0 = SubResource("StandardMaterial3D_d5c1r")
+surface_material_override/1 = SubResource("StandardMaterial3D_u17yc")

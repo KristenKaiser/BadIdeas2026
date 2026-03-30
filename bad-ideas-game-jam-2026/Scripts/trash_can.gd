@@ -1,4 +1,4 @@
-extends CSGBox3D
+extends MeshInstance3D
 class_name  TrashCan
 var capacity : int = 10 ##TODO set too high for testing
 var trash_fill : int = 0
