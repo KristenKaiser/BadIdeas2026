@@ -41,13 +41,15 @@ func write_requested_items():
 func get_home_position()-> Vector3:
 	var home_position : Vector3
 	home_position.y = -parent_box.box_collision_shape.shape.size.y / 2 + .03
-	home_position.x = (-parent_box.box_collision_shape.shape.size.x / 2) - (get_aabb().size.x * scale.x)
+	home_position.x = (parent_box.box_collision_shape.shape.size.x / 2) + (get_aabb().size.x * scale.x) + .1
 	home_position.z = 0
 	return home_position
 	
 
 func _on_area_3d_input_event(_camera: Node, event: InputEvent, _event_position: Vector3, _normal: Vector3, _shape_idx: int) -> void:
 	if event is InputEventMouseButton:
+		if parent_box.is_zoomed_in == false: 
+			return 
 		if event.button_index == MOUSE_BUTTON_LEFT and event.pressed:
 			if is_zoomed:
 				is_zoomed = false

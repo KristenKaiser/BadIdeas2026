@@ -2,6 +2,7 @@ extends Node
 class_name HealthManager
 
 var disable_hydration_testing : bool = false##TESTING
+var is_health_tracking_paused : bool = false
 
 
 @export var hydration_timer : Timer
@@ -30,6 +31,13 @@ func restart_hydration_timer():
 	hydration_timer.stop()
 	hydration_timer.wait_time = max_hydration
 	hydration_timer.start()
+
+func restart_health():
+	current_hydration = max_hydration
+	current_dehydration = 0
+	pee_escrow = 0
+	pee_level = 0
+	is_health_tracking_paused = false
 	
 func drink():
 	var water : int = water_value
@@ -48,6 +56,8 @@ func drink():
 
 
 func _on_hydration_timer_timeout() -> void:
+	if is_health_tracking_paused: 
+		return
 	if current_hydration > 0:
 		decrease_hydration()
 	else: increase_dehydration()

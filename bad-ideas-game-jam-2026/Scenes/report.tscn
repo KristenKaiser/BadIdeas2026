@@ -1,0 +1,24 @@
+[gd_scene load_steps=4 format=3 uid="uid://ulq8sygjghj7"]
+
+[ext_resource type="PackedScene" uid="uid://oroprnus7ub3" path="res://Scenes/metrics_report.tscn" id="1_5igmr"]
+[ext_resource type="Script" uid="uid://f0t6fl58j0b7" path="res://Scenes/3d_report.gd" id="1_kqdg8"]
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_5mclw"]
+
+[node name="report" type="Node3D"]
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -4.3711385e-08, 0.99999994, 0, -0.99999994, -4.3711385e-08, 0, 0.793401, -1.2704177e-08)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." node_paths=PackedStringArray("sub_viewport")]
+mesh = SubResource("PlaneMesh_5mclw")
+script = ExtResource("1_kqdg8")
+sub_viewport = NodePath("SubViewport")
+
+[node name="SubViewport" type="SubViewport" parent="MeshInstance3D"]
+size = Vector2i(1920, 1080)
+
+[node name="Metrics_Report" parent="MeshInstance3D/SubViewport" instance=ExtResource("1_5igmr")]
+
+[node name="OmniLight3D" type="OmniLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.82638645, 0)

@@ -58,12 +58,7 @@ func create_flicker():
 		2:  # Stuttering multiple flicks
 			flicker_stutter()
 	#
-	#var color_shift = Color(
-		#randf_range(0.8, 1.0),
-		#randf_range(0.7, 0.95),
-		#randf_range(0.6, 0.85)
-	#)
-	
+
 	var tween = create_tween()
 	tween.set_parallel(true)  
 	tween.tween_property(light, "light_energy", 0.3, 0.08)
@@ -103,7 +98,7 @@ func create_screen(sub_scene : PackedScene):
 	sub_viewport.size = Vector2(1920, 1080)
 	add_child(sub_viewport)
 	
-	# Load and add your 2D scene
+	# Load and add 2D scene
 	var ui_scene :Screen = sub_scene.instantiate()
 	ui_scene.parent_tv = self
 	sub_viewport.add_child(ui_scene)
@@ -118,3 +113,18 @@ func create_screen(sub_scene : PackedScene):
 	
 	# Apply to TV mesh
 	tv_mesh.set_surface_override_material(0, material)
+
+
+func warning_flash():
+	if light.light_color == light_color:
+		light.light_color = warning_light_color
+	else:
+		light.light_color = light_color
+
+func reset_light(): 
+	light.light_color = light_color
+	
+func fail_light():
+	light.light_color = fail_light_color
+	await get_tree().create_timer(1).timeout
+	light.light_color = light_color

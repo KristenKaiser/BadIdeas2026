@@ -21,6 +21,7 @@ var right_rotation = Vector3(-15, -101.5, 0)
 func child_ready() -> void:
 	Global.main_camera = self
 	move_camera(Direction.CENTER)
+	Global.camera_manager.current = self
 
 func _process(delta: float) -> void:
 	if current_direction == Direction.CENTER:

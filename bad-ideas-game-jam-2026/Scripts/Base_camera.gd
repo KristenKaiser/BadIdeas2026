@@ -8,7 +8,8 @@ func _ready() -> void:
 	child_ready()
 
 func _exit_tree() -> void:
-	Global.camera_manager.remove_camera(self)
+	if Global.camera_manager != null:
+		Global.camera_manager.remove_camera(self)
 
 
 func child_ready():

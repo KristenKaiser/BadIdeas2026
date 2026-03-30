@@ -11,13 +11,17 @@ config_version=5
 [application]
 
 config/name="Bad Ideas Game Jam 2026"
-run/main_scene="uid://d0nk4t02xe8ik"
+run/main_scene="uid://8cyhvwx6ber1"
 config/features=PackedStringArray("4.5", "GL Compatibility")
 config/icon="res://Art/icon.svg"
 
 [autoload]
 
 Global="*res://Scripts/Global.gd"
+
+[display]
+
+window/stretch/mode="canvas_items"
 
 [editor]
 

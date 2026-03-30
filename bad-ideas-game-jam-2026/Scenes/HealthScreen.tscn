@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://bkyu6t0x8lt5y" path="res://Scripts/health_screen.gd" id="1_p8rfa"]
 
-[node name="HealthScreen" type="Control" node_paths=PackedStringArray("thisrt_label", "pee_label")]
+[node name="HealthScreen" type="Control" node_paths=PackedStringArray("thisrt_label", "pee_label", "warning_screen", "pee_warning", "warning_thirst_label")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -10,10 +10,13 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_p8rfa")
-thisrt_label = NodePath("ColorRect/VBoxContainer/thirst_label")
-pee_label = NodePath("ColorRect/VBoxContainer/pee_label")
+thisrt_label = NodePath("health_metrics/VBoxContainer/thirst_label")
+pee_label = NodePath("health_metrics/VBoxContainer/pee_label")
+warning_screen = NodePath("Urin_warning")
+pee_warning = NodePath("Urin_warning/VBoxContainer/time")
+warning_thirst_label = NodePath("Urin_warning/VBoxContainer/thirst")
 
-[node name="ColorRect" type="ColorRect" parent="."]
+[node name="health_metrics" type="ColorRect" parent="."]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -22,7 +25,7 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(0, 0, 1, 1)
 
-[node name="VBoxContainer" type="VBoxContainer" parent="ColorRect"]
+[node name="VBoxContainer" type="VBoxContainer" parent="health_metrics"]
 layout_mode = 1
 anchors_preset = 14
 anchor_top = 0.5
@@ -33,16 +36,57 @@ offset_bottom = 230.5
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="thirst_label" type="Label" parent="ColorRect/VBoxContainer"]
+[node name="thirst_label" type="Label" parent="health_metrics/VBoxContainer"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 126
 text = "Boxes Sent : 0"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="pee_label" type="Label" parent="ColorRect/VBoxContainer"]
+[node name="pee_label" type="Label" parent="health_metrics/VBoxContainer"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 126
 text = "pee ratio: 0/150"
 horizontal_alignment = 1
 vertical_alignment = 1
+
+[node name="Urin_warning" type="ColorRect" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(1, 0.54509807, 0, 1)
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Urin_warning"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 0
+
+[node name="thirst" type="Label" parent="Urin_warning/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 88
+text = "Thirst: 00/00 "
+horizontal_alignment = 2
+
+[node name="warning" type="Label" parent="Urin_warning/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 10
+theme_override_font_sizes/font_size = 106
+text = "URINATION EVENT 
+IMMINENT"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="time" type="Label" parent="Urin_warning/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 2
+theme_override_font_sizes/font_size = 182
+text = "00:00"
+horizontal_alignment = 1

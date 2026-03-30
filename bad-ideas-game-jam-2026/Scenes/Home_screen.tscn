@@ -1,0 +1,69 @@
+[gd_scene load_steps=5 format=3 uid="uid://8cyhvwx6ber1"]
+
+[ext_resource type="Script" uid="uid://tix2u4yllftj" path="res://Scripts/home_screen.gd" id="1_02jnj"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_adtrt"]
+bg_color = Color(0.6666667, 0.26666668, 0, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_02jnj"]
+bg_color = Color(0.38399273, 0.14126235, 9.62615e-08, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_al3hc"]
+bg_color = Color(0.92443657, 0.38156185, 7.70092e-07, 1)
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
+
+[node name="HomeScreen" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_02jnj")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.035466105, 0, 0.31729153, 1)
+
+[node name="VBoxContainer" type="VBoxContainer" parent="ColorRect"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Label" type="Label" parent="ColorRect/VBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.6674379, 0.26731437, 3.85046e-07, 1)
+theme_override_font_sizes/font_size = 136
+text = "Two Day 
+Shipping"
+horizontal_alignment = 1
+
+[node name="Start" type="Button" parent="ColorRect/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_font_sizes/font_size = 116
+theme_override_styles/normal = SubResource("StyleBoxFlat_adtrt")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_02jnj")
+theme_override_styles/hover = SubResource("StyleBoxFlat_al3hc")
+text = "Clock in "
+
+[connection signal="button_down" from="ColorRect/VBoxContainer/Start" to="." method="_on_start_button_down"]

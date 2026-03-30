@@ -1,12 +1,12 @@
 extends Node
-
-@export var conveyer_speed: float =.1
+var base_conveyer_speed : float =.1 
+var conveyer_speed: float =.1
 var conveyer_speed_increase: float =.05
 var slow_conveyer_speed: float =.1
 var fast_conveyer_speed: float = 1
 var box_drop_speed: float =.8
 var grid_size : float  = .1 # 1.0/6.0
-var base_boxes_per_day : int = 7
+var base_boxes_per_day : int = 1# 7
 var current_boxes_per_day : int 
 var metrics_tv : MetricsScreen
 var health_tv : HealthScreen
@@ -15,6 +15,9 @@ var penopticon : Penopticon
 var main_scene : MainScene
 var order_tube : OrderTube
 var main_camera : Camera3D
+
+
+
 
 const MERCH_MANAGER = preload("uid://cpxhjnah05wv6")
 var merch_manager : MerchManager 
@@ -34,14 +37,16 @@ var healh_manager : HealthManager
 const TV_MANAGER = preload("uid://6wrtdlanfrtg")
 var tv_manager : TVManager
 
+const MAIN = preload("uid://d0nk4t02xe8ik")
+var main : MainScene 
 
 var ui : UI
 
-func _ready() -> void:
-	current_boxes_per_day = base_boxes_per_day
-	start_game()
+
 
 func start_game():
+	current_boxes_per_day = base_boxes_per_day
+	current_boxes_per_day = base_boxes_per_day
 	merch_manager = MERCH_MANAGER.instantiate()
 	add_child(merch_manager)
 	
@@ -60,6 +65,8 @@ func start_game():
 	tv_manager = TV_MANAGER.instantiate()
 	add_child(tv_manager)
 	
+	main_scene = MAIN.instantiate()
+	add_child(main_scene)
 	
 func _unhandled_input(event: InputEvent) -> void:
 		if event is InputEventKey:
@@ -134,7 +141,28 @@ func fit_collision_to_meshes(node_3d: Node3D, collision_shape: CollisionShape3D)
 	collision_shape.position = local_aabb_final.get_center()
 	
 func start_new_day():
+	Global.healh_manager.restart_health()
 	if box_manager.is_box_difficulty_maxed: 
 		conveyer_speed += conveyer_speed_increase
 	box_manager.box_dropper.drop_box()
 	
+func end_run():
+	merch_manager.queue_free()
+	merch_manager = null
+	camera_manager.queue_free()
+	camera_manager = null
+	box_manager.queue_free()
+	box_manager = null
+	score_manager.queue_free()
+	score_manager = null
+	healh_manager.queue_free()
+	healh_manager = null
+	tv_manager.queue_free()
+	tv_manager = null
+	main_scene.queue_free()
+	main_scene = null
+
+func restart_game():
+	end_run()
+	await get_tree().process_frame
+	start_game()

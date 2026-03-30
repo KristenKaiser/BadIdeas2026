@@ -293,7 +293,7 @@ func camera_changed() -> void:
 		box_collision_shape.disabled = false
 		is_zoomed_in = false
 		if ghost != null:
-			ghost.orignal_object.ghost = null
+			ghost.orignal_merch.ghost = null
 			ghost.queue_free()
 
 func _on_box_bottom_3d_mouse_entered() -> void:
