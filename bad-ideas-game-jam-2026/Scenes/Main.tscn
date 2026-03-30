@@ -1,4 +1,4 @@
-[gd_scene load_steps=59 format=3 uid="uid://d0nk4t02xe8ik"]
+[gd_scene load_steps=58 format=3 uid="uid://d0nk4t02xe8ik"]
 
 [ext_resource type="PackedScene" uid="uid://ccmmb1u17r8a0" path="res://Scenes/keypad.tscn" id="1_r150o"]
 [ext_resource type="Script" uid="uid://dxx1jykm0t1k6" path="res://Scripts/main.gd" id="1_v1gob"]
@@ -22,7 +22,6 @@
 [ext_resource type="PackedScene" uid="uid://chjvnkghiybor" path="res://Scenes/MetricsScreen.tscn" id="15_2w5on"]
 [ext_resource type="Script" uid="uid://cm3uftokymxn6" path="res://Scripts/penopticon.gd" id="19_sxkr1"]
 [ext_resource type="PackedScene" uid="uid://qy7nbc03t04r" path="res://Scenes/shelf.tscn" id="20_sxkr1"]
-[ext_resource type="PackedScene" uid="uid://dfn3krjokafc0" path="res://Art/Merchandise/Apple.fbx" id="23_jyqft"]
 
 [sub_resource type="CylinderMesh" id="CylinderMesh_346fj"]
 flip_faces = true
@@ -48,7 +47,7 @@ emission_energy_multiplier = 1.54
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_fq0cl"]
 material = SubResource("StandardMaterial3D_sxkr1")
-size = Vector2(8.07, 3.475)
+size = Vector2(32.75, 28.3)
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_0sclb"]
 material = ExtResource("5_fq0cl")
@@ -236,19 +235,19 @@ spot_range = 30.51
 spot_angle = 8.08858
 
 [node name="spotlight_glare" type="MeshInstance3D" parent="Penopticon"]
-transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 1.5519029, 24.802128)
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 2.302, 24.802)
 visible = false
 mesh = SubResource("PlaneMesh_fq0cl")
 skeleton = NodePath("../..")
 
 [node name="OmniLight3D" type="OmniLight3D" parent="Penopticon/spotlight_glare"]
-transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, -0.4218806, 0.2299254, -0.31811845)
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, -0.422, 0.23, -0.718)
 light_energy = 2.921
 light_size = 1.0
 light_specular = 1.77
 shadow_enabled = true
 omni_range = 7.43
-omni_attenuation = 0.365
+omni_attenuation = 4.187
 
 [node name="room" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.2, -0.2)
@@ -379,9 +378,10 @@ mesh = SubResource("BoxMesh_jyqft")
 transform = Transform3D(-3.035918e-08, 0, 0.38678715, 0, 0.10020816, 0, -0.69453704, 0, -1.6907002e-08, 0.2080847, 0.09499931, 0.07140708)
 skeleton = NodePath("../../..")
 
-[node name="order_tube" parent="Right" node_paths=PackedStringArray("deposit", "keypad") instance=ExtResource("13_sxkr1")]
+[node name="order_tube" parent="Right" node_paths=PackedStringArray("orgin", "deposit", "keypad") instance=ExtResource("13_sxkr1")]
 transform = Transform3D(-0.1750411, -0.63117796, 2.7589664e-08, 0, -2.8630959e-08, -0.655, 0.63117796, -0.1750411, 7.651289e-09, 2.8078883, 0.54373026, 0.42593068)
 script = ExtResource("3_rgh2o")
+orgin = NodePath("orgin")
 deposit = NodePath("deposit")
 keypad = NodePath("keypad")
 
@@ -399,6 +399,12 @@ transform = Transform3D(0.7009046, -0.71324575, 1.30735875e-08, -1.3073673e-08, 
 light_color = Color(1, 0.6953351, 0.38060626, 1)
 omni_range = 0.716
 omni_attenuation = -1.368
+
+[node name="orgin" type="MeshInstance3D" parent="Right/order_tube"]
+transform = Transform3D(1.0700976, -1.99598e-08, 1.0889392, -1.0889392, -4.759873e-08, 1.0700976, 1.9959934e-08, -1.5267174, -4.759905e-08, -0.057480257, 1.8255049, 3.4846141)
+transparency = 1.0
+cast_shadow = 0
+mesh = SubResource("BoxMesh_c4ay3")
 
 [node name="TrashCompactor" type="MeshInstance3D" parent="Right"]
 transform = Transform3D(0.64278764, 0, 0.7660445, 0, 1, 0, -0.7660445, 0, 0.64278764, 1.7766043, -0.9, 1.2857213)
@@ -435,9 +441,6 @@ environment = SubResource("Environment_erwvk")
 
 [node name="Shelf" parent="." instance=ExtResource("20_sxkr1")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.5233126, 0.78470254, -0.32209814)
-
-[node name="Apple" parent="." instance=ExtResource("23_jyqft")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.513404, 1.0737112, -0.047921002)
 
 [connection signal="input_event" from="Left/TrashCan/Area3D" to="Left/TrashCan" method="_on_area_3d_input_event"]
 [connection signal="area_exited" from="Center/Conveyer/conveyer_exit/Area3D" to="Center/Conveyer" method="_on_area_3d_area_exited"]

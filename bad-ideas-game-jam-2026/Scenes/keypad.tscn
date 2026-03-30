@@ -10,7 +10,7 @@ albedo_color = Color(0, 0.107533656, 0.10765313, 1)
 
 [sub_resource type="BoxMesh" id="BoxMesh_oo0pj"]
 material = SubResource("StandardMaterial3D_oo0pj")
-size = Vector3(0.095, 0.565, 0.32)
+size = Vector3(0.095, 0.615, 0.32)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_h5lr6"]
 albedo_color = Color(0, 0.107533656, 0.10765313, 1)
@@ -33,12 +33,12 @@ display = NodePath("Display")
 light = NodePath("bezil/light/SpotLight3D")
 
 [node name="bezil" type="MeshInstance3D" parent="."]
-transform = Transform3D(0.99999994, 0, 0, 0, 1, 0, 0, 0, 0.99999994, 0, -0.075, 0)
+transform = Transform3D(0.99999994, 0, 0, 0, 1, 0, 0, 0, 0.99999994, 0, -0.108251676, 0)
 mesh = SubResource("BoxMesh_oo0pj")
 skeleton = NodePath("../Device")
 
 [node name="light" type="MeshInstance3D" parent="bezil"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.09073588, 0.27280575, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.06446746, 0.29759386, 0)
 mesh = SubResource("BoxMesh_phgvv")
 
 [node name="SpotLight3D" type="SpotLight3D" parent="bezil/light"]
@@ -131,6 +131,6 @@ functionality = 1
 color = Color(1, 0, 0, 1)
 
 [node name="Enter" parent="Buttons" instance=ExtResource("3_cam67")]
-transform = Transform3D(0.99999976, 0, 0, 0, 1, 0, 0, 0, 4.439999, -0.06, -0.3, 0)
+transform = Transform3D(1, 0, 0, 0, 1.34, 0, 0, 0, 4.44, -0.06, -0.34269878, 0)
 functionality = 3
 color = Color(0.6039216, 0.19607843, 0, 1)

@@ -1,5 +1,6 @@
 extends Node3D
 class_name OrderTube
+@export var orgin : Node3D
 @export var deposit : Node3D
 @export var keypad : KeyPad
 const Merchandise_script = preload("uid://8d86k6wj4m5x")
@@ -12,10 +13,12 @@ func _ready() -> void:
 func order_item(code : String):
 	var item: Merchandise = Global.merch_manager.create_from_code(code)
 	held_object = item
-	deposit.add_child(item)
-	item.rotation_degrees = Vector3(180, 90, 0)
 	
-	#var new_item : Node3D = item.instantiate()
-	#new_item.set_script(Merchandise_script)
-	#deposit.add_child(new_item)
-	#new_item.position = deposit.position
+	add_child(item)
+	item.global_position = orgin.global_position
+	item.rotation_degrees = Vector3(180, 90, 0)
+	var tween = create_tween()
+	tween.tween_property(held_object, "global_position", deposit.global_position, 1)
+	
+	
+	
