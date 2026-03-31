@@ -19,6 +19,7 @@ var orignal_merch : Merchandise
 enum Location{ORDER_TUBE, HELD, BOX}
 var location : Location
 signal remove_from_box(location : Vector3, merch : Merchandise)
+var base_rotation : Vector3
 
 func _ready() -> void:
 	if is_ghost: 

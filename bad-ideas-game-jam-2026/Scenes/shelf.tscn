@@ -1,6 +1,7 @@
-[gd_scene load_steps=4 format=3 uid="uid://qy7nbc03t04r"]
+[gd_scene load_steps=7 format=3 uid="uid://qy7nbc03t04r"]
 
 [ext_resource type="Script" uid="uid://oaufytxobcd5" path="res://Scenes/grid_surface.gd" id="1_ndc05"]
+[ext_resource type="Script" uid="uid://dhhmlqn2obqoq" path="res://Scenes/shelf.gd" id="1_pp4lf"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_pp4lf"]
 size = Vector3(0.49, 0.01, 0.455)
@@ -8,11 +9,20 @@ size = Vector3(0.49, 0.01, 0.455)
 [sub_resource type="BoxShape3D" id="BoxShape3D_ndc05"]
 size = Vector3(1, 0.04296875, 1)
 
-[node name="Shelf" type="Node3D"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ndc05"]
+transparency = 1
+albedo_color = Color(1, 0.57254905, 0.3137255, 0.7607843)
 
-[node name="grid_surface" type="MeshInstance3D" parent="." node_paths=PackedStringArray("surface_collision_shape")]
+[sub_resource type="PrismMesh" id="PrismMesh_pp4lf"]
+material = SubResource("StandardMaterial3D_ndc05")
+
+[node name="Shelf" type="Node3D"]
+script = ExtResource("1_pp4lf")
+
+[node name="grid_surface" type="MeshInstance3D" parent="." node_paths=PackedStringArray("tutorial_obj", "surface_collision_shape")]
 mesh = SubResource("BoxMesh_pp4lf")
 script = ExtResource("1_ndc05")
+tutorial_obj = NodePath("../tutorial")
 surface_collision_shape = NodePath("Area3D/CollisionShape3D")
 
 [node name="Area3D" type="Area3D" parent="grid_surface"]
@@ -23,6 +33,18 @@ shape = SubResource("BoxShape3D_ndc05")
 
 [node name="Camera3D" type="Camera3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 0.6535801, -9.43447e-09)
+
+[node name="tutorial" type="MeshInstance3D" parent="."]
+transform = Transform3D(-0.315, 2.7538174e-08, 0, -2.7538174e-08, -0.315, 0, 0, 0, 0.315, 2.3184237e-08, 0.4763975, 0)
+visible = false
+mesh = SubResource("PrismMesh_pp4lf")
+
+[node name="Label3D" type="Label3D" parent="tutorial"]
+transform = Transform3D(1, 0, 0, 0, -1, 8.742278e-08, 0, -8.742278e-08, -1, -7.1054274e-15, -0.90402275, -7.903217e-08)
+modulate = Color(1, 0.57254905, 0.3137255, 1)
+text = "Place empty 
+water bottles 
+here"
 
 [connection signal="input_event" from="grid_surface/Area3D" to="grid_surface" method="_on_area_3d_input_event"]
 [connection signal="mouse_entered" from="grid_surface/Area3D" to="grid_surface" method="_on_area_3d_mouse_entered"]

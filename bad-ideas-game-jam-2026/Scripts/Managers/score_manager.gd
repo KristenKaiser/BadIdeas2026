@@ -16,7 +16,15 @@ var count_untaped_items_by_day : Array[int]
 var count_no_address_by_day: Array[int] 
 var count_missed_boxes_by_day : Array[int]
 
-
+func clear_days_metrics(day : int):
+	count_boxes_sent_by_day[day-1] = 0
+	count_missing_items_by_day[day-1] = 0
+	count_sent_items_by_day[day-1] = 0
+	count_incorrect_items_by_day[day-1] = 0
+	count_untaped_items_by_day[day-1] = 0
+	count_no_address_by_day[day-1] = 0
+	count_missed_boxes_by_day[day-1] = 0
+	
 
 func _ready() -> void:
 	reset_todays_metrics()

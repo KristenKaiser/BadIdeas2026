@@ -71,8 +71,15 @@ func _unhandled_input(event: InputEvent) -> void:
 func create_water():
 	if Global.camera_manager.held_object != null:
 		return
-	var new_water : Water = WATER.instantiate()
+	# play tutorial
+	if Global.tutorial_manager.tutorial_status[TutorialManager.Tutorials.DRINK] == true and Global.tutorial_manager.tutorial_status[TutorialManager.Tutorials.DRINKUI] == false:
+		Global.tutorial_manager.display_overseer_text(Global.tutorial_manager.drinkui, TutorialManager.Tutorials.DRINKUI)
+		Global.main_scene.shelf.get_node("tutorial").show()
+	if Global.tutorial_manager.tutorial_status[TutorialManager.Tutorials.PEE] == true and Global.tutorial_manager.tutorial_status[TutorialManager.Tutorials.PEEUI] == false:
+		Global.tutorial_manager.display_overseer_text(Global.tutorial_manager.peeui, TutorialManager.Tutorials.PEEUI)
 	
+	var new_water : Water = WATER.instantiate()
+	remove_from_box.emit(global_position, self)
 	Global.camera_manager.held_object = new_water 
 	new_water.is_held = true
 	Global.camera_manager.current.add_child(new_water)
@@ -81,6 +88,14 @@ func create_water():
 func grab_water():
 	if Global.camera_manager.held_object != null:
 		return
+	
+	# play tutorial
+	if Global.tutorial_manager.tutorial_status[TutorialManager.Tutorials.DRINK] == true and Global.tutorial_manager.tutorial_status[TutorialManager.Tutorials.DRINKUI] == false:
+		Global.tutorial_manager.display_overseer_text(Global.tutorial_manager.drinkui, TutorialManager.Tutorials.DRINKUI)
+		Global.main_scene.shelf.get_node("tutorial").show()
+	if Global.tutorial_manager.tutorial_status[TutorialManager.Tutorials.PEE] == true and Global.tutorial_manager.tutorial_status[TutorialManager.Tutorials.PEEUI] == false:
+		Global.tutorial_manager.display_overseer_text(Global.tutorial_manager.peeui, TutorialManager.Tutorials.PEEUI)
+		
 	remove_from_box.emit(global_position, self)
 	Global.camera_manager.held_object = self
 	is_held = true

@@ -39,14 +39,14 @@ grow_vertical = 2
 [node name="thirst_label" type="Label" parent="health_metrics/VBoxContainer"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 126
-text = "Boxes Sent : 0"
+text = "Thirst Level : LOADING"
 horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="pee_label" type="Label" parent="health_metrics/VBoxContainer"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 126
-text = "pee ratio: 0/150"
+text = "Bladder Level: LOADING"
 horizontal_alignment = 1
 vertical_alignment = 1
 

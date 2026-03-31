@@ -201,17 +201,58 @@ transform = Transform3D(40.149204, -6.2477184e-06, 59.60009, 29.800045, -4.63725
 mesh = SubResource("ArrayMesh_ylrwf")
 surface_material_override/0 = SubResource("StandardMaterial3D_yocxd")
 
+[node name="d" type="Label3D" parent="flap-back" index="0"]
+transform = Transform3D(0.105, 0, 0, 0, 0.105, 0, 0, 0, 0.105, 0.010115256, -4.3839927e-17, -0.00091469503)
+shaded = true
+modulate = Color(0.6866409, 0.45203698, 0.27088028, 1)
+outline_modulate = Color(0.43746522, 0.27499312, 0.14777806, 1)
+text = "D"
+outline_size = 3
+
 [node name="flap-front" parent="." index="2"]
 transform = Transform3D(-35.66252, -6.6650814e-06, -70.09094, 35.045467, 2.726757e-06, -71.32505, 3.7444279e-06, -89, 3.0637723e-06, -1, 1.00344, 0)
 mesh = SubResource("ArrayMesh_6nydp")
 surface_material_override/0 = SubResource("StandardMaterial3D_yocxd")
+
+[node name="a" type="Label3D" parent="flap-front" index="0"]
+transform = Transform3D(-0.09, 7.868051e-09, -7.86805e-09, 7.86805e-09, 0.09, 7.86805e-09, 7.868051e-09, 7.868049e-09, -0.09, 0.009553897, -7.54825e-10, -0.0009197045)
+shaded = true
+modulate = Color(0.6866409, 0.45203698, 0.27088028, 1)
+outline_modulate = Color(0.43746522, 0.27499312, 0.14777806, 1)
+text = "A"
+outline_size = 3
 
 [node name="flap-left" parent="." index="3"]
 transform = Transform3D(-1.8320985e-06, 100, -3.4439488e-06, 19.697094, -1.7219745e-06, -91.91353, -45.956768, -4.72461e-06, -39.394184, -8.881784e-15, 0.99396646, -1)
 mesh = SubResource("ArrayMesh_6k2bc")
 surface_material_override/0 = SubResource("StandardMaterial3D_yocxd")
 
+[node name="w" type="Label3D" parent="flap-left" index="0"]
+transform = Transform3D(-4.808253e-09, 0.11, 0, 0.11, 4.808253e-09, 9.616506e-09, 9.616506e-09, 4.203508e-16, -0.11, 0.011814289, 5.1985183e-10, -3.9266797e-05)
+shaded = true
+modulate = Color(0.6866409, 0.45203698, 0.27088028, 1)
+outline_modulate = Color(0.43746522, 0.27499312, 0.14777806, 1)
+text = "w"
+outline_size = 3
+
 [node name="flap-right" parent="." index="4"]
-transform = Transform3D(-2.1855697e-06, 100, 0, 35.293583, 3.0854628e-06, -70.83398, -35.41699, -3.0962515e-06, -70.587166, 1.1920929e-07, 0.9920181, 1)
+transform = Transform3D(2.1843048e-06, 100, -1.486618e-07, -34.068634, 3.0854626e-06, 73.193665, 36.596832, -3.096252e-06, 68.13727, 1.1920929e-07, 0.9920181, 1)
 mesh = SubResource("ArrayMesh_yy1pl")
 surface_material_override/0 = SubResource("StandardMaterial3D_yocxd")
+
+[node name="s" type="Label3D" parent="flap-right" index="0"]
+transform = Transform3D(-3.715468e-09, 0.085, 0, 0.085, 3.715468e-09, 7.430936e-09, 7.430936e-09, 3.2481654e-16, -0.085, -0.009214157, 2.6550473e-10, -0.00046890654)
+shaded = true
+modulate = Color(0.6866409, 0.45203698, 0.27088028, 1)
+outline_modulate = Color(0.43746522, 0.27499312, 0.14777806, 1)
+text = "S"
+outline_size = 3
+
+[node name="right_click" type="Label3D" parent="flap-right" index="1"]
+transform = Transform3D(1.0927845e-09, -0.025, 2.1855695e-09, 0.025, 1.0927848e-09, 2.1855695e-09, -2.1855697e-09, 2.1855693e-09, 0.025, -0.006597697, 3.8953762e-10, 0.0011569433)
+shaded = true
+modulate = Color(0.6866409, 0.45203698, 0.27088028, 1)
+outline_modulate = Color(0.43746522, 0.27499312, 0.14777806, 1)
+text = "Right click 
+to exit"
+outline_size = 5

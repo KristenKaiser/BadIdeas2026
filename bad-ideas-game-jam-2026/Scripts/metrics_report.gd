@@ -15,7 +15,7 @@ class_name MetricsReport
 @export var sub_window :  SubViewport
 @export var burn_texture : TextureRect
 var burn_duration : float = 4
-
+var is_tutorial_day: bool = false
 
 var missing_items_max_ratio : float = .25
 var incorrect_items_max_ratio : float =.25
@@ -32,6 +32,7 @@ var max_total_writeups: int = 6
 
 func _ready() -> void:
 	init_todays_writeups()
+	Global.mertics_report = self
 	
 func init_todays_writeups():
 	var new_writeups : Array[Writeup] = []
@@ -42,15 +43,24 @@ func close_metrics_card():
 	self.hide()
 
 func _on_continue_button_button_down() -> void:
-	if is_fired:
+	
+	if is_fired and is_tutorial_day == false:
 		burn()
 	else:
 		Global.score_manager.reset_todays_metrics()
 		init_todays_writeups()
 		close_metrics_card()
 		Global.start_new_day()
+	
+	if is_tutorial_day: 
+		is_tutorial_day = false
+		writeups[0] = []
 
 func fill_metrics_card(): 
+	# play tutorial
+	if Global.tutorial_manager.tutorial_status[TutorialManager.Tutorials.METRICS] == false:
+				Global.tutorial_manager.display_overseer_text(Global.tutorial_manager.metrics, TutorialManager.Tutorials.METRICS)
+				Global.tutorial_manager.end_tutorial()
 	if get_incorrect_ratio(Global.score_manager.count_sent_items_by_day.size() - 1) > incorrect_items_max_ratio:
 		writeup(Writeup.INCORRECT)
 	if get_missing_ratio(Global.score_manager.count_sent_items_by_day.size() - 1) > missing_items_max_ratio:

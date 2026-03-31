@@ -21,11 +21,17 @@ var is_taped : bool = false
 var is_addressed : bool = false
 var is_tutorial : bool = false
 
+
 func _ready() -> void:
+	
+	
 	Global.camera_manager.camera_changed.connect(camera_changed)
 	
 	order_form.parent_box = self
 	order_form.generate_order()
+	# write tutorial to note
+	if Global.tutorial_manager!= null and Global.tutorial_manager.tutorial_status[TutorialManager.Tutorials.ALONE] == true and Global.tutorial_manager.is_more_friend_text():
+			order_form.write_to_label(Global.tutorial_manager.get_friend_note())
 	current_state = State.STILL
 	var grid : MeshInstance3D=  create_grid_mesh(Vector2i(Global.box_manager.sizes[current_size].x,Global.box_manager.sizes[current_size].z), Global.grid_size)
 	
@@ -73,6 +79,9 @@ func _on_box_input_event(_camera: Node, event: InputEvent, _event_position: Vect
 			if event.button_index == MOUSE_BUTTON_LEFT and event.pressed:
 				if Global.camera_manager.current != camera: 
 					Global.camera_manager.change_camera(camera, true)
+					# play tutorial
+					if Global.tutorial_manager.tutorial_status[TutorialManager.Tutorials.PLACE] == false and Global.tutorial_manager.tutorial_status[TutorialManager.Tutorials.ORDER]:
+						Global.tutorial_manager.display_overseer_text(Global.tutorial_manager.place, TutorialManager.Tutorials.PLACE)
 				elif box.get_is_box_closed() and Global.camera_manager.held_object is ShippingLabel:
 					add_label_to_box(Global.camera_manager.held_object)
 
@@ -88,6 +97,10 @@ func add_label_to_box(label : ShippingLabel):
 	label.position.y -= box_collision_shape.shape.size.y/2.0 - tape.mesh.size.y/2 - .1
 	label.position.z -= box_collision_shape.shape.size.z/2.0 - tape.mesh.size.z/2 - (label.get_node("mesh").mesh.size.y/2 * label.get_node("mesh").scale.z)
 	Global.camera_manager.held_object = null
+	# play tutorial
+	if is_tutorial and Global.tutorial_manager.tutorial_status[TutorialManager.Tutorials.ALONE] == false:
+				Global.tutorial_manager.display_overseer_text(Global.tutorial_manager.alone, TutorialManager.Tutorials.ALONE)
+				current_state = State.CONVEYING
 
 func set_box_size(box_size : String):
 	current_size = box_size
@@ -165,10 +178,11 @@ func add_to_box(event_position: Vector3):
 		else: 
 			held_objects[Global.merch_manager.get_last_held_merch().merch_name] = 1
 			
-		if  Global.merch_manager.get_last_held_merch().ghost != null:
-			Global.merch_manager.place_held_merch(self)
-		else:
-			Global.merch_manager.place_held_merch(self)
+
+		Global.merch_manager.place_held_merch(self)
+		# play tutprial
+		if is_tutorial and Global.tutorial_manager.tutorial_status[TutorialManager.Tutorials.CLOSE] == false:
+			Global.tutorial_manager.display_overseer_text(Global.tutorial_manager.close, TutorialManager.Tutorials.CLOSE)
 		if ghost != null: 
 			ghost.queue_free()
 		
@@ -320,10 +334,14 @@ func _unhandled_input(event: InputEvent) -> void:
 					move_box_flap("back")
 				if event.pressed and event.keycode == KEY_SPACE:
 					tape_box()
+			
 
 func move_box_flap(flap : String):
 	box.move_flap(flap)
 	if box.get_is_box_closed():
+		# play tutorial
+		if is_tutorial and Global.tutorial_manager.tutorial_status[TutorialManager.Tutorials.TAPE] == false:
+			Global.tutorial_manager.display_overseer_text(Global.tutorial_manager.tape, TutorialManager.Tutorials.TAPE)
 		if box.tween and box.tween.is_running():
 			await box.tween.finished
 		Global.fit_collision_to_meshes(box, box_collision_shape)
@@ -344,6 +362,9 @@ func tape_box():
 			tape.show()
 		elif tape.mesh.size.x > box_collision_shape.shape.size.x: 
 			is_taped = true
+			# play tutorial
+			if is_tutorial and Global.tutorial_manager.tutorial_status[TutorialManager.Tutorials.ADDRESS] == false:
+				Global.tutorial_manager.display_overseer_text(Global.tutorial_manager.address, TutorialManager.Tutorials.ADDRESS)
 			return
 		else: 
 			var grow_amount : float = (box_collision_shape.shape.size.x + .02)  / (Global.box_manager.sizes[current_size].x * 4.0)

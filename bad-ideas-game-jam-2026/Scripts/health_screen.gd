@@ -20,7 +20,7 @@ func update_value(value: int, max_val : int, metric : Metric):
 		Metric.THIRST:
 			thisrt_label.text = "Thirst Level : %s / %s"%[value, max_val] 
 		Metric.PEE:
-			pee_label.text = "Pee Level: %s / %s"%[value, max_val] 
+			pee_label.text = "Bladder Level: %s / %s"%[value, max_val] 
 			if (max_val-value) <= pee_warning_threshold * Global.healh_manager.pee_transfer_rate and warning_timer == null: 
 				warning_thirst_label.text = "Thirst Level : %s / %s"%[value, max_val] 
 				pee_warning.text = "00:%02d"%((max_val-value) * Global.healh_manager.pee_transfer_rate)
@@ -31,6 +31,11 @@ func update_value(value: int, max_val : int, metric : Metric):
 				warning_timer.wait_time = 1
 				warning_timer.timeout.connect(change_warning_timer)
 				warning_timer.start()
+			elif warning_timer != null:
+				warning_timer.stop()
+				warning_screen.hide()
+				warning_timer.timeout.disconnect(change_warning_timer)
+				
 				
 
 func change_warning_timer():

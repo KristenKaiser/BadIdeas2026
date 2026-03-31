@@ -2,7 +2,7 @@ extends MeshInstance3D
 class_name Conveyer
 
 @export var collision_shape : CollisionShape3D 
-
+@export var tutorial_collision: CollisionShape3D 
 
 func _ready() -> void:
 	collision_shape.shape.size = mesh.size
@@ -33,4 +33,11 @@ func _on_tutorial_stop_area_entered(area: Area3D) -> void:
 	if area.name == "box_collision":
 		var box : Box = area.get_parent()
 		if box.is_tutorial:
-			box.current_state = Box.State.STILL
+			(func ():tutorial_collision.disabled = true).call_deferred()
+			if Global.tutorial_manager.tutorial_status[TutorialManager.Tutorials.ALONE] == false:
+				box.current_state = Box.State.STILL
+				# play tutorial
+				if Global.tutorial_manager.tutorial_status[TutorialManager.Tutorials.PLACE] == false:
+					Global.tutorial_manager.display_overseer_text(Global.tutorial_manager.place, TutorialManager.Tutorials.PLACE)
+			
+			

@@ -3,7 +3,7 @@ class_name GridSurface
 
 
 @export var grid_size : Vector2i = Vector2i(3,3)
-
+@export var tutorial_obj : MeshInstance3D = null
 @export var surface_collision_shape : CollisionShape3D
 var ghost: Merchandise = null
 var grid_statuses : Array[Array]
@@ -91,10 +91,9 @@ func add_to_box(event_position: Vector3):
 		else: 
 			held_objects[Global.merch_manager.get_last_held_merch().merch_name] = 1
 			
-		if  Global.merch_manager.get_last_held_merch().ghost != null:
-			Global.merch_manager.place_held_merch(self)
-		else:
-			Global.merch_manager.place_held_merch(self)
+		Global.merch_manager.place_held_merch(self)
+		if tutorial_obj != null and tutorial_obj.visible == true:
+			tutorial_obj.hide()
 		if ghost != null: 
 			ghost.queue_free()
 		

@@ -187,9 +187,10 @@ glow_levels/5 = 9.7
 glow_levels/6 = 6.49
 glow_levels/7 = 9.35
 
-[node name="Main" type="Node3D" node_paths=PackedStringArray("main_camera")]
+[node name="Main" type="Node3D" node_paths=PackedStringArray("main_camera", "shelf")]
 script = ExtResource("1_v1gob")
 main_camera = NodePath("MainCamera")
+shelf = NodePath("Shelf")
 
 [node name="Blur" parent="." instance=ExtResource("3_346fj")]
 mouse_filter = 2
@@ -353,8 +354,9 @@ tv_content = ExtResource("7_2w5on")
 [node name="Center" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.2, -0.2)
 
-[node name="Conveyer" parent="Center" instance=ExtResource("5_vy5pj")]
+[node name="Conveyer" parent="Center" node_paths=PackedStringArray("tutorial_collision") instance=ExtResource("5_vy5pj")]
 transform = Transform3D(1.456, 0, 0, 0, 1, 0, 0, 0, 1, 0.22481126, -0.41766706, -2.5)
+tutorial_collision = NodePath("tutorial_stop/CollisionShape3D")
 
 [node name="conveyer_exit" type="MeshInstance3D" parent="Center/Conveyer"]
 transform = Transform3D(1.2499999, 0, 0, 0, -4.3711115e-08, -0.9999954, 0, 0.9999954, -4.3711115e-08, 1.4659836, 0.56879765, 0.014583099)
@@ -454,7 +456,7 @@ transform = Transform3D(0.69453704, 0, -1.7763568e-15, 0, 0.10020816, 0, 0, 0, 0
 environment = SubResource("Environment_erwvk")
 
 [node name="Shelf" parent="." instance=ExtResource("20_sxkr1")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.5233126, 0.78470254, -0.32209814)
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, -2.5233126, 0.78470254, -0.32209814)
 
 [connection signal="input_event" from="Left/TrashCan/Area3D" to="Left/TrashCan" method="_on_area_3d_input_event"]
 [connection signal="area_exited" from="Center/Conveyer/conveyer_exit/Area3D" to="Center/Conveyer" method="_on_area_3d_area_exited"]

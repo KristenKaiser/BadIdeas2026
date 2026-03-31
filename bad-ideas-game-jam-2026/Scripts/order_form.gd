@@ -73,6 +73,7 @@ func make_tutorial_box():
 	Global.box_manager.is_tutorial_box = false
 
 func generate_order():
+	## TODO use tutorial manager not box_manager.is_tutorial_box 
 	if Global.box_manager.is_tutorial_box:
 		make_tutorial_box()
 		return
