@@ -1,4 +1,4 @@
-[gd_scene load_steps=58 format=3 uid="uid://d0nk4t02xe8ik"]
+[gd_scene load_steps=59 format=3 uid="uid://d0nk4t02xe8ik"]
 
 [ext_resource type="PackedScene" uid="uid://ccmmb1u17r8a0" path="res://Scenes/keypad.tscn" id="1_r150o"]
 [ext_resource type="Script" uid="uid://dxx1jykm0t1k6" path="res://Scripts/main.gd" id="1_v1gob"]
@@ -138,6 +138,9 @@ size = Vector3(0.02, 1.475, 1)
 [sub_resource type="BoxShape3D" id="BoxShape3D_4kpch"]
 size = Vector3(0.03, 1.4, 1)
 
+[sub_resource type="BoxShape3D" id="BoxShape3D_hwpts"]
+size = Vector3(0.085, 1.225, 1.395)
+
 [sub_resource type="BoxMesh" id="BoxMesh_hwpts"]
 material = ExtResource("11_hwpts")
 size = Vector3(1, 1, 1.38)
@@ -275,6 +278,11 @@ mesh = SubResource("PlaneMesh_3tgeq")
 [node name="Left" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.2, -0.2)
 
+[node name="poster2" parent="Left" instance=ExtResource("12_grg3l")]
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, -3.3038404, 0.39999998, 0.30369008)
+visible = false
+skeleton = NodePath("../../Right")
+
 [node name="Desk" type="MeshInstance3D" parent="Left"]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -2.723567, -0.49499935, -0.49794137)
 mesh = SubResource("BoxMesh_fq0cl")
@@ -359,6 +367,12 @@ transform = Transform3D(0.99999964, 0, 0, 0, 0.99999624, 1.2079227e-13, 0, -1.20
 shape = SubResource("BoxShape3D_4kpch")
 debug_color = Color(0.94915134, 1.92523e-06, 0.57249576, 0.84313726)
 
+[node name="tutorial_stop" type="Area3D" parent="Center/Conveyer"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Center/Conveyer/tutorial_stop"]
+transform = Transform3D(0.9999999, 0, 0, 0, 0.9999991, 0, 0, 0, 0.9999991, 0, 0, 0)
+shape = SubResource("BoxShape3D_hwpts")
+
 [node name="BoxDropper" type="MeshInstance3D" parent="Center"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.728289, 0.12927175, -2.5000005)
 mesh = SubResource("BoxMesh_hwpts")
@@ -434,7 +448,7 @@ tv_content = ExtResource("15_2w5on")
 [node name="Hand" type="Node3D" parent="."]
 transform = Transform3D(0.69453704, 0, -1.7763568e-15, 0, 0.10020816, 0, 0, 0, 0.38678715, 1.8000002, 0.8, -1.2)
 
-[node name="ReportCard" parent="." instance=ExtResource("13_frkhe")]
+[node name="UI" parent="." instance=ExtResource("13_frkhe")]
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_erwvk")
@@ -444,4 +458,5 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.5233126, 0.78470254, -0.32
 
 [connection signal="input_event" from="Left/TrashCan/Area3D" to="Left/TrashCan" method="_on_area_3d_input_event"]
 [connection signal="area_exited" from="Center/Conveyer/conveyer_exit/Area3D" to="Center/Conveyer" method="_on_area_3d_area_exited"]
+[connection signal="area_entered" from="Center/Conveyer/tutorial_stop" to="Center/Conveyer" method="_on_tutorial_stop_area_entered"]
 [connection signal="input_event" from="Right/TrashCompactor/Area3D" to="Right/TrashCompactor" method="_on_area_3d_input_event"]

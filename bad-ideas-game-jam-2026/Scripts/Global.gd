@@ -15,7 +15,9 @@ var penopticon : Penopticon
 var main_scene : MainScene
 var order_tube : OrderTube
 var main_camera : Camera3D
-
+var is_testing : bool = false ##TESTING
+var is_tutorial: bool = true
+var conveyer : Conveyer
 
 
 

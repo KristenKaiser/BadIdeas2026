@@ -5,7 +5,7 @@ albedo_color = Color(0.95686275, 0.9254902, 0.81960785, 1)
 
 [sub_resource type="BoxMesh" id="BoxMesh_xktcx"]
 material = SubResource("StandardMaterial3D_xktcx")
-size = Vector3(0.01, 1, 1)
+size = Vector3(0.01, 1.165, 1)
 
 [node name="poster" type="MeshInstance3D"]
 mesh = SubResource("BoxMesh_xktcx")
@@ -13,9 +13,20 @@ mesh = SubResource("BoxMesh_xktcx")
 [node name="Label3D" type="Label3D" parent="."]
 transform = Transform3D(5.424551e-08, -1.8663495e-07, 9.231949, -1.510464e-08, 0.7199039, -3.4531843e-07, -0.62049633, -5.650576e-08, 8.070826e-07, 0.0070531145, 0.00808084, 0)
 shaded = true
-text = "84460 - Apple
-69128 - Banana
-07590 - Bread
-71411 - EggPLant
-63389 - Sauce
-"
+text = "202  Oneo
+337  Twoi
+351  Threei
+449  Fourl
+503  Fours
+515  Fourt
+548  Fivef"
+
+[node name="Label3D2" type="Label3D" parent="."]
+transform = Transform3D(-2.7122756e-08, 0, -9.231949, 0, 0.7199039, 0, 0.62049633, 0, -4.035413e-07, -0.007, 0.008, 0)
+shaded = true
+text = "562  Fivepls
+721  Fivep
+733  Fives
+744  Fivet
+756  Fiveu
+782  Fivew"

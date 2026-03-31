@@ -10,6 +10,7 @@ class_name MerchData
 @export var trash_fill : int = 1
 enum RotateAxis {X, Y, Z}
 @export var rotate_axis : RotateAxis
+@export var mesh_color : Color
 
 
 func get_rotate_axis_string()->String:

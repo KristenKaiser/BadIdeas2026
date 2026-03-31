@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=3 uid="uid://5bo23abi3m8c"]
+[gd_scene load_steps=4 format=3 uid="uid://5bo23abi3m8c"]
 
 [ext_resource type="Script" uid="uid://bv4sf2asekh6w" path="res://Scripts/ui.gd" id="1_w371h"]
 [ext_resource type="PackedScene" uid="uid://oroprnus7ub3" path="res://Scenes/metrics_report.tscn" id="2_nxvpl"]
+[ext_resource type="Script" uid="uid://cx1sl865sffyp" path="res://Scripts/tutorial.gd" id="3_dewlx"]
 
 [node name="UI" type="Control" node_paths=PackedStringArray("metrics_card")]
 layout_mode = 3
@@ -15,3 +16,6 @@ script = ExtResource("1_w371h")
 metrics_card = NodePath("Metrics_Report")
 
 [node name="Metrics_Report" parent="." instance=ExtResource("2_nxvpl")]
+
+[node name="Tutorial" type="CanvasLayer" parent="."]
+script = ExtResource("3_dewlx")

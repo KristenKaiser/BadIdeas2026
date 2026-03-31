@@ -86,7 +86,7 @@ func rotate_ghost(amount : Vector3):
 
 func get_size_from_shape() -> Vector3:
 	var grid_array : Array[Array] = get_grid_as_array()
-	var target_size : Vector3 = Vector3(1, grid_array.size(), grid_array[0].size()) * Global.grid_size
+	var target_size : Vector3 = Vector3( grid_array[0].size(), grid_array.size(), 1) * Global.grid_size
 	var aabb = object_mesh.get_aabb()  # local space
 	var global_aabb : AABB = object_mesh.global_transform * aabb  # world space AABB
 	var scale_factor : Vector3 =  target_size / global_aabb.size 	

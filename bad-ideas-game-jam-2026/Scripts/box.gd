@@ -18,6 +18,8 @@ var held_objects : Dictionary[String, int]
 var is_shipped : bool = false
 @export var tape : MeshInstance3D
 var is_taped : bool = false
+var is_addressed : bool = false
+var is_tutorial : bool = false
 
 func _ready() -> void:
 	Global.camera_manager.camera_changed.connect(camera_changed)
@@ -76,6 +78,7 @@ func _on_box_input_event(_camera: Node, event: InputEvent, _event_position: Vect
 
 
 func add_label_to_box(label : ShippingLabel):
+	is_addressed = true
 	label.reparent(self)
 	label.rotation_degrees = Vector3(0, -90, -90)
 	label.scale = Vector3(1,1,1)

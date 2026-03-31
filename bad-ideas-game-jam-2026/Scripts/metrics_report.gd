@@ -5,6 +5,8 @@ class_name MetricsReport
 @export var incorrect_items_label :Label
 @export var shipped_items_label :Label
 @export var writeup_label : Label
+@export var tape_label : Label
+@export var address_label : Label
 @export var missing_items_graph : ScoreGraph
 @export var incorrect_items_graph : ScoreGraph
 @export var mistakes_graph : ScoreGraph
@@ -17,9 +19,11 @@ var burn_duration : float = 4
 
 var missing_items_max_ratio : float = .25
 var incorrect_items_max_ratio : float =.25
-enum Writeup {SLACKING, URIN, DRINKING, PEEING, MISSING, INCORRECT}
-var falloff :Dictionary[ Writeup, int ] = {Writeup.SLACKING : 6, Writeup.URIN: 4, Writeup.PEEING : 4, Writeup.MISSING : 6, Writeup.INCORRECT : 6}
-var count_writeups : Dictionary[ Writeup, int ] =  {Writeup.SLACKING : 0, Writeup.URIN: 0, Writeup.PEEING : 0, Writeup.MISSING : 0, Writeup.INCORRECT : 0}
+var bad_tape_max_rato : float = 1.0/Global.current_boxes_per_day
+var no_address_max_rato : float = 1.0/Global.current_boxes_per_day
+enum Writeup {SLACKING, URIN, DRINKING, PEEING, MISSING, INCORRECT, TAPE, ADDRESS}
+var falloff :Dictionary[ Writeup, int ] = {Writeup.SLACKING : 6, Writeup.URIN: 4, Writeup.PEEING : 4, Writeup.MISSING : 6, Writeup.INCORRECT : 6, Writeup.TAPE : 6, Writeup.ADDRESS : 6}
+var count_writeups : Dictionary[ Writeup, int ] =  {Writeup.SLACKING : 0, Writeup.URIN: 0, Writeup.PEEING : 0, Writeup.MISSING : 0, Writeup.INCORRECT : 0, Writeup.TAPE : 0, Writeup.ADDRESS : 0}
 var writeups : Array[Array]
 var is_fired : bool = false
 var max_matching_writeups: int = 3
@@ -51,15 +55,23 @@ func fill_metrics_card():
 		writeup(Writeup.INCORRECT)
 	if get_missing_ratio(Global.score_manager.count_sent_items_by_day.size() - 1) > missing_items_max_ratio:
 		writeup(Writeup.MISSING)
+	if get_bad_tape_ratio(Global.score_manager.count_sent_items_by_day.size() - 1)  > bad_tape_max_rato:
+		writeup(Writeup.TAPE)
+	if get_no_address_ratio(Global.score_manager.count_sent_items_by_day.size() - 1)  > no_address_max_rato:
+		writeup(Writeup.ADDRESS)
 	display_writeups()
 	shipped_items_label.text = "Shipped Merchandise: %s units" %Global.score_manager.count_sent_items_by_day.back()
 	missing_items_label.text = "Missing Merchandise: %s units" %Global.score_manager.count_missing_items_by_day.back()
 	incorrect_items_label.text = "Incorrect Merchandise Shipped: %s units" %Global.score_manager.count_incorrect_items_by_day.back()
+	tape_label.text = "Unacceptable Tape Applications: %s" %Global.score_manager.count_untaped_items_by_day.back()
+	address_label.text = "Missing Shipping Labels: %s" %Global.score_manager.count_no_address_by_day.back()
 	if Global.score_manager.count_incorrect_items_by_day.size() < 2:
 		graphs.hide()
 		return
 	
 	graphs.show()
+	await get_tree().process_frame
+	graphs.custom_minimum_size.y = floor(DisplayServer.window_get_size().y/2.0)
 
 	var missing_over_time: Array[Vector2] = []
 	for day in range(Global.score_manager.count_sent_items_by_day.size()):
@@ -77,7 +89,6 @@ func fill_metrics_card():
 	
 	incorrect_items_graph.update_graph(incorrect_over_time)
 	
-	
 	var mistakes_over_time : Array[Vector2] = []
 	var biggest_mistake_ratio : float = 0.0
 	for day in range(Global.score_manager.count_sent_items_by_day.size()):
@@ -93,12 +104,25 @@ func fill_metrics_card():
 		mistakes_graph.update_graph(mistakes_over_time)
 
 func get_incorrect_ratio(day : int)-> float:
+	if Global.score_manager.count_sent_items_by_day[day] == 0 : 
+		return 1.0 
 	return float(Global.score_manager.count_incorrect_items_by_day[day])/float(Global.score_manager.count_sent_items_by_day[day])
 
 func get_missing_ratio(day : int)-> float:
 	var requested_items_count : float = float(Global.score_manager.count_sent_items_by_day[day] + Global.score_manager.count_missing_items_by_day[day] - Global.score_manager.count_incorrect_items_by_day[day])
+	if requested_items_count == 0:
+		return 1.0
 	return float(Global.score_manager.count_missing_items_by_day[day])/ requested_items_count
-	
+
+func get_bad_tape_ratio(day : int)-> float:
+	if Global.score_manager.count_boxes_sent_by_day[day] == 0 : 
+		return 1.0 
+	return Global.score_manager.count_untaped_items_by_day[day]/float(Global.score_manager.count_boxes_sent_by_day[day])
+
+func get_no_address_ratio(day : int)-> float:
+	if Global.score_manager.count_boxes_sent_by_day[day] == 0 : 
+		return 1.0 
+	return Global.score_manager.count_no_address_by_day[day]/float(Global.score_manager.count_boxes_sent_by_day[day])
 
 func writeup(reason : Writeup):
 	print("WRITEUP %s"% Writeup.find_key(reason))
@@ -113,7 +137,7 @@ func display_writeups():
 	writeup_label.show()
 	for day in range(writeups.size() - 1, -1, -1):
 		if day == writeups.size() - 2:
-			writeup_label.text += "\nPREVIOUS WRITEUP(S)"
+			writeup_label.text += "\n\nPREVIOUS WRITEUP(S)"
 		for citation in range(writeups[day].size()):
 			var days_to_falloff = get_days_to_falloff(day, writeups[day][citation])
 			if days_to_falloff <= 0: 
@@ -122,19 +146,23 @@ func display_writeups():
 			count_writeups[writeups[day][citation]] += 1
 			match writeups[day][citation]:
 				Writeup.SLACKING:
-					writeup_label.text += "WRITEUP REASON - FOUND SLACKING ON THE JOB - Days until writeup attrits : "
+					writeup_label.text += "WRITEUP REASON - CONDUCT: FOUND SLEEPING/UNCONCIOUS ON THE JOB\n     Days until writeup attrits : "
 				Writeup.URIN:
-					writeup_label.text += "WRITEUP REASON - SANITATION NON-COMPLIANCE : URIN FOUND ON CUBICAL FLOOR - Days until writeup attrits : " 
+					writeup_label.text += "WRITEUP REASON - CONDUCT: SANITATION NON-COMPLIANCE : URIN FOUND ON CUBICAL FLOOR\n     Days until writeup attrits : " 
 				Writeup.DRINKING: 
-					writeup_label.text += "WRITEUP REASON - HYDRATION WHILE ON COMPANY TIME - Days until writeup attrits : " 
+					writeup_label.text += "WRITEUP REASON - CONDUCT: HYDRATION WHILE ON COMPANY TIME\n     Days until writeup attrits : " 
 				Writeup.PEEING: 
-					writeup_label.text += "WRITEUP REASON - URINATION WHILE ON COMPANY TIME- Days until writeup attrits : " 
+					writeup_label.text += "WRITEUP REASON - CONDUCT: URINATION WHILE ON COMPANY TIME\n     Days until writeup attrits : " 
 				Writeup.MISSING:
 					writeup_label.text += "WRITEUP REASON - PREFORMANCE : TODAY'S NUMBER OF ITEMS MISSING EXCEEDEDS MAXIMUM OF " + \
-						str(int(missing_items_max_ratio * 100)) + "% - Days until writeup attrits : " 
+						str(int(missing_items_max_ratio * 100)) + "%\n     Days until writeup attrits : " 
 				Writeup.INCORRECT:
 					writeup_label.text += "WRITEUP REASON - PREFORMANCE : TODAY'S NUMBER OF INCORRECT ITEMS SHIPPED EXCEEDEDS MAXIMUM OF " +\
-						str(int(incorrect_items_max_ratio * 100)) +"% - Days until writeup attrits : " 
+						str(int(incorrect_items_max_ratio * 100)) +"%\n     Days until writeup attrits : " 
+				Writeup.TAPE:
+					writeup_label.text += "WRITEUP REASON - PREFORMANCE : TODAY'S NUMBER OF UNACCEPTABLE TAPE APPLICATIONS EXCEEDEDS MAXIMUM OF ONE PER DAY\n     Days until writeup attrits : " 
+				Writeup.ADDRESS:
+					writeup_label.text += "WRITEUP REASON - PREFORMANCE : TODAY'S NUMBER OF MISSING ADDRESS LABELS EXCEEDEDS MAXIMUM OF ONE PER DAY\n     Days until writeup attrits : " 
 			writeup_label.text += str(days_to_falloff)
 	if get_is_fired(): 
 		is_fired = true

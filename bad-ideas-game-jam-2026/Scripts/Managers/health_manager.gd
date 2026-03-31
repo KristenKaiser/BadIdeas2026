@@ -1,7 +1,7 @@
 extends Node
 class_name HealthManager
 
-var disable_hydration_testing : bool = false##TESTING
+var disable_hydration_testing : bool = true##TESTING
 var is_health_tracking_paused : bool = false
 
 

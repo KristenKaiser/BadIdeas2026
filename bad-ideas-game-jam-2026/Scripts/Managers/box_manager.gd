@@ -7,7 +7,7 @@ var box_dropper : BoxDropper
 var box_odds : Dictionary[String, float]
 var box_empty_fill: Dictionary[String, int]
 var is_box_difficulty_maxed : bool = false
-
+var is_tutorial_box : bool = true
 
 func _ready() -> void:
 	for size in sizes:

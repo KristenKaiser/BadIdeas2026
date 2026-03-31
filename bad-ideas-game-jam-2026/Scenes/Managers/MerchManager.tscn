@@ -1,58 +1,168 @@
-[gd_scene load_steps=13 format=3 uid="uid://cpxhjnah05wv6"]
+[gd_scene load_steps=29 format=3 uid="uid://cpxhjnah05wv6"]
 
 [ext_resource type="Script" uid="uid://ddgtuurbafg7k" path="res://Scripts/Managers/merch_manager.gd" id="1_qb7xf"]
 [ext_resource type="Script" uid="uid://d06to0talnada" path="res://Scripts/Classes/MerchData.gd" id="2_y8k13"]
-[ext_resource type="PackedScene" uid="uid://dfn3krjokafc0" path="res://Art/Merchandise/Apple.fbx" id="3_ossd1"]
-[ext_resource type="PackedScene" uid="uid://df2222p86ln6a" path="res://Art/Merchandise/Banana4.fbx" id="4_ayf3q"]
-[ext_resource type="PackedScene" uid="uid://dog3eivu5a3da" path="res://Art/Merchandise/Bread1.fbx" id="5_ossd1"]
-[ext_resource type="PackedScene" uid="uid://d2mjklbdl0rmi" path="res://Art/Merchandise/Eggplant1.fbx" id="6_ossd1"]
-[ext_resource type="PackedScene" uid="uid://b8s2rxnd5p5hh" path="res://Art/Merchandise/Sauce1.fbx" id="7_ayf3q"]
+[ext_resource type="PackedScene" uid="uid://p2oma6wn1oe3" path="res://Art/ominos/ominoe_1O.fbx" id="8_wrjup"]
+[ext_resource type="PackedScene" uid="uid://cupmj2hbr3y4e" path="res://Art/ominos/ominoe_2I.fbx" id="9_merxk"]
+[ext_resource type="PackedScene" uid="uid://cgafewpskolr" path="res://Art/ominos/ominoe_3I.fbx" id="10_fl71i"]
+[ext_resource type="PackedScene" uid="uid://c4jdw5xe56xjg" path="res://Art/ominos/ominoe_5+.fbx" id="12_fl71i"]
+[ext_resource type="PackedScene" uid="uid://b82hct31qv76b" path="res://Art/ominos/ominoe_4L.fbx" id="13_hqui2"]
+[ext_resource type="PackedScene" uid="uid://bngwyxsglxxme" path="res://Art/ominos/ominoe_4S.fbx" id="15_6kjcb"]
+[ext_resource type="PackedScene" uid="uid://2qfalvtl1lkb" path="res://Art/ominos/ominoe_4T.fbx" id="16_fl71i"]
+[ext_resource type="PackedScene" uid="uid://dem86cxv2es8k" path="res://Art/ominos/ominoe_5F.fbx" id="17_0r7qo"]
+[ext_resource type="PackedScene" uid="uid://dvk7unlliess3" path="res://Art/ominos/ominoe_5P.fbx" id="19_bdade"]
+[ext_resource type="PackedScene" uid="uid://bjm0saqnwlu66" path="res://Art/ominos/ominoe_5S.fbx" id="20_f8kj0"]
+[ext_resource type="PackedScene" uid="uid://dyvhkjtjc4tcl" path="res://Art/ominos/ominoe_5T.fbx" id="21_coxhg"]
+[ext_resource type="PackedScene" uid="uid://dfxy0kdhx1fju" path="res://Art/ominos/ominoe_5U.fbx" id="22_ld84d"]
+[ext_resource type="PackedScene" uid="uid://cx51e45sfy431" path="res://Art/ominos/ominoe_5W.fbx" id="23_c6jrp"]
 
-[sub_resource type="Resource" id="Resource_sgreg"]
+[sub_resource type="Resource" id="Resource_wysys"]
 script = ExtResource("2_y8k13")
-code = "84460"
-item_name = "Apple"
-item = ExtResource("3_ossd1")
+code = "202"
+item_name = "Oneo"
+item = ExtResource("8_wrjup")
 grid_shape = "o"
-rotate_axis = 2
+item_rotation = Vector3(0, -90, 0)
+mesh_color = Color(1, 0.13725491, 0, 1)
 metadata/_custom_type_script = "uid://d06to0talnada"
 
-[sub_resource type="Resource" id="Resource_kkwcq"]
+[sub_resource type="Resource" id="Resource_c6f4p"]
 script = ExtResource("2_y8k13")
-code = "69128"
-item_name = "Banana"
-item = ExtResource("4_ayf3q")
-grid_shape = "ox
-x_"
-item_rotation = Vector3(45, 0, 0)
+code = "337"
+item_name = "Twoi"
+item = ExtResource("9_merxk")
+grid_shape = "o
+x"
+mesh_color = Color(0.4627451, 0.23529412, 0, 1)
 metadata/_custom_type_script = "uid://d06to0talnada"
 
-[sub_resource type="Resource" id="Resource_0vlwy"]
+[sub_resource type="Resource" id="Resource_s4w1q"]
 script = ExtResource("2_y8k13")
-code = "07590"
-item_name = "Bread"
-item = ExtResource("5_ossd1")
-grid_shape = "xxx
-xox"
-metadata/_custom_type_script = "uid://d06to0talnada"
-
-[sub_resource type="Resource" id="Resource_sspri"]
-script = ExtResource("2_y8k13")
-code = "71411"
-item_name = "Eggplant"
-item = ExtResource("6_ossd1")
+code = "351"
+item_name = "Threei"
+item = ExtResource("10_fl71i")
 grid_shape = "x
-o"
+o
+x"
+item_rotation = Vector3(0, -90, 0)
+mesh_color = Color(0.24313726, 1, 0, 1)
 metadata/_custom_type_script = "uid://d06to0talnada"
 
-[sub_resource type="Resource" id="Resource_j6e08"]
+[sub_resource type="Resource" id="Resource_eky23"]
 script = ExtResource("2_y8k13")
-code = "63389"
-item_name = "Sauce"
-item = ExtResource("7_ayf3q")
-grid_shape = "xox"
+code = "449"
+item_name = "Fourl"
+item = ExtResource("13_hqui2")
+grid_shape = "__x
+xox"
+item_rotation = Vector3(0, -90, 0)
+mesh_color = Color(1, 1, 0.24313726, 1)
+metadata/_custom_type_script = "uid://d06to0talnada"
+
+[sub_resource type="Resource" id="Resource_urpy6"]
+script = ExtResource("2_y8k13")
+code = "503"
+item_name = "Fours"
+item = ExtResource("15_6kjcb")
+grid_shape = "xx_
+_ox"
+item_rotation = Vector3(0, -90, 0)
+mesh_color = Color(0, 0, 0.69803923, 1)
+metadata/_custom_type_script = "uid://d06to0talnada"
+
+[sub_resource type="Resource" id="Resource_cley1"]
+script = ExtResource("2_y8k13")
+code = "515"
+item_name = "Fourt"
+item = ExtResource("16_fl71i")
+grid_shape = "-x-
+xox"
+item_rotation = Vector3(0, -90, 0)
+mesh_color = Color(1, 0.7058824, 0.48235294, 1)
+metadata/_custom_type_script = "uid://d06to0talnada"
+
+[sub_resource type="Resource" id="Resource_apdgw"]
+script = ExtResource("2_y8k13")
+code = "548"
+item_name = "Fivef"
+item = ExtResource("17_0r7qo")
+grid_shape = "_x_
+xox
+x__"
+item_rotation = Vector3(0, -90, 0)
+mesh_color = Color(1, 0, 0, 1)
+metadata/_custom_type_script = "uid://d06to0talnada"
+
+[sub_resource type="Resource" id="Resource_1tatd"]
+script = ExtResource("2_y8k13")
+code = "562"
+item_name = "Fivepls"
+item = ExtResource("12_fl71i")
+grid_shape = "_x_
+xox
+_x_"
+item_rotation = Vector3(0, -90, 0)
+mesh_color = Color(0.5686275, 0, 0.40392157, 1)
+metadata/_custom_type_script = "uid://d06to0talnada"
+
+[sub_resource type="Resource" id="Resource_pfl4q"]
+script = ExtResource("2_y8k13")
+code = "721"
+item_name = "Fivep"
+item = ExtResource("19_bdade")
+grid_shape = "xx_
+xox"
+item_rotation = Vector3(0, -90, 0)
+mesh_color = Color(0.6431373, 1, 0, 1)
+metadata/_custom_type_script = "uid://d06to0talnada"
+
+[sub_resource type="Resource" id="Resource_6niop"]
+script = ExtResource("2_y8k13")
+code = "733"
+item_name = "Fives"
+item = ExtResource("20_f8kj0")
+grid_shape = "__x
+xox
+x__"
+item_rotation = Vector3(0, -90, 0)
+mesh_color = Color(0, 0.7019608, 0, 1)
+metadata/_custom_type_script = "uid://d06to0talnada"
+
+[sub_resource type="Resource" id="Resource_hqi6p"]
+script = ExtResource("2_y8k13")
+code = "744"
+item_name = "Fivet"
+item = ExtResource("21_coxhg")
+grid_shape = "_x_
+_o_
+xxx"
+item_rotation = Vector3(0, -90, 0)
+mesh_color = Color(0.3254902, 0, 0, 1)
+metadata/_custom_type_script = "uid://d06to0talnada"
+
+[sub_resource type="Resource" id="Resource_pw4om"]
+script = ExtResource("2_y8k13")
+code = "756"
+item_name = "Fiveu"
+item = ExtResource("22_ld84d")
+grid_shape = "x_x
+xox"
+item_rotation = Vector3(0, -90, 0)
+mesh_color = Color(0.39902902, 0.0015399915, 0.6347883, 1)
+metadata/_custom_type_script = "uid://d06to0talnada"
+
+[sub_resource type="Resource" id="Resource_l1e5m"]
+script = ExtResource("2_y8k13")
+code = "782"
+item_name = "Fivew"
+item = ExtResource("23_c6jrp")
+grid_shape = "_xx
+xo_
+x__"
+item_rotation = Vector3(0, -90, 0)
+mesh_color = Color(0, 0.49019608, 1, 1)
 metadata/_custom_type_script = "uid://d06to0talnada"
 
 [node name="MerchManager" type="Node"]
 script = ExtResource("1_qb7xf")
-prototypes = Array[ExtResource("2_y8k13")]([SubResource("Resource_sgreg"), SubResource("Resource_kkwcq"), SubResource("Resource_0vlwy"), SubResource("Resource_sspri"), SubResource("Resource_j6e08")])
+prototypes = Array[ExtResource("2_y8k13")]([SubResource("Resource_wysys"), SubResource("Resource_c6f4p"), SubResource("Resource_s4w1q"), SubResource("Resource_eky23"), SubResource("Resource_urpy6"), SubResource("Resource_cley1"), SubResource("Resource_apdgw"), SubResource("Resource_1tatd"), SubResource("Resource_pfl4q"), SubResource("Resource_6niop"), SubResource("Resource_hqi6p"), SubResource("Resource_pw4om"), SubResource("Resource_l1e5m")])

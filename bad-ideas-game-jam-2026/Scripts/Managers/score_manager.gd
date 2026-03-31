@@ -6,12 +6,14 @@ var count_missing_items : int = 0
 var count_sent_items : int = 0 
 var count_untaped : int = 0
 var count_incorrect_items : int = 0 
+var count_no_address : int = 0
 var count_missed_boxes : int = 0
 var count_boxes_sent_by_day : Array[int]
 var count_missing_items_by_day : Array[int]
 var count_sent_items_by_day : Array[int]
 var count_incorrect_items_by_day : Array[int]
 var count_untaped_items_by_day : Array[int]
+var count_no_address_by_day: Array[int] 
 var count_missed_boxes_by_day : Array[int]
 
 
@@ -25,7 +27,9 @@ func reset_todays_metrics():
 	count_missing_items_by_day.append(0)
 	count_sent_items_by_day.append(0)
 	count_untaped_items_by_day.append(0)
+	count_no_address_by_day.append(0)
 	count_missed_boxes_by_day.append(0)
+	
 	
 
 func score_box(box : Box):
@@ -56,6 +60,9 @@ func score_box(box : Box):
 	if box.is_taped == false: 
 		count_untaped += 1
 		count_untaped_items_by_day[count_untaped_items_by_day.size() - 1] += 1
+	if box.is_addressed == false: 
+		count_no_address += 1
+		count_no_address_by_day[count_untaped_items_by_day.size() - 1] += 1
 	
 	Global.metrics_tv.update_value(count_boxes_sent, Global.metrics_tv.Metric.BOXES)
 	Global.metrics_tv.update_value(count_missing_items, Global.metrics_tv.Metric.MISSING)

@@ -87,6 +87,12 @@ func create_from_code(code : String) -> Merchandise:
 	new_item.trash_fill = item_Data.trash_fill
 	new_item.merch_name = item_Data.item_name
 	new_item.rotate_axis = item_Data.get_rotate_axis_string()
+	
+	var mesh :  MeshInstance3D =  new_item.get_child(0)
+	var material = StandardMaterial3D.new()
+	material.albedo_color = item_Data.mesh_color
+	mesh.set_surface_override_material(0, material)
+	
 	return new_item 
 	
 func get_size_from_code(code: String)-> int:

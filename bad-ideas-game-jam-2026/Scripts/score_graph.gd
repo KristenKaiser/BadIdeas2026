@@ -4,24 +4,30 @@ class_name ScoreGraph
 var points : Array[Vector2]
 var x_gridlines : Array[Vector2]
 var y_gridlines : Array[Vector2]
-var highval : Vector2 
-var lowval : Vector2 
+var highval : Vector2 = Vector2.ZERO
+var lowval : Vector2 = Vector2.ONE
 var y_high: int
 var y_low : int
 
 func update_graph(new_points : Array[Vector2], new_y_low : int = 0, new_y_high : int = 10 ):
+	await get_tree().process_frame
 	y_high = new_y_high
 	y_low = new_y_low
-	points = new_points
+	points = new_points.duplicate()
 
 	set_high_and_low_value()
 	#normalize points
 	for point in range(points.size()): 
 		points[point].x = (points[point].x-lowval.x) / (highval.x - lowval.x)
 		points[point].y = (1 - points[point].y) * (y_high  - y_low) * .1
+		if points[point].y == y_high:
+			points[point].y -= .1
+		
 	
 	#scale points to local space
 	for point in range(points.size()): 
+		if points[point].x == 1.0:
+			points[point].x = .99
 		points[point] *= size
 	queue_redraw()
 
@@ -52,16 +58,18 @@ func set_gridlines():
 		y_gridlines.append(Vector2(size.x, (float(line)/float(y_high)) * size.y))
 
 func _draw() -> void:
+	set_gridlines()
+	for line in x_gridlines:
+		draw_line(Vector2(line.x, 0), line, Color.GRAY)
+	
+	for line in y_gridlines:
+		draw_line(Vector2(0, line.y), line, Color.GRAY)
 	if points.size() >= 2:
-		set_gridlines()
-		for line in x_gridlines:
-			draw_line(Vector2(line.x, 0), line, Color.GRAY)
 		
-		for line in y_gridlines:
-			draw_line(Vector2(0, line.y), line, Color.GRAY)
+
 		
 		# draw metric line
-		draw_polyline(PackedVector2Array(points), Color.BLACK, 2.0, true)
+		draw_polyline(PackedVector2Array(points), Color.BLACK, 5.0, true)
 
 
 func _on_draw_graph_button_button_down() -> void:

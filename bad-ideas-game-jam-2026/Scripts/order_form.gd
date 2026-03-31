@@ -62,9 +62,24 @@ func _on_area_3d_input_event(_camera: Node, event: InputEvent, _event_position: 
 				rotation = Global.camera_manager.current.rotation
 				
 
+func make_tutorial_box():
+	#var box_size = "Small"
+	parent_box.set_box_size("Small")
+	var merch : Merchandise = Global.merch_manager.create_from_code("337")
+	generated_items.append(merch)
+	requested_items[merch.merch_name] = 1
+	write_requested_items()
+	parent_box.is_tutorial = true
+	Global.box_manager.is_tutorial_box = false
+
 func generate_order():
+	if Global.box_manager.is_tutorial_box:
+		make_tutorial_box()
+		return
 	var possible_boxes = Global.box_manager.generate_box_sizes()
 	var box_size : String = possible_boxes.pick_random()
+	if Global.is_testing: 
+		box_size = "Large"
 	var max_empty_spaces : int = Global.box_manager.box_empty_fill[box_size]
 	var box_area : int = Global.box_manager.sizes[box_size].x * Global.box_manager.sizes[box_size].y * Global.box_manager.sizes[box_size].z
 	var available_box_area : int = box_area

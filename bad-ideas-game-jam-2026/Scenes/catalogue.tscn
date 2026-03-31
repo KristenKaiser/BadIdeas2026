@@ -7,6 +7,7 @@ albedo_color = Color(0.827451, 0.73333335, 0.6039216, 1)
 
 [sub_resource type="BoxMesh" id="BoxMesh_qhw6r"]
 material = SubResource("StandardMaterial3D_qhw6r")
+size = Vector3(1.195, 1, 1.155)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_ehiis"]
 
@@ -24,11 +25,12 @@ shape = SubResource("BoxShape3D_ehiis")
 [node name="Label3D" type="Label3D" parent="."]
 transform = Transform3D(-1.510464e-08, 0.7199039, 5.8223137e-08, 0, -2.1810294e-07, 9.231949, 0.62049633, 5.650574e-08, 0, 3.204314e-09, 0.50808084, 2.646978e-23)
 shaded = true
-text = "84460 - Apple
-69128 - Banana
-07590 - Bread
-71411 - EggPLant
-63389 - Sauce
+text = "562  Fivepls
+721  Fivep
+733  Fives
+744  Fivet
+756  Fiveu
+782  Fivew
 right click to exit "
 
 [node name="Camera3D" type="Camera3D" parent="."]

@@ -14,7 +14,7 @@ func order_item(code : String):
 	var item: Merchandise = Global.merch_manager.create_from_code(code)
 	held_object = item
 	
-	add_child(item)
+	deposit.add_child(item)
 	item.global_position = orgin.global_position
 	item.rotation_degrees = Vector3(180, 90, 0)
 	var tween = create_tween()

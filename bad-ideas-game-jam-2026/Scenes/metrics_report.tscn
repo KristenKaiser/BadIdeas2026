@@ -1,6 +1,7 @@
-[gd_scene load_steps=8 format=3 uid="uid://oroprnus7ub3"]
+[gd_scene load_steps=9 format=3 uid="uid://oroprnus7ub3"]
 
 [ext_resource type="Script" uid="uid://y8xgidbk47pa" path="res://Scripts/metrics_report.gd" id="1_4c6qw"]
+[ext_resource type="Texture2D" uid="uid://dtjvpxpuuv73d" path="res://Art/paper.png" id="2_84t0c"]
 [ext_resource type="Shader" uid="uid://ddw02iqikoe8h" path="res://Scripts/burn.gdshader" id="2_gyych"]
 [ext_resource type="Script" uid="uid://c8fj70611m1yu" path="res://Scripts/score_graph.gd" id="2_xxdc3"]
 
@@ -22,17 +23,19 @@ shader_parameter/burn_thickness = 0.1200000057
 [sub_resource type="ViewportTexture" id="ViewportTexture_l0bhf"]
 viewport_path = NodePath("SubViewport")
 
-[node name="Metrics_Report" type="CanvasLayer" node_paths=PackedStringArray("missing_items_label", "incorrect_items_label", "shipped_items_label", "writeup_label", "missing_items_graph", "incorrect_items_graph", "mistakes_graph", "graphs", "report_control", "sub_window", "burn_texture")]
+[node name="Metrics_Report" type="CanvasLayer" node_paths=PackedStringArray("missing_items_label", "incorrect_items_label", "shipped_items_label", "writeup_label", "tape_label", "address_label", "missing_items_graph", "incorrect_items_graph", "mistakes_graph", "graphs", "report_control", "sub_window", "burn_texture")]
 visible = false
 script = ExtResource("1_4c6qw")
-missing_items_label = NodePath("Metrics/ColorRect/VBoxContainer/Missing_Items")
-incorrect_items_label = NodePath("Metrics/ColorRect/VBoxContainer/Incorrect_Items")
-shipped_items_label = NodePath("Metrics/ColorRect/VBoxContainer/Shipped_Items")
-writeup_label = NodePath("Metrics/ColorRect/VBoxContainer/Writeup")
-missing_items_graph = NodePath("Metrics/ColorRect/VBoxContainer/Graphs/HBoxContainer/VBoxContainer/missing_items_graph")
-incorrect_items_graph = NodePath("Metrics/ColorRect/VBoxContainer/Graphs/HBoxContainer/VBoxContainer2/wrong_items_graph")
-mistakes_graph = NodePath("Metrics/ColorRect/VBoxContainer/Graphs/HBoxContainer2/mistakes_graph")
-graphs = NodePath("Metrics/ColorRect/VBoxContainer/Graphs")
+missing_items_label = NodePath("Metrics/ColorRect/ScrollContainer/VBoxContainer/Missing_Items")
+incorrect_items_label = NodePath("Metrics/ColorRect/ScrollContainer/VBoxContainer/Incorrect_Items")
+shipped_items_label = NodePath("Metrics/ColorRect/ScrollContainer/VBoxContainer/Shipped_Items")
+writeup_label = NodePath("Metrics/ColorRect/ScrollContainer/VBoxContainer/Writeup")
+tape_label = NodePath("Metrics/ColorRect/ScrollContainer/VBoxContainer/Tape_Appliction")
+address_label = NodePath("Metrics/ColorRect/ScrollContainer/VBoxContainer/Missing_Label")
+missing_items_graph = NodePath("Metrics/ColorRect/ScrollContainer/VBoxContainer/Graphs/HBoxContainer/VBoxContainer/missing_items_graph")
+incorrect_items_graph = NodePath("Metrics/ColorRect/ScrollContainer/VBoxContainer/Graphs/HBoxContainer/VBoxContainer2/wrong_items_graph")
+mistakes_graph = NodePath("Metrics/ColorRect/ScrollContainer/VBoxContainer/Graphs/HBoxContainer2/mistakes_graph")
+graphs = NodePath("Metrics/ColorRect/ScrollContainer/VBoxContainer/Graphs")
 report_control = NodePath("Metrics")
 sub_window = NodePath("SubViewport")
 burn_texture = NodePath("burn_texture")
@@ -100,7 +103,7 @@ grow_vertical = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="ColorRect" type="ColorRect" parent="Metrics"]
+[node name="ColorRect" type="TextureRect" parent="Metrics"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -108,99 +111,115 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
-color = Color(0.9515795, 0.95157963, 0.9515795, 1)
+texture = ExtResource("2_84t0c")
+expand_mode = 1
+stretch_mode = 6
 
-[node name="VBoxContainer" type="VBoxContainer" parent="Metrics/ColorRect"]
+[node name="ScrollContainer" type="ScrollContainer" parent="Metrics/ColorRect"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+horizontal_scroll_mode = 3
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Metrics/ColorRect/ScrollContainer"]
+layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="Header" type="Label" parent="Metrics/ColorRect/VBoxContainer"]
+[node name="Header" type="Label" parent="Metrics/ColorRect/ScrollContainer/VBoxContainer"]
 layout_mode = 2
 theme_override_colors/font_color = Color(0, 0, 0, 1)
 text = "Metrics Report"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Writeup" type="Label" parent="Metrics/ColorRect/VBoxContainer"]
+[node name="Writeup" type="Label" parent="Metrics/ColorRect/ScrollContainer/VBoxContainer"]
 visible = false
 layout_mode = 2
 theme_override_colors/font_color = Color(0.76020277, 3.706068e-06, 4.813075e-07, 1)
 text = "WRITEUP(S)"
 
-[node name="Shipped_Items" type="Label" parent="Metrics/ColorRect/VBoxContainer"]
+[node name="Shipped_Items" type="Label" parent="Metrics/ColorRect/ScrollContainer/VBoxContainer"]
 layout_mode = 2
 theme_override_colors/font_color = Color(0, 0, 0, 1)
 text = "Missing Items: "
 
-[node name="Missing_Items" type="Label" parent="Metrics/ColorRect/VBoxContainer"]
+[node name="Missing_Items" type="Label" parent="Metrics/ColorRect/ScrollContainer/VBoxContainer"]
 layout_mode = 2
 theme_override_colors/font_color = Color(0, 0, 0, 1)
 text = "Missing Items: "
 
-[node name="Incorrect_Items" type="Label" parent="Metrics/ColorRect/VBoxContainer"]
+[node name="Incorrect_Items" type="Label" parent="Metrics/ColorRect/ScrollContainer/VBoxContainer"]
 layout_mode = 2
 theme_override_colors/font_color = Color(0, 0, 0, 1)
 text = "Incorrect Items: "
 
-[node name="Graphs" type="VBoxContainer" parent="Metrics/ColorRect/VBoxContainer"]
+[node name="Tape_Appliction" type="Label" parent="Metrics/ColorRect/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+text = "Unacceptable Tape Application:"
+
+[node name="Missing_Label" type="Label" parent="Metrics/ColorRect/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+text = "Missing Shipping Labels:"
+
+[node name="Graphs" type="VBoxContainer" parent="Metrics/ColorRect/ScrollContainer/VBoxContainer"]
 visible = false
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="HBoxContainer" type="HBoxContainer" parent="Metrics/ColorRect/VBoxContainer/Graphs"]
+[node name="HBoxContainer" type="HBoxContainer" parent="Metrics/ColorRect/ScrollContainer/VBoxContainer/Graphs"]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="VBoxContainer" type="VBoxContainer" parent="Metrics/ColorRect/VBoxContainer/Graphs/HBoxContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="Metrics/ColorRect/ScrollContainer/VBoxContainer/Graphs/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="Label" type="Label" parent="Metrics/ColorRect/VBoxContainer/Graphs/HBoxContainer/VBoxContainer"]
+[node name="Label" type="Label" parent="Metrics/ColorRect/ScrollContainer/VBoxContainer/Graphs/HBoxContainer/VBoxContainer"]
 layout_mode = 2
 theme_override_colors/font_color = Color(0, 0, 0, 1)
 text = "Percent Items Missing"
 
-[node name="missing_items_graph" type="ColorRect" parent="Metrics/ColorRect/VBoxContainer/Graphs/HBoxContainer/VBoxContainer"]
+[node name="missing_items_graph" type="ColorRect" parent="Metrics/ColorRect/ScrollContainer/VBoxContainer/Graphs/HBoxContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
 script = ExtResource("2_xxdc3")
 
-[node name="VBoxContainer2" type="VBoxContainer" parent="Metrics/ColorRect/VBoxContainer/Graphs/HBoxContainer"]
+[node name="VBoxContainer2" type="VBoxContainer" parent="Metrics/ColorRect/ScrollContainer/VBoxContainer/Graphs/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="Label2" type="Label" parent="Metrics/ColorRect/VBoxContainer/Graphs/HBoxContainer/VBoxContainer2"]
+[node name="Label2" type="Label" parent="Metrics/ColorRect/ScrollContainer/VBoxContainer/Graphs/HBoxContainer/VBoxContainer2"]
 layout_mode = 2
 theme_override_colors/font_color = Color(0, 0, 0, 1)
 text = "Percent Wrong Items Shipped"
 
-[node name="wrong_items_graph" type="ColorRect" parent="Metrics/ColorRect/VBoxContainer/Graphs/HBoxContainer/VBoxContainer2"]
+[node name="wrong_items_graph" type="ColorRect" parent="Metrics/ColorRect/ScrollContainer/VBoxContainer/Graphs/HBoxContainer/VBoxContainer2"]
 layout_mode = 2
 size_flags_vertical = 3
 script = ExtResource("2_xxdc3")
 
-[node name="HBoxContainer2" type="VBoxContainer" parent="Metrics/ColorRect/VBoxContainer/Graphs"]
+[node name="HBoxContainer2" type="VBoxContainer" parent="Metrics/ColorRect/ScrollContainer/VBoxContainer/Graphs"]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="Label3" type="Label" parent="Metrics/ColorRect/VBoxContainer/Graphs/HBoxContainer2"]
+[node name="Label3" type="Label" parent="Metrics/ColorRect/ScrollContainer/VBoxContainer/Graphs/HBoxContainer2"]
 layout_mode = 2
 theme_override_colors/font_color = Color(0, 0, 0, 1)
 text = "Percent Mistakes compared to successes "
 
-[node name="mistakes_graph" type="ColorRect" parent="Metrics/ColorRect/VBoxContainer/Graphs/HBoxContainer2"]
+[node name="mistakes_graph" type="ColorRect" parent="Metrics/ColorRect/ScrollContainer/VBoxContainer/Graphs/HBoxContainer2"]
 layout_mode = 2
 size_flags_vertical = 3
 script = ExtResource("2_xxdc3")
 
-[node name="ContinueButton" type="Button" parent="Metrics/ColorRect/VBoxContainer"]
+[node name="ContinueButton" type="Button" parent="Metrics/ColorRect/ScrollContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 10
 text = "Continue"
@@ -222,4 +241,4 @@ texture = SubResource("ViewportTexture_l0bhf")
 expand_mode = 1
 
 [connection signal="button_down" from="Fail/ColorRect/VBoxContainer/pay_again" to="." method="_on_pay_again_button_down"]
-[connection signal="button_down" from="Metrics/ColorRect/VBoxContainer/ContinueButton" to="." method="_on_continue_button_button_down"]
+[connection signal="button_down" from="Metrics/ColorRect/ScrollContainer/VBoxContainer/ContinueButton" to="." method="_on_continue_button_button_down"]
