@@ -52,15 +52,21 @@ func _on_area_3d_input_event(_camera: Node, event: InputEvent, _event_position: 
 			return 
 		if event.button_index == MOUSE_BUTTON_LEFT and event.pressed:
 			if is_zoomed:
-				is_zoomed = false
-				position = get_home_position()
-				rotation_degrees = flat_rotation
+				put_down()
+				#is_zoomed = false
+				#position = get_home_position()
+				#rotation_degrees = flat_rotation
 			else: 
 				is_zoomed = true
 				global_position = parent_box.global_position
 				position.y += .3
 				rotation = Global.camera_manager.current.rotation
 				
+
+func put_down():
+	is_zoomed = false
+	position = get_home_position()
+	rotation_degrees = flat_rotation
 
 func make_tutorial_box():
 	#var box_size = "Small"

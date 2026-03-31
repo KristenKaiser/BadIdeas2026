@@ -6,7 +6,7 @@ var slow_conveyer_speed: float =.1
 var fast_conveyer_speed: float = 1
 var box_drop_speed: float =.8
 var grid_size : float  = .1 # 1.0/6.0
-var base_boxes_per_day : int = 1# 7
+var base_boxes_per_day : int =  7
 var current_boxes_per_day : int 
 var metrics_tv : MetricsScreen
 var health_tv : HealthScreen
@@ -72,16 +72,20 @@ func start_game():
 	add_child(main_scene)
 	
 func _unhandled_input(event: InputEvent) -> void:
-		if event is InputEventKey:
-			if OS.get_keycode_string(event.keycode) == "2" and event.pressed:
-				conveyer_speed = fast_conveyer_speed
-			if OS.get_keycode_string(event.keycode) == "2" and event.pressed == false:
+	if is_testing == false: 
+		return
+	if event is InputEventKey:
+		if OS.get_keycode_string(event.keycode) == "3" and event.pressed:
+			conveyer_speed = fast_conveyer_speed
+		if OS.get_keycode_string(event.keycode) == "2" and event.pressed:
+			conveyer_speed = slow_conveyer_speed
+		#if OS.get_keycode_string(event.keycode) == "2" and event.pressed == false:
+			#conveyer_speed = slow_conveyer_speed
+		if OS.get_keycode_string(event.keycode) == "1" and event.pressed:
+			if conveyer_speed == 0:
 				conveyer_speed = slow_conveyer_speed
-			if OS.get_keycode_string(event.keycode) == "1" and event.pressed:
-				if conveyer_speed == 0:
-					conveyer_speed = slow_conveyer_speed
-				else:
-					conveyer_speed = 0
+			else:
+				conveyer_speed = 0
 
 
 func fit_collision_to_meshes(node_3d: Node3D, collision_shape: CollisionShape3D) -> void:
@@ -148,6 +152,8 @@ func start_new_day():
 	if box_manager.is_box_difficulty_maxed: 
 		conveyer_speed += conveyer_speed_increase
 	box_manager.box_dropper.drop_box()
+	Global.camera_manager.held_object.queue_free()
+	
 	
 func end_run():
 	merch_manager.queue_free()

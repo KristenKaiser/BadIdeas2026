@@ -1,7 +1,7 @@
 extends Node
 class_name HealthManager
 
-var disable_hydration_testing : bool = true##TESTING
+var disable_hydration_testing : bool = false##TESTING
 var is_health_tracking_paused : bool = false
 
 
@@ -22,6 +22,9 @@ var bladder_multiplier : float = 2.25
 
 
 func _ready() -> void:
+	if Global.is_testing: 
+		disable_hydration_testing = true
+		is_health_tracking_paused = true
 	if disable_hydration_testing: 
 		hydration_timer.stop()
 	current_hydration = max_hydration

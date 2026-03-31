@@ -119,10 +119,13 @@ func select_object(_event_position : Vector3):
 		Location.ORDER_TUBE:
 			if self == Global.order_tube.held_object:
 				Global.order_tube.held_object = null
-			hold_object()
+			hold_object(Vector3(180, 0, 0))
 		Location.BOX: 
 			remove_from_box.emit(global_position, self)
-			hold_object(rotation_degrees - (Vector3(0, 0, -90) - base_rotation))
+			var rotation_offset : Vector3 = Vector3(180, 0, 0)
+#			#ghost.rotation_degrees.y -= Global.merch_manager.get_last_held_merch().rotation_degrees.x-180
+			rotation_offset.x -= rotation_degrees.y + 90
+			hold_object(rotation_offset)
 
 	
 	
@@ -130,7 +133,7 @@ func hold_object(rotation_offset : Vector3 = Vector3.ZERO):
 	if Global.merch_manager.hold_merch(self):
 		is_held = true
 		Global.camera_manager.hold_item(self, object_mesh, rotation_offset)
-		ghost_rotatation = rotation_offset
+		#ghost_rotatation = rotation_offset
 
 
 func turn(is_right : bool):

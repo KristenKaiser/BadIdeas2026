@@ -179,6 +179,8 @@ func print_grid(grid : Array[Array]):
 #
 func move_ghost(ghost_position : Vector3):
 	if ghost == null: 
+		if Global.merch_manager.get_last_held_merch() is Water and (Global.merch_manager.get_last_held_merch().is_drinking or Global.merch_manager.get_last_held_merch().is_peeing):
+			return
 		ghost =  Global.merch_manager.get_last_held_merch().duplicate()
 		ghost.scale = Vector3.ONE
 		ghost.name = ghost.name +"_ghost"

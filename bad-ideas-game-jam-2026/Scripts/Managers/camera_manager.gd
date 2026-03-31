@@ -48,11 +48,12 @@ func change_camera_to_prev():
 func hold_item(item : Node3D, mesh_instance : MeshInstance3D, rotation_offset : Vector3 = Vector3.ZERO):
 	if item.get_parent() != null:
 		item.reparent(current)
+		print("test")
 	else:
 		current.add_child(item)
 	item.scale = Vector3(.1,.1,.1)
 	item.position = Vector3(.08, -.045, -.07)
-	item.rotation_degrees = Vector3(180, 90, 0) + Vector3(rotation_offset.y, rotation_offset.z, rotation_offset.z)
+	item.rotation_degrees =  rotation_offset#Vector3(rotation_offset.y, rotation_offset.z, rotation_offset.z)
 	mesh_instance.layers = 2
 	current.cull_mask = 0xFFFFFFFF
 	held_object = item

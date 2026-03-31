@@ -39,7 +39,7 @@ var tutorial_text : Dictionary[TutorialsTexts, String] ={
 	TutorialsTexts.METRICS2: "Please be aware having 3 active writeups for the same infraction or having 6 total writeups will result in termination.",
 	TutorialsTexts.METRICS3: "All of today’s writeups will be cleared immediately to account for training",
 	TutorialsTexts.METRICS4: "Remember Two-Day Shipping Inc. is ALWAYS WATCHING",
-	TutorialsTexts.WATCHING: "2 day shiping isn’t always watching,\nthey can only see one person at a time.\nThe lights always turn orange\nright before they look at you. ",
+	TutorialsTexts.WATCHING: "the Boss isn’t always watching,\nBoss can only see one person at a time.\nThe lights always turn orange\nright before they look at you. ",
 	TutorialsTexts.DRINK: "This is thirsty work,\nbe sure to check your vitals\nshown on the health monitor\nto the right.\nAnd don’t let them\ncatch you drinking.",
 	TutorialsTexts.DRINKUI1:"Press space to open the water",
 	TutorialsTexts.DRINKUI2:"Press space to drink water",
@@ -53,7 +53,7 @@ var place : Array[String] = [tutorial_text[TutorialsTexts.PLACE]]
 var close : Array[String] = [tutorial_text[TutorialsTexts.CLOSE]]
 var tape : Array[String] = [tutorial_text[TutorialsTexts.TAPE1], tutorial_text[TutorialsTexts.TAPE2]]
 var address : Array[String] = [tutorial_text[TutorialsTexts.ADDRESS]]
-var alone : Array[String] = [tutorial_text[TutorialsTexts.ALONE1], tutorial_text[TutorialsTexts.ALONE1]]
+var alone : Array[String] = [tutorial_text[TutorialsTexts.ALONE1], tutorial_text[TutorialsTexts.ALONE2]]
 var metrics : Array[String] = [tutorial_text[TutorialsTexts.METRICS1], tutorial_text[TutorialsTexts.METRICS2], tutorial_text[TutorialsTexts.METRICS3], tutorial_text[TutorialsTexts.METRICS4]]
 var drinkui: Array[String] = [tutorial_text[TutorialsTexts.DRINKUI1], tutorial_text[TutorialsTexts.DRINKUI2]]
 var peeui: Array[String] = [tutorial_text[TutorialsTexts.PEEUI1], tutorial_text[TutorialsTexts.PEEUI2]]

@@ -6,7 +6,7 @@ var current_state : State
 @export var camera : Camera3D
 @export var box : BoxModel
 var current_size: String
-@export var box_interior : CollisionShape3D ##TODO only needed for whiteboxing
+@export var box_interior : CollisionShape3D 
 @export var box_collision_shape : CollisionShape3D
 @export var bottom_box_collision_shape : CollisionShape3D
 var ghost: Merchandise= null
@@ -298,6 +298,8 @@ func turn_ghost_red():
 	ghost.object_mesh.material_override = new_material
 
 func camera_changed() -> void:
+	if order_form.is_zoomed: 
+		order_form.put_down()
 	if is_queued_for_deletion(): 
 		return
 	if camera == Global.camera_manager.current:
