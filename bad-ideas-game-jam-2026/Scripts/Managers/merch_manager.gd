@@ -82,11 +82,13 @@ func create_from_code(code : String) -> Merchandise:
 	new_item.set_script(MerchandiseScript)
 	new_item.rotation_degrees = Vector3.ZERO
 	new_item.get_child(0).rotation_degrees = item_Data.item_rotation 
+	new_item.base_rotation = item_Data.item_rotation 
 	new_item.grid_shape = item_Data.grid_shape
 	new_item.center_offset = item_Data.center_offset
 	new_item.trash_fill = item_Data.trash_fill
 	new_item.merch_name = item_Data.item_name
 	new_item.rotate_axis = item_Data.get_rotate_axis_string()
+	
 	
 	var mesh :  MeshInstance3D =  new_item.get_child(0)
 	var material = StandardMaterial3D.new()

@@ -23,6 +23,9 @@ func _ready() -> void:
 	set_grid_size()
 
 func _on_area_3d_input_event(_camera: Node, event: InputEvent, event_position: Vector3, _normal: Vector3, _shape_idx: int) -> void:
+	## TODO this can hold more than water but teh rotation is wrong and i dont have time to fix it for the jam :(
+	if Global.merch_manager.get_last_held_merch() is not Water:
+		return
 	if event is InputEventMouseButton:
 		if Global.camera_manager.held_object != null:
 			if event.pressed:

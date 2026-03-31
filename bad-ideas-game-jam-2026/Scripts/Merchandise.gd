@@ -20,6 +20,7 @@ enum Location{ORDER_TUBE, HELD, BOX}
 var location : Location
 signal remove_from_box(location : Vector3, merch : Merchandise)
 var base_rotation : Vector3
+var ghost_rotatation : Vector3 = Vector3.ZERO
 
 func _ready() -> void:
 	if is_ghost: 
@@ -121,7 +122,7 @@ func select_object(_event_position : Vector3):
 			hold_object()
 		Location.BOX: 
 			remove_from_box.emit(global_position, self)
-			hold_object(rotation_degrees - Vector3(0, -90, -90))
+			hold_object(rotation_degrees - (Vector3(0, 0, -90) - base_rotation))
 
 	
 	
@@ -129,6 +130,7 @@ func hold_object(rotation_offset : Vector3 = Vector3.ZERO):
 	if Global.merch_manager.hold_merch(self):
 		is_held = true
 		Global.camera_manager.hold_item(self, object_mesh, rotation_offset)
+		ghost_rotatation = rotation_offset
 
 
 func turn(is_right : bool):
