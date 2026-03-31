@@ -51,7 +51,7 @@ shape = SubResource("BoxShape3D_42nxc")
 debug_color = Color(0, 0.6, 0.69803923, 0.85882354)
 
 [node name="Camera3D" type="Camera3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 0.38268346, 0.9238795, 0, -0.92387956, 0.38268346, 0, 0.49396315, 0.19485459)
+transform = Transform3D(1, 0, 0, 0, 0.38268343, 0.9238795, 0, -0.9238795, 0.38268343, 0, 0.5934338, 0.32818037)
 script = ExtResource("3_cmh7u")
 metadata/_custom_type_script = "uid://6yl2vsaktf5n"
 

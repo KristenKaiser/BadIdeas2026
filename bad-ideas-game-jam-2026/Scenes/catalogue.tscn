@@ -34,6 +34,6 @@ text = "562  Fivepls
 right click to exit "
 
 [node name="Camera3D" type="Camera3D" parent="."]
-transform = Transform3D(4.2909605e-08, 1.4398079, 6.383236e-08, 7.101007e-08, -4.4241847e-07, 9.979227, 2.5854013, -7.705094e-08, -1.8397172e-08, -2.3600288e-08, 4.9896135, 0)
+transform = Transform3D(4.2909605e-08, 1.4398079, 6.383236e-08, 7.101007e-08, -4.4241847e-07, 9.979227, 2.5854013, -7.705094e-08, -1.8397172e-08, -1.5640612e-08, 6.233989, -2.294064e-09)
 
 [connection signal="input_event" from="Area3D" to="." method="_on_area_3d_input_event"]

@@ -39,7 +39,8 @@ func _ready() -> void:
 	grid.position = Vector3(-box_interior.shape.size.x/2, -box_interior.shape.size.y/2.9, -box_interior.shape.size.z/2)
 	#bottom_box_collision_shape.scale = Vector3.ONE
 	bottom_box_collision_shape.shape.size = Vector3(box_interior.shape.size.x, .01, box_interior.shape.size.z)
-	bottom_box_collision_shape.global_position.y = box_interior.global_position.y - box_interior.shape.size.y/2 + .01
+	bottom_box_collision_shape.global_position.y = box_interior.global_position.y + box_interior.shape.size.y/2 - .04
+	grid.global_position.y = bottom_box_collision_shape.global_position.y - .02
 	Global.fit_collision_to_meshes(box, box_collision_shape)
 
 
@@ -264,6 +265,8 @@ func print_grid(grid : Array[Array]):
 		print(row)
 
 func move_ghost(ghost_position : Vector3):
+	if Global.merch_manager.get_last_held_merch() is not Merchandise: 
+		return
 	if ghost == null: 
 		ghost =  Global.merch_manager.get_last_held_merch().duplicate()
 		ghost.scale = Vector3.ONE
@@ -290,6 +293,10 @@ func move_ghost(ghost_position : Vector3):
 	if ghost.visible == false: 
 		ghost.show()
 	ghost.position = ghost_position - (Global.merch_manager.get_last_held_merch().center_offset * Global.grid_size)
+	if ghost.merch_name == "Twoi":
+		ghost.position.y  =-.01
+	else:
+		ghost.position.y  = 0
 
 
 func turn_ghost_red():

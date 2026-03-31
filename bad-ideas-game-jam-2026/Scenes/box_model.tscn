@@ -236,7 +236,7 @@ text = "w"
 outline_size = 3
 
 [node name="flap-right" parent="." index="4"]
-transform = Transform3D(2.1843048e-06, 100, -1.486618e-07, -34.068634, 3.0854626e-06, 73.193665, 36.596832, -3.096252e-06, 68.13727, 1.1920929e-07, 0.9920181, 1)
+transform = Transform3D(-2.1171525e-06, 100, 1.0851359e-06, 25.39647, 3.0854621e-06, -86.13986, -43.06993, -3.0962515e-06, -50.79294, 1.1920929e-07, 0.9920181, 1)
 mesh = SubResource("ArrayMesh_yy1pl")
 surface_material_override/0 = SubResource("StandardMaterial3D_yocxd")
 

@@ -25,8 +25,7 @@ window/stretch/mode="canvas_items"
 
 [editor]
 
-movie_writer/ogv/encoding_speed=1
-movie_writer/ogv/keyframe_interval=32
+movie_writer/ogv/encoding_speed=2
 movie_writer/movie_file="C:/Users/krist/Videos/BadIdeasJam2026/capture.avi"
 
 [global_group]
