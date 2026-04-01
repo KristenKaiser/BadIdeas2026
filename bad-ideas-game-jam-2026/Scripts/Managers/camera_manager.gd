@@ -97,9 +97,9 @@ func _unhandled_input(event: InputEvent) -> void:
 				print("zoom out")
 				is_zoomed_in = false
 				get_viewport().set_input_as_handled()
-	if event is InputEventKey:
-		if OS.get_keycode_string(event.keycode) == "L" and event.pressed:
-			is_screen_locked = !is_screen_locked
+	#if event is InputEventKey:
+		#if OS.get_keycode_string(event.keycode) == "L" and event.pressed:
+			#is_screen_locked = !is_screen_locked
 			
 func remove_camera(camera : Camera3D):
 	while cameras.has(camera):

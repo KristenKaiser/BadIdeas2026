@@ -1,6 +1,7 @@
-[gd_scene load_steps=5 format=3 uid="uid://8cyhvwx6ber1"]
+[gd_scene load_steps=6 format=3 uid="uid://8cyhvwx6ber1"]
 
 [ext_resource type="Script" uid="uid://tix2u4yllftj" path="res://Scripts/home_screen.gd" id="1_02jnj"]
+[ext_resource type="PackedScene" uid="uid://beu3mn43fhmcv" path="res://Scenes/Managers/SoundManager.tscn" id="2_al3hc"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_adtrt"]
 bg_color = Color(0.6666667, 0.26666668, 0, 1)
@@ -65,5 +66,7 @@ theme_override_styles/normal = SubResource("StyleBoxFlat_adtrt")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_02jnj")
 theme_override_styles/hover = SubResource("StyleBoxFlat_al3hc")
 text = "Clock in "
+
+[node name="SoundManager" parent="." instance=ExtResource("2_al3hc")]
 
 [connection signal="button_down" from="ColorRect/VBoxContainer/Start" to="." method="_on_start_button_down"]

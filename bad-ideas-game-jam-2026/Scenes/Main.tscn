@@ -1,4 +1,4 @@
-[gd_scene load_steps=59 format=3 uid="uid://d0nk4t02xe8ik"]
+[gd_scene load_steps=61 format=3 uid="uid://d0nk4t02xe8ik"]
 
 [ext_resource type="PackedScene" uid="uid://ccmmb1u17r8a0" path="res://Scenes/keypad.tscn" id="1_r150o"]
 [ext_resource type="Script" uid="uid://dxx1jykm0t1k6" path="res://Scripts/main.gd" id="1_v1gob"]
@@ -7,6 +7,8 @@
 [ext_resource type="PackedScene" uid="uid://bk8gshk5vwo18" path="res://Scenes/blur.tscn" id="3_346fj"]
 [ext_resource type="PackedScene" uid="uid://dc2ar543euyj6" path="res://Scenes/catalogue.tscn" id="3_pbw6q"]
 [ext_resource type="Script" uid="uid://cd6s54ejg8gtm" path="res://Scripts/order_tube.gd" id="3_rgh2o"]
+[ext_resource type="PackedScene" uid="uid://c5oy0c81b6swc" path="res://Scenes/edge_arrows.tscn" id="4_3tgeq"]
+[ext_resource type="PackedScene" uid="uid://c167l5f4uc0fb" path="res://Scenes/fire.tscn" id="4_jyqft"]
 [ext_resource type="Script" uid="uid://1jf6gby3db6p" path="res://Scripts/box_dropper.gd" id="5_50glp"]
 [ext_resource type="Script" uid="uid://b238gl40bbarg" path="res://Scripts/trash_can.gd" id="5_bmxlf"]
 [ext_resource type="Material" uid="uid://ddcnejutgn34x" path="res://Scenes/materials/concrete.tres" id="5_fq0cl"]
@@ -198,9 +200,36 @@ mouse_filter = 2
 [node name="LightmapGI" type="LightmapGI" parent="."]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 3.1608565, 0, -0.7691581)
 
-[node name="MainCamera" type="Camera3D" parent="."]
+[node name="MainCamera" type="Camera3D" parent="." node_paths=PackedStringArray("edge_arrows")]
 transform = Transform3D(-4.371139e-08, 0.3907311, -0.9205048, 0, 0.9205048, 0.3907311, 1, 1.7079397e-08, -4.0236543e-08, -0.3, 1.75, -2.025)
 script = ExtResource("2_jw32o")
+edge_arrows = NodePath("CanvasLayer")
+
+[node name="CanvasLayer" parent="MainCamera" instance=ExtResource("4_3tgeq")]
+
+[node name="Node3D" type="Node3D" parent="MainCamera"]
+visible = false
+
+[node name="fire" parent="MainCamera/Node3D" instance=ExtResource("4_jyqft")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.6399313, -0.70121586, -0.88282126)
+
+[node name="fire4" parent="MainCamera/Node3D" instance=ExtResource("4_jyqft")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.48772776, -0.6742306, -0.859063)
+
+[node name="fire7" parent="MainCamera/Node3D" instance=ExtResource("4_jyqft")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.15672576, -0.6742306, -0.6336454)
+
+[node name="fire2" parent="MainCamera/Node3D" instance=ExtResource("4_jyqft")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.40045428, -0.33589277, -0.2661496)
+
+[node name="fire6" parent="MainCamera/Node3D" instance=ExtResource("4_jyqft")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.40045428, 0.088497646, -0.2661496)
+
+[node name="fire3" parent="MainCamera/Node3D" instance=ExtResource("4_jyqft")]
+transform = Transform3D(1, 1.7763568e-15, 0, 0, 1, -6.872161e-16, 0, -6.872161e-16, 1, 0.7733746, -0.45991078, -0.6183939)
+
+[node name="fire5" parent="MainCamera/Node3D" instance=ExtResource("4_jyqft")]
+transform = Transform3D(1, 1.7763568e-15, 0, 0, 1, -6.872161e-16, 0, -6.872161e-16, 1, 0.7733746, -0.013421863, -0.6183939)
 
 [node name="Penopticon" type="MeshInstance3D" parent="." node_paths=PackedStringArray("player_window", "spotlight", "spotlight_glare")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -28.20585)

@@ -1,4 +1,5 @@
 extends BaseCamera
+@export var edge_arrows : CanvasLayer
 
 enum Direction {LEFT, CENTER, RIGHT}
 var current_direction : Direction 
@@ -42,11 +43,14 @@ func move_camera(direction : Direction):
 	current_direction = direction
 	match direction:
 		Direction.RIGHT:
+			edge_arrows.hide()
 			position = right_position
 			rotation_degrees = right_rotation
 		Direction.CENTER:
+			edge_arrows.show()
 			position = center_position
 			rotation_degrees = center_rotation
 		Direction.LEFT:
+			edge_arrows.hide()
 			position = left_position
 			rotation_degrees = left_rotation
